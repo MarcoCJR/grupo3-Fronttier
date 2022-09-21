@@ -97,6 +97,7 @@ while True:
         sql = "INSERT INTO dados(fkServidor, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (%s,%s,%s,%s,%s,%s)"
         values=[(index + 1), dataHora, maquina[0], maquina[1], maquina[2], maquina[3]]
         cursor.execute(sql,values)
+        
         meu_so = platform.system()
         print("SO que eu uso : ",meu_so)
         print(cursor.rowcount,"record inserted")

@@ -34,34 +34,46 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Cadastre-se!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Cadastre sua empresa!</h1>
                             </div>
-                            <form class="user">
+                            <div class="user">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="Seu nome">
+                                        <input type="text" class="form-control form-control-user" id="nomeEmpresa"
+                                            placeholder="Nome empresa">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Sobrenome">
+                                        <input type="text" class="form-control form-control-user" id="cnpjEmpresa"
+                                            placeholder="Seu CNPJ">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Seu e-mail">
-                                </div>
+
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Sua senha">
+                                        <input type="text" class="form-control form-control-user" id="i_email"
+                                            placeholder="Seu email">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" id="codigoEmpresa"
+                                            placeholder="Digite um código de segurança">
+                                    </div>
+                                </div>                                
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <select id="fkPlano" class="aa">
+                                            <option value="">Escolha seu plano</option>
+                                            <option value="1">Básico</option>
+                                            <option value="2">Médio</option>
+                                            <option value="3">Avançado</option>
+                                    </select>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repita a senha">
+                                            id="i_senha" placeholder="Sua senha">
                                     </div>
                                 </div>
-                                <a href="login.html" class="btn btn-primary btn-user btn-block">
+                                <a class="btn btn-primary btn-user btn-block" onclick="cadastrar()">
                                     Cadastrar
                                 </a>
                                 <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
@@ -70,7 +82,7 @@
                                 <a href="index.html" class="btn btn-facebook btn-user btn-block">
                                     <i class="fab fa-facebook-f fa-fw"></i> Cadastre-se com Facebook
                                 </a> -->
-                            </form>
+                            </div>
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="forgot-password.html">Esqueci minha senha.</a>
@@ -94,8 +106,71 @@
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script> 
+    <script src="js/funcoes.js"></script>
 
-</body>
+</body> 
+<script>
 
+    function cadastrar() {
+
+        //Recupere o valor da nova input pelo nome do id
+        // Agora vá para o método fetch logo abaixo
+        var nomeEmpresaVar = document.getElementById('nomeEmpresa').value;
+        var cnpjVar = document.getElementById('cnpjEmpresa').value;
+        var emailVar = document.getElementById('i_email').value;
+        var codigoEmpresaVar= document.getElementById('codigoEmpresa').value;
+        var senhaVar = document.getElementById('i_senha').value;
+        var plano = document.getElementById('fkPlano').value;
+        if (nomeEmpresaVar == "" || cnpjVar == "" || emailVar == "" || senhaVar == "" || plano == "") {           
+
+            alert("Dados em branco")
+            return false;
+        }
+    /* else {
+            setInterval(sumirMensagem, 5000)
+        } */
+
+        // Enviando o valor da nova input
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nomeEmpresaServer:nomeEmpresaVar,
+                cnpjServer: cnpjVar,
+                emailServer: emailVar,
+                codigoServer: codigoEmpresaVar,
+                senhaServer: senhaVar,
+                fkPlanoServer: plano
+
+            })
+        }).then(function (resposta) {
+
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                // card_erro.style.display = "block";
+
+                alert = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                setTimeout(() => {
+                    window.location = "login.html";
+                }, "2000")
+                
+            } else {
+                throw ("Houve um erro ao tentar realizar o cadastro!");
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+            finalizarAguardar();
+        });
+
+        return false;
+    }
+
+</script>
 </html>

@@ -5,6 +5,7 @@ idTiers int primary key,
 nome varchar(45),
 preco varchar(45)
 );
+	-- Dados que estaram já inseridos no banco de dados(mocado)
 
 create table Empresa (
 codEmpresa char(7) primary key,
@@ -12,17 +13,22 @@ nome varchar(45),
 cnpj char(18),
 telefone varchar(45),
 fkTiers int,
-	foreign key (fkTiers) references Tiers (idTiers)
+foreign key (fkTiers) references Tiers (idTiers)
 );
+
+-- Dados que seram cadastrados via Api
+
 create table Usuario (
 idUsuario int primary key,
 fkEmpresa char(7),
-	foreign key (fkEmpresa) references Empresa(codEmpresa),
-primeiroNome varchar(45),
-ultimoNome varchar(45),
+foreign key (fkEmpresa) references Empresa(codEmpresa),
+nome varchar(45),
+sobreNome varchar(45),
 email varchar(45),
 senha varchar (45)
 );
+
+-- Dados que seram cadastrados via Api
 
 create table Servidor (
 idServidor int primary key auto_increment,
@@ -33,6 +39,8 @@ discoTotal decimal (6,2),
 memoriaTotal decimal (5,2),
 fkEmpresa char(7),
 	foreign key (fkEmpresa) references Empresa (codEmpresa)
+
+	-- Dados que estaram já inseridos no banco de dados(mocado)
 );
 select * from Servidor;
 
@@ -48,5 +56,7 @@ percentualCpu decimal(4,1),
 discoUsado decimal(6,2),
 memoriaUsada decimal(5,2)
 );
+-- Dados que seram cadastrados via Api
+
 
 select * from Dados;
