@@ -39,40 +39,46 @@
                             <div class="user">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <span class="teste23">Nome da empresa</span>
                                         <input type="text" class="form-control form-control-user" id="nomeEmpresa"
-                                            placeholder="Nome empresa">
+                                            placeholder="">
                                     </div>
                                     <div class="col-sm-6">
+                                        <span>CNPJ</span>
                                         <input type="text" class="form-control form-control-user" id="cnpjEmpresa"
-                                            placeholder="Seu CNPJ">
+                                            placeholder="00.000.000/0000-22">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="i_email"
-                                            placeholder="Seu email">
-                                    </div>
                                     <div class="col-sm-6">
+                                        <span class="teste23">Digite um código de segurança</span>
                                         <input type="text" class="form-control form-control-user" id="codigoEmpresa"
-                                            placeholder="Digite um código de segurança">
+                                            placeholder="">
                                     </div>
-                                </div>                                
-
-                                <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <span class="teste23">Escolha um plano</span>
                                         <select id="fkPlano" class="aa">
-                                            <option value="">Escolha seu plano</option>
+                                            <option value=""></option>
                                             <option value="1">Básico</option>
                                             <option value="2">Médio</option>
                                             <option value="3">Avançado</option>
                                     </select>
                                     </div>
+                                    <!-- <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <span class="teste23">Email</span>
+                                        <input type="text" class="form-control form-control-user" id="i_email"
+                                            placeholder="example@sp.com">
+                                    </div> -->
+                                </div>                                
+
+                                <!-- <div class="form-group row">
                                     <div class="col-sm-6">
+                                        <span class="teste23">Senha</span>
                                         <input type="password" class="form-control form-control-user"
-                                            id="i_senha" placeholder="Sua senha">
+                                            id="i_senha" placeholder="">
                                     </div>
-                                </div>
+                                </div> -->
                                 <a class="btn btn-primary btn-user btn-block" onclick="cadastrar()">
                                     Cadastrar
                                 </a>
@@ -118,11 +124,11 @@
         // Agora vá para o método fetch logo abaixo
         var nomeEmpresaVar = document.getElementById('nomeEmpresa').value;
         var cnpjVar = document.getElementById('cnpjEmpresa').value;
-        var emailVar = document.getElementById('i_email').value;
+       // var emailVar = document.getElementById('i_email').value;
         var codigoEmpresaVar= document.getElementById('codigoEmpresa').value;
-        var senhaVar = document.getElementById('i_senha').value;
+       // var senhaVar = document.getElementById('i_senha').value;
         var plano = document.getElementById('fkPlano').value;
-        if (nomeEmpresaVar == "" || cnpjVar == "" || emailVar == "" || senhaVar == "" || plano == "") {           
+        if (nomeEmpresaVar == "" || cnpjVar == "" || plano == "") {           
 
             alert("Dados em branco")
             return false;
@@ -142,9 +148,7 @@
                 // Agora vá para o arquivo routes/usuario.js
                 nomeEmpresaServer:nomeEmpresaVar,
                 cnpjServer: cnpjVar,
-                emailServer: emailVar,
                 codigoServer: codigoEmpresaVar,
-                senhaServer: senhaVar,
                 fkPlanoServer: plano
 
             })
@@ -158,7 +162,7 @@
                 alert = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
 
                 setTimeout(() => {
-                    window.location = "login.html";
+                    window.location = "cadastrarUsuario.html";
                 }, "2000")
                 
             } else {

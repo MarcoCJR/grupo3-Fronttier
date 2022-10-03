@@ -15,7 +15,8 @@ function buscarUltimasMedidas(fkVoto, limite_linhas) {
                     order by id desc`;
 
     } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
-        instrucaoSql = `select votos.voto, count(usuario.id) qtd_pessoas from usuario join votos on usuario.fkVoto = votos.id group by votos.voto;`;
+        instrucaoSql = `select votos.voto, count(usuario.id) qtd_pessoas 
+        from usuario join votos on usuario.fkVoto = votos.id group by votos.voto;`;
 
     } /* else  if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
         instrucaoSql = `select votos.voto, count(usuario.id) from usuario join votos on usuario.fkVoto = votos.id group by votos.voto;` */

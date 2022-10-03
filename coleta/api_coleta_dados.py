@@ -33,7 +33,7 @@ memoriaTotal = round(psutil.virtual_memory().total*(2**-30),2)
 while True:
     try:
         con = mysql.connector.connect(
-            host='localhost', user='root', password='', database='Fronttier')
+            host='localhost', user='root', password='Information5526', database='Fronttier2')
         print("Conexão ao banco estabelecida!")
     except mysql.connector.Error as error:
         if error.errno == mysql.connector.errorcode.ER_BAD_DB_ERROR:
@@ -94,6 +94,7 @@ while True:
     
     for index, maquina in enumerate(maquinas):
         # comando para inserir os dados das variaveis no banco
+        
         sql = "INSERT INTO dados(fkServidor, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (%s,%s,%s,%s,%s,%s)"
         values=[(index + 1), dataHora, maquina[0], maquina[1], maquina[2], maquina[3]]
         cursor.execute(sql,values)

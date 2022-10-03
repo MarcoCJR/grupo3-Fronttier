@@ -1,4 +1,5 @@
-# Lembrete: Dados da empresa (para colocar em fkEmpresa futuramente) precisam da tela "Cadastro de Servidores" enviando dados da empresa para este arquivo
+# Lembrete: 
+# Dados da empresa (para colocar em fkEmpresa futuramente) precisam da tela "Cadastro de Servidores" enviando dados da empresa para este arquivo
 
 import psutil
 import mysql.connector

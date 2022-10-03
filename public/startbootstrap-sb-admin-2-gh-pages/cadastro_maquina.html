@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user" id="fk_empresa"
-                                    placeholder="Nome empresa">
+                                    placeholder="Código da empresa">
                                 </div>
                                 <hr>
                                 <label for="">Posição</label>
@@ -57,8 +57,8 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <a href="front_dash.html" class="btn btn-primary btn-user btn-block">
-                                    Cadastrar
+                                <a href="front_dash.html" class="btn btn-primary btn-user btn-block" onclick="cadastrar()">
+                                    Cadastrar máquina
                                 </a>
                             </form>
                             <hr>
@@ -85,4 +85,72 @@
 
 </body>
 
-</html>
+</html> 
+<script> 
+
+    function cadastrarU() {
+
+        //Recupere o valor da nova input pelo nome do id
+        // Agora vá para o método fetch logo abaixo
+        var nomeU = document.getElementById('i_nome').value;
+        var sobreNomeU = document.getElementById('i_sobreNome').value;
+        var telefoneU = document.getElementById('i_telefone').value;
+        var emailU = document.getElementById('i_email').value;
+        var senhaU = document.getElementById('i_senha').value;
+        var fkEmpresa = document.getElementById('fkEmpresa').value;
+        var fkPermissao = Number(document.getElementById('fkPermissao').value);
+
+        if (nomeU == "" || sobreNomeU == "" || telefoneU == "" || emailU == "" || senhaU == "" || fkEmpresa == "" || fkPermissao == "") {           
+                
+
+            return false;
+        }
+        /* else {
+            setInterval(sumirMensagem, 5000)
+        } */
+
+        // Enviando o valor da nova input
+        fetch("/usuarios/cadastrarU", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nomeServer: nomeU,
+                sobreNomeServer: sobreNomeU,
+                telefoneServer: telefoneU,
+                emailServer: emailU,
+                senhaServer: senhaU,
+                fkEmpresaServer: fkEmpresa,
+                fkPermissaoServer: fkPermissao
+
+            })
+        }).then(function (resposta) {
+
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                // card_erro.style.display = "block";
+
+                alert = ("Cadastro realizado com sucesso!...");
+
+                setTimeout(() => {
+            
+                    window.location = "login.html";
+                }, "2000")
+                
+            } else {
+                throw ("Houve um erro ao tentar realizar o cadastro!");
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+
+        return false;
+    }
+   
+    
+
+</script>

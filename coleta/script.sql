@@ -41,7 +41,7 @@ fkEmpresa char(7),
 	foreign key (fkEmpresa) references Empresa (codEmpresa)
 
 	-- Dados que estaram já inseridos no banco de dados(mocado)
-);
+); 
 select * from Servidor;
 
 insert into Servidor values (100,'0010','10000.0','10000.0','2000.00','300.00','1001');

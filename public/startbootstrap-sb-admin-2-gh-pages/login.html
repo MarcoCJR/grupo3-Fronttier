@@ -42,6 +42,8 @@
                                         <h1 class="h4 text-gray-900 mb-4">Bem-Vindo de volta!</h1>
                                     </div>
                                     <div class="user">
+
+                                
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="email_input" aria-describedby="emailHelp"
@@ -109,27 +111,26 @@
 
 <script>
 
-    function entrar() {
+    function entrar(){ 
 
         var emailVar = document.getElementById('email_input').value;
         var senhaVar = document.getElementById('senha_input').value;
         var codigoSegurancaVar = document.getElementById('codigoSeguranca').value;
-
-
-
+        var permissaoUser = Number(document.getElementById('i_permissao').value);
+        
+        var permissao = ""
+        // Criando permissao Admin
         if (emailVar == "" || senhaVar == "" || codigoSegurancaVar == "") {
-            erro_login.style.display = "block"
-            erro_login.innerHTML = "Para prosseguir preencher todos os campos!";
+            
+            alert("Dados em branco")
             // finalizarAguardar();
+
             return false;
-        }
-        else {
-            setInterval(sumirMensagem, 5000)
         }
 
         console.log("FORM LOGIN: ", emailVar);
         console.log("FORM SENHA: ", senhaVar);
-
+        
         fetch("/usuarios/autenticar", {
             method: "POST",
             headers: {
@@ -138,27 +139,42 @@
             body: JSON.stringify({
                 emailServer: emailVar,
                 senhaServer: senhaVar,
-                codigoServer: codigoSegurancaVar
+                codigoServer: codigoSegurancaVar,
             })
+            
         }).then(function (resposta) {
             console.log("ESTOU NO THEN DO entrar()!")
-
+            
             if (resposta.ok) {
                 console.log(resposta);
-
+                
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
-
+                    
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.COD_EMPRESA = json.codigoSegurancaVar;
+                    sessionStorage.permissaoUser = json.fkPermissao
+                    
+                    permissao = sessionStorage.permissaoUser = json.fkPermissao
 
+                    if(sessionStorage.permissaoUser == 1){
                     setTimeout(function () {
+                        
                         window.location = "index_dash.html";
                     }, 1000); // apenas para exibir o loading
+                }  
 
-                });
+                if(sessionStorage.permissaoUser == 2){
+                    setTimeout(function () {
+                        
+                        window.location = "telaDashUser.html";
+                    }, 1000);
+                }
+                }); 
+
+            
 
             } else {
 
@@ -166,7 +182,6 @@
 
                 resposta.text().then(texto => {
                     console.error(texto);
-                    finalizarAguardar(texto);
                 });
             }
 
@@ -175,11 +190,7 @@
         })
 
         return false;
-    }
 
-    // function sumirMensagem() {
-    //     card_erro_login.style.display = "none"
-    // } 
-
+}    
 
 </script>
