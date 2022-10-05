@@ -1,6 +1,6 @@
 var database = require("../database/config");
 
-function buscarUltimasMedidas(fkVoto, limite_linhas) {
+function buscarUltimasMedidas(idAquario, limite_linhas) {
     
     instrucaoSql = ''
     
@@ -15,8 +15,12 @@ function buscarUltimasMedidas(fkVoto, limite_linhas) {
                     order by id desc`;
 
     } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
-        instrucaoSql = `select votos.voto, count(usuario.id) qtd_pessoas 
-        from usuario join votos on usuario.fkVoto = votos.id group by votos.voto;`;
+        instrucaoSql = `select 
+        percentualCpu,
+                        dataHora,
+                        DATE_FORMAT(dataHora,'%H:%i:%s') 
+                    from dados  
+                    order by idDados desc limit ${limite_linhas}`;
 
     } /* else  if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
         instrucaoSql = `select votos.voto, count(usuario.id) from usuario join votos on usuario.fkVoto = votos.id group by votos.voto;` */
@@ -30,7 +34,7 @@ function buscarUltimasMedidas(fkVoto, limite_linhas) {
     return database.executar(instrucaoSql);
 }
 
-function buscarMedidasEmTempoReal(fkVoto) {
+function buscarMedidasEmTempoReal(idAquario) {
     
     instrucaoSql = ''
     
@@ -43,7 +47,12 @@ function buscarMedidasEmTempoReal(fkVoto) {
                     order by id desc`;
         
     } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
-        instrucaoSql = `select votos.voto, count(usuario.id) qtd_pessoas from usuario join votos on usuario.fkVoto = votos.id group by votos.voto;`;
+        instrucaoSql = `select  
+        percentualCpu,
+                    dataHora,
+                        DATE_FORMAT(dataHora,'%H:%i:%s')
+                        from dados 
+                    order by idDados desc limit 1`;
 
     } /* else  if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
         instrucaoSql = `select votos (voto), count(usuario.id) from usuario join votos on usuario.fkVoto = votos.id group by votos.voto;` */

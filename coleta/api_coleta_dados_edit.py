@@ -8,7 +8,7 @@ while True:
 
     try:
         db_connection = mysql.connector.connect(
-            host='localhost', user='root', password='', database='Fronttier2')
+            host='localhost', user='root', password='Information5526', database='Fronttier2')
         print("Conectei no banco!")
     except mysql.connector.Error as error:
         if error.errno == errorcode.ER_BAD_DB_ERROR:
@@ -68,8 +68,6 @@ while True:
     dataHora = datetime.now()
     formatoh = dataHora.strftime("%d/%m/%Y %H:%M:%S")
 
-
-    
     
     cursor = db_connection.cursor()
     
@@ -91,4 +89,4 @@ while True:
 
     db_connection.commit()
     db_connection.close()    
-    time.sleep(30.0)
+    time.sleep(2.0)

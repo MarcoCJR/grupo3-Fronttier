@@ -116,7 +116,6 @@
         var emailVar = document.getElementById('email_input').value;
         var senhaVar = document.getElementById('senha_input').value;
         var codigoSegurancaVar = document.getElementById('codigoSeguranca').value;
-        var permissaoUser = Number(document.getElementById('i_permissao').value);
         
         var permissao = ""
         // Criando permissao Admin
@@ -171,7 +170,16 @@
                         
                         window.location = "telaDashUser.html";
                     }, 1000);
+                } 
+
+                
+                if(sessionStorage.permissaoUser == 3){
+                    setTimeout(function () {
+                        
+                        window.location = "front_dash.html";
+                    }, 1000);
                 }
+
                 }); 
 
             

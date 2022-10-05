@@ -15,7 +15,7 @@ function entrar(email, codigo, senha) {
     var instrucao = ``
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email, codigo, senha)
     
-        instrucao+=`
+        instrucao =`
         SELECT fkPermissao FROM usuario WHERE email = '${email}' AND fkEmpresa = ${codigo} AND senha = '${senha}';`   
         ;
 
