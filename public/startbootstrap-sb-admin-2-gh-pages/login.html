@@ -43,11 +43,10 @@
                                     </div>
                                     <div class="user">
 
-                                
+
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="email_input" aria-describedby="emailHelp"
-                                                placeholder="Insira seu e-mail">
+                                            <input type="email" class="form-control form-control-user" id="email_input"
+                                                aria-describedby="emailHelp" placeholder="Insira seu e-mail">
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
@@ -61,7 +60,8 @@
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">mantenha-me conectado
+                                                <label class="custom-control-label" for="customCheck">mantenha-me
+                                                    conectado
                                                 </label>
                                             </div>
                                         </div>
@@ -73,7 +73,7 @@
                                             <i class="fab fa-google fa-fw"></i> Entrar com Google
                                         </a> -->
                                         <a href="../index.html" class="btn btn-user btn-block">
-                                             Cancelar
+                                            Cancelar
                                         </a>
                                     </div>
                                     <hr>
@@ -111,16 +111,16 @@
 
 <script>
 
-    function entrar(){ 
+    function entrar() {
 
         var emailVar = document.getElementById('email_input').value;
         var senhaVar = document.getElementById('senha_input').value;
         var codigoSegurancaVar = document.getElementById('codigoSeguranca').value;
-        
+
         var permissao = ""
         // Criando permissao Admin
         if (emailVar == "" || senhaVar == "" || codigoSegurancaVar == "") {
-            
+
             alert("Dados em branco")
             // finalizarAguardar();
 
@@ -129,7 +129,7 @@
 
         console.log("FORM LOGIN: ", emailVar);
         console.log("FORM SENHA: ", senhaVar);
-        
+
         fetch("/usuarios/autenticar", {
             method: "POST",
             headers: {
@@ -140,49 +140,49 @@
                 senhaServer: senhaVar,
                 codigoServer: codigoSegurancaVar,
             })
-            
+
         }).then(function (resposta) {
             console.log("ESTOU NO THEN DO entrar()!")
-            
+
             if (resposta.ok) {
                 console.log(resposta);
-                
+
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
-                    
+
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.COD_EMPRESA = json.codigoSegurancaVar;
                     sessionStorage.permissaoUser = json.fkPermissao
-                    
+
                     permissao = sessionStorage.permissaoUser = json.fkPermissao
 
-                    if(sessionStorage.permissaoUser == 1){
-                    setTimeout(function () {
-                        
-                        window.location = "index_dash.html";
-                    }, 1000); // apenas para exibir o loading
-                }  
+                    if (sessionStorage.permissaoUser == 1) {
+                        setTimeout(function () {
 
-                if(sessionStorage.permissaoUser == 2){
-                    setTimeout(function () {
-                        
-                        window.location = "telaDashUser.html";
-                    }, 1000);
-                } 
+                            window.location = "index_dash.html";
+                        }, 1000); // apenas para exibir o loading
+                    }
 
-                
-                if(sessionStorage.permissaoUser == 3){
-                    setTimeout(function () {
-                        
-                        window.location = "front_dash.html";
-                    }, 1000);
-                }
+                    if (sessionStorage.permissaoUser == 2) {
+                        setTimeout(function () {
 
-                }); 
+                            window.location = "telaDashUser.html";
+                        }, 1000);
+                    }
 
-            
+
+                    if (sessionStorage.permissaoUser == 3) {
+                        setTimeout(function () {
+
+                            window.location = "front_dash.html";
+                        }, 1000);
+                    }
+
+                });
+
+
 
             } else {
 
@@ -199,6 +199,6 @@
 
         return false;
 
-}    
+    }
 
 </script>

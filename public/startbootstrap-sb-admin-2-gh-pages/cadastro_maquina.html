@@ -35,14 +35,14 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Nova Maquina</h1>
                             </div>
-                            <form class="user">
+                            <div class="user">
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="id_servidor"
-                                        placeholder="Número de série">
+                                    <input type="number" class="form-control form-control-user" id="fkEmpresa"
+                                        placeholder="Id da Empresa">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="fk_empresa"
-                                    placeholder="Código da empresa">
+                                    <input type="text" class="form-control form-control-user" id="numSerie"
+                                        placeholder="Número de série">
                                 </div>
                                 <hr>
                                 <label for="">Posição</label>
@@ -57,10 +57,11 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <a href="front_dash.html" class="btn btn-primary btn-user btn-block" onclick="cadastrar()">
-                                    Cadastrar máquina
+                                <a class="btn btn-primary btn-user btn-block"
+                                    onclick="cadastrarM()">
+                                    Cadastrar Máquina
                                 </a>
-                            </form>
+                            </div>
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="front_dash.html">Voltar</a>
@@ -85,32 +86,29 @@
 
 </body>
 
-</html> 
-<script> 
+</html>
+<script>
 
-    function cadastrarU() {
+    function cadastrarM() {
 
         //Recupere o valor da nova input pelo nome do id
         // Agora vá para o método fetch logo abaixo
-        var nomeU = document.getElementById('i_nome').value;
-        var sobreNomeU = document.getElementById('i_sobreNome').value;
-        var telefoneU = document.getElementById('i_telefone').value;
-        var emailU = document.getElementById('i_email').value;
-        var senhaU = document.getElementById('i_senha').value;
-        var fkEmpresa = document.getElementById('fkEmpresa').value;
-        var fkPermissao = Number(document.getElementById('fkPermissao').value);
+        var fkEmpresaVar = document.getElementById('fkEmpresa').value;
+        var serialVar = document.getElementById('numSerie').value;
+        var linhaVar = document.getElementById('posicao_linha').value;
+        var colunaVar = document.getElementById('posicao_coluna').value;
 
-        if (nomeU == "" || sobreNomeU == "" || telefoneU == "" || emailU == "" || senhaU == "" || fkEmpresa == "" || fkPermissao == "") {           
-                
+        if (fkEmpresaVar == "" || serialVar == "" || linhaVar == "" || colunaVar == "") {
 
-            return false;
+
+            alert("teste")
         }
         /* else {
             setInterval(sumirMensagem, 5000)
         } */
 
         // Enviando o valor da nova input
-        fetch("/usuarios/cadastrarU", {
+        fetch("/usuarios/cadastrarM", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -118,14 +116,10 @@
             body: JSON.stringify({
                 // crie um atributo que recebe o valor recuperado aqui
                 // Agora vá para o arquivo routes/usuario.js
-                nomeServer: nomeU,
-                sobreNomeServer: sobreNomeU,
-                telefoneServer: telefoneU,
-                emailServer: emailU,
-                senhaServer: senhaU,
-                fkEmpresaServer: fkEmpresa,
-                fkPermissaoServer: fkPermissao
-
+                fkEmpresaServer: fkEmpresaVar,
+                serialServer: serialVar,
+                linhaServer: linhaVar,
+                colunaServer: colunaVar
             })
         }).then(function (resposta) {
 
@@ -137,10 +131,10 @@
                 alert = ("Cadastro realizado com sucesso!...");
 
                 setTimeout(() => {
-            
+
                     window.location = "login.html";
                 }, "2000")
-                
+
             } else {
                 throw ("Houve um erro ao tentar realizar o cadastro!");
             }
@@ -150,7 +144,7 @@
 
         return false;
     }
-   
-    
+
+
 
 </script>

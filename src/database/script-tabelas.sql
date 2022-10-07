@@ -12,7 +12,8 @@ descricao varchar(45)
 );
 
 create table Empresa (
-codEmpresa char(4) primary key,
+idEmpresa int primary key auto_increment,
+codEmpresa char(4) unique,
 nomeEmpresa varchar(45),
 cnpj char(18),
 fkPlano int,
@@ -26,22 +27,22 @@ sobreNome varchar(45),
 telefone char(16),
 email varchar(45),
 senha varchar (45),
-fkEmpresa char(4),
-foreign key (fkEmpresa) references Empresa(codEmpresa),
+fkEmpresa int,
+foreign key (fkEmpresa) references Empresa(idEmpresa),
+fkCodEmpresa char(4),
+foreign key (fkCodEmpresa) references Empresa(codEmpresa),
 fkPermissao int,
 foreign key (fkPermissao) references Permissao (idPermissao)
 );
 
 
 create table MaquinaServidor (
-idServidor int primary key,
+idServidor int primary key auto_increment,
+fkEmpresa int,
+foreign key (fkEmpresa) references Empresa (idEmpresa),
 numeroSerial varchar(45),
-freqMin decimal (6,1),
-freqMax decimal (6,1),
-discoTotal decimal (6,2),
-memoriaTotal decimal (5,2),
-fkEmpresa char(7),
-foreign key (fkEmpresa) references Empresa (codEmpresa)
+posicaoLinha INT,
+posicaoColuna INT
 );
 
 create table Dados(
@@ -53,4 +54,4 @@ freqAtual decimal(6,1),
 percentualCpu decimal(4,1),
 discoUsado decimal(6,2),
 memoriaUsada decimal(5,2)
-)
+);

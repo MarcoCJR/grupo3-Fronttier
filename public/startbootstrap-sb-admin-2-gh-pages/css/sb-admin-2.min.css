@@ -8027,6 +8027,10 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
     padding: 3rem !important
 }
 
+.p-5 input {
+height: 50px;
+}
+
 .pt-5, .py-5 {
     padding-top: 3rem !important
 }

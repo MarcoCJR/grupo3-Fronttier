@@ -21,29 +21,29 @@ function listar(req, res) {
                 console.log("Houve um erro ao realizar a consulta! Erro: ", erro.sqlMessage);
                 res.status(500).json(erro.sqlMessage);
             }
-            );
-        }
-        
-        function entrar(req, res) {
-         //   var permissao = req.body.permissaoServer;
-            var email = req.body.emailServer;
-            var codigo = req.body.codigoServer;
-            var senha = req.body.senhaServer;
+        );
+}
 
-            if (email == undefined) {
-                res.status(400).send("Sua permissão está undefined!");
-            } else if (codigo == undefined) {
-                res.status(400).send("Seu código está indefinida!");
-            }else if (senha == undefined) {
-                res.status(400).send("Seu código está indefinida!");
-            } else {
-        
-                usuarioModel.entrar(email, codigo, senha)
-                .then(
-                    function (resultado) {
-                        console.log(`\nResultados encontrados: ${resultado.length}`);
-                        console.log(`Resultados: ${JSON.stringify(resultado)}`); // transforma JSON em String
-                        
+function entrar(req, res) {
+    //   var permissao = req.body.permissaoServer;
+    var email = req.body.emailServer;
+    var codigo = req.body.codigoServer;
+    var senha = req.body.senhaServer;
+
+    if (email == undefined) {
+        res.status(400).send("Sua permissão está undefined!");
+    } else if (codigo == undefined) {
+        res.status(400).send("Seu código está indefinida!");
+    } else if (senha == undefined) {
+        res.status(400).send("Seu código está indefinida!");
+    } else {
+
+        usuarioModel.entrar(email, codigo, senha)
+            .then(
+                function (resultado) {
+                    console.log(`\nResultados encontrados: ${resultado.length}`);
+                    console.log(`Resultados: ${JSON.stringify(resultado)}`); // transforma JSON em String
+
                     if (resultado.length == 1) {
                         console.log(resultado);
                         res.json(resultado[0]);
@@ -71,8 +71,8 @@ function cadastrar(req, res) {
     var codigo = req.body.codigoServer
     var empresaNome = req.body.nomeEmpresaServer;
     var cnpj = req.body.cnpjServer;
-  //  var email = req.body.emailServer;
-   // var senha = req.body.senhaServer;
+    //  var email = req.body.emailServer;
+    // var senha = req.body.senhaServer;
     var plano = req.body.fkPlanoServer;
 
     // Faça as validações dos valores
@@ -82,10 +82,10 @@ function cadastrar(req, res) {
         res.status(400).send("Seu nome está undefined!");
     } else if (cnpj == undefined) {
         res.status(400).send("Seu cnpj está undefined!");
-    }else if (plano == undefined) {
+    } else if (plano == undefined) {
         res.status(400).send("Seu plano está undefined!");
-    }  else {
-        
+    } else {
+
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
         usuarioModel.cadastrar(codigo, empresaNome, cnpj, plano)
             .then(
@@ -103,7 +103,7 @@ function cadastrar(req, res) {
                 }
             );
     }
-} 
+}
 
 
 function cadastrarU(req, res) {
@@ -123,7 +123,7 @@ function cadastrarU(req, res) {
         res.status(400).send("Seu sobrenome está undefined!");
     } else if (telefone == undefined) {
         res.status(400).send("Seu telefone está undefined!");
-    }else if (email == undefined) {
+    } else if (email == undefined) {
         res.status(400).send("Seu email está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
@@ -131,10 +131,47 @@ function cadastrarU(req, res) {
         res.status(400).send("Seu fkEmpresa está undefined!");
     } else if (fkPermissao == undefined) {
         res.status(400).send("Sua permissão está undefined!");
-    }   else {
-        
+    } else {
+
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
         usuarioModel.cadastrarU(nome, sobreNome, telefone, email, senha, fkEmpresa, fkPermissao)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function cadastrarM(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var fkEmpresa = req.body.fkEmpresaServer
+    var serial = req.body.serialServer;
+    var linha = req.body.linhaServer;
+    var coluna = req.body.colunaServer;
+
+    // Faça as validações dos valores
+    if (fkEmpresa == undefined) {
+        res.status(400).send("Seu fkEmpresa está undefined!");
+    } else if (serial == undefined) {
+        res.status(400).send("Seu serial está undefined!");
+    } else if (linha == undefined) {
+        res.status(400).send("Sua linha está undefined!");
+    } else if (coluna == undefined) {
+        res.status(400).send("Sua coluna está undefined!");
+    } else {
+
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.cadastrarM(fkEmpresa, serial, linha, coluna)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -158,4 +195,5 @@ module.exports = {
     listar,
     testar,
     cadastrarU,
+    cadastrarM
 }
