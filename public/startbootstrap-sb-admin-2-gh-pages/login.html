@@ -48,11 +48,11 @@
                                             <input type="email" class="form-control form-control-user" id="email_input"
                                                 aria-describedby="emailHelp" placeholder="Insira seu e-mail">
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                 id="codigoSeguranca" aria-describedby="emailHelp"
                                                 placeholder="Código de segurança">
-                                        </div>
+                                        </div> -->
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
                                                 id="senha_input" placeholder="Senha">
@@ -115,11 +115,9 @@
 
         var emailVar = document.getElementById('email_input').value;
         var senhaVar = document.getElementById('senha_input').value;
-        var codigoSegurancaVar = document.getElementById('codigoSeguranca').value;
 
-        var permissao = ""
-        // Criando permissao Admin
-        if (emailVar == "" || senhaVar == "" || codigoSegurancaVar == "") {
+
+        if (emailVar == "" || senhaVar == "") {
 
             alert("Dados em branco")
             // finalizarAguardar();
@@ -138,7 +136,6 @@
             body: JSON.stringify({
                 emailServer: emailVar,
                 senhaServer: senhaVar,
-                codigoServer: codigoSegurancaVar,
             })
 
         }).then(function (resposta) {

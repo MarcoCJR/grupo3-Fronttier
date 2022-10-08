@@ -79,18 +79,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <!-- <span>Escolha a permissão</span>
-                                    <select  class="form-control form-control-user" id="fkPermissao"
-                                     >
+                                    <span>Escolha a permissão</span>
+                                    <select class="form-control form-control-user" id="fkPermissao">
                                      <option value=""></option>
                                      <option value="1">Administrador</option>
                                      <option value="2">Usuário</option>
                                     </select>
-                                </div> -->
+                                </div>
                                 <div class="teste">  
                                                                            
-                                <a class="btn btn-primary btn-user btn-block" onclick="cadastrarU()">
-                                    Cadastrar
+                                <a class="btn btn-primary btn-user btn-block" onclick="cadastrarUserDash()">
+                                    Cadastrar novo usuário
                                 </a>
                         
                                 </div>
@@ -117,7 +116,7 @@
 </html>
 <script>
     
-    function cadastrarU() {
+    function cadastrarUserDash() {
 
         //Recupere o valor da nova input pelo nome do id
         // Agora vá para o método fetch logo abaixo
@@ -127,9 +126,9 @@
         var emailU = document.getElementById('i_email').value;
         var senhaU = document.getElementById('i_senha').value;
         var fkEmpresa = document.getElementById('fkEmpresa').value;
-      //  var fkPermissao = Number(document.getElementById('fkPermissao').value);
+        var fkPermissao = document.getElementById('fkPermissao').value;
 
-        if (nomeU == "" || sobreNomeU == "" || telefoneU == "" || emailU == "" || senhaU == "" || fkEmpresa == "" ) {           
+        if (nomeU == "" || sobreNomeU == "" || telefoneU == "" || emailU == "" || senhaU == "" || fkEmpresa == "" || fkPermissao == "") {           
                 
 
             return false;
@@ -139,7 +138,7 @@
         } */
 
         // Enviando o valor da nova input
-        fetch("/usuarios/cadastrarU", {
+        fetch("/usuarios/cadastrarUserDash", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -152,7 +151,8 @@
                 telefoneServer: telefoneU,
                 emailServer: emailU,
                 senhaServer: senhaU,
-                fkEmpresaServer: fkEmpresa
+                fkEmpresaServer: fkEmpresa,
+                fkPermissaoServer: fkPermissao
             })
         }).then(function (resposta) {
 
@@ -165,7 +165,7 @@
 
                 setTimeout(() => {
             
-                    window.location = "login.html";
+                    window.location = "index_dash.html";
                 }, "2000")
                 
             } else {
