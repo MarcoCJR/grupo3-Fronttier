@@ -1,57 +1,66 @@
-create database Fronttier2;
-use Fronttier2;
+DROP DATABASE Fronttier2;
+CREATE DATABASE Fronttier2;
+USE Fronttier2;
 
-create table Permissao (
-idPermissao int primary key, 
-descricao varchar (40)
+CREATE TABLE Permissao (
+idPermissao INT PRIMARY KEY, 
+descricao VARCHAR (40)
 );
 
-create table Plano (
-idPlano int primary key,
-descricao varchar(45)
+INSERT INTO Permissao VALUES (1, "Administrador"),
+							 (2, "Usuário"),
+                             (3, "Desenvolvedor");
+
+CREATE TABLE Plano (
+idPlano INT PRIMARY KEY,
+descricao VARCHAR(45)
 );
 
-create table Empresa (
-idEmpresa int primary key auto_increment,
-codEmpresa char(4) unique,
-nomeEmpresa varchar(45),
-cnpj char(18),
-fkPlano int,
-foreign key (fkPlano) references Plano (idPlano)
+INSERT INTO Plano VALUES (1, "Gold"),
+						 (2, "Platinum"),
+                         (3, "Diamond");
+
+CREATE TABLE Empresa (
+codEmpresa INT PRIMARY KEY,
+nomeEmpresa VARCHAR(45),
+cnpj CHAR(18),
+fkPlano INT,
+FOREIGN KEY (fkPlano) REFERENCES Plano (idPlano)
 );
 
-create table Usuario (
-idUsuario int primary key auto_increment,
-nome varchar(45),
-sobreNome varchar(45),
-telefone char(16),
-email varchar(45),
-senha varchar (45),
-fkEmpresa int,
-foreign key (fkEmpresa) references Empresa(idEmpresa),
-fkCodEmpresa char(4),
-foreign key (fkCodEmpresa) references Empresa(codEmpresa),
-fkPermissao int,
-foreign key (fkPermissao) references Permissao (idPermissao)
+CREATE TABLE Usuario (
+idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(45),
+sobreNome VARCHAR(45),
+telefone CHAR(15),
+email VARCHAR(45),
+senha VARCHAR (45),
+fkCodEmpresa INT,
+FOREIGN KEY (fkCodEmpresa) REFERENCES Empresa(codEmpresa),
+fkPermissao INT,
+FOREIGN KEY (fkPermissao) REFERENCES Permissao (idPermissao)
 );
 
-
-create table MaquinaServidor (
-idServidor int primary key auto_increment,
-fkEmpresa int,
-foreign key (fkEmpresa) references Empresa (idEmpresa),
-numeroSerial varchar(45),
+CREATE TABLE MaquinaServidor (
+idServidor INT PRIMARY KEY AUTO_INCREMENT,
+fkCodEmpresa INT,
+FOREIGN KEY (fkCodEmpresa) REFERENCES Empresa (codEmpresa),
+numeroSerial INT,
 posicaoLinha INT,
 posicaoColuna INT
 );
 
-create table Dados(
-idDados int primary key auto_increment,
-fkServidor int,
-foreign key (fkServidor) references MaquinaServidor (idServidor),
-dataHora datetime,
-freqAtual decimal(6,1),
-percentualCpu decimal(4,1),
-discoUsado decimal(6,2),
-memoriaUsada decimal(5,2)
+CREATE TABLE Dados(
+idDados INT PRIMARY KEY AUTO_INCREMENT,
+fkServidor INT,
+FOREIGN KEY (fkServidor) REFERENCES MaquinaServidor (idServidor),
+dataHora DATETIME,
+freqAtual DECIMAL(6,1),
+percentualCpu DECIMAL(4,1),
+discoUsado DECIMAL(6,2),
+memoriaUsada DECIMAL(5,2)
 );
+
+SELECT * FROM Empresa;
+SELECT * FROM Usuario;
+SELECT * FROM MaquinaServidor;

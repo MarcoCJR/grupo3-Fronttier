@@ -41,15 +41,14 @@
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <span>Nome</span>
-                                        <input type="text"
-                                         class="form-control form-control-user" id="i_nome"
-                                            placeholder="" > 
-                                           
+                                        <input type="text" class="form-control form-control-user" id="i_nome"
+                                            placeholder="Fernando" maxlength="45">
+
                                     </div>
                                     <div class="col-sm-6">
                                         <span>Sobrenome</span>
-                                        <input  type="text" class="form-control form-control-user" id="i_sobreNome"
-                                            placeholder="" >
+                                        <input type="text" class="form-control form-control-user" id="i_sobreNome"
+                                            placeholder="Brandão" maxlength="45">
                                     </div>
                                 </div>
 
@@ -57,41 +56,42 @@
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <span>Telefone</span>
                                         <input type="" class="form-control form-control-user" id="i_telefone"
-                                            placeholder="(11) 92222-1111"   max="15">
+                                            placeholder="(11) 92222-1111" maxlength="15">
                                     </div>
+
                                     <div class="col-sm-6">
                                         <span>Email</span>
                                         <input type="email" class="form-control form-control-user" id="i_email"
-                                            placeholder="example@sp.com">
-                                    </div> 
-                                </div>                                
-                                
+                                            placeholder="exemplo@sptech.school" maxlength="45">
+                                    </div>
+                                </div>
+
                                 <div class="form-group row">
                                     <div class="col-sm-6">
                                         <span>Senha</span>
                                         <input type="password" class="form-control form-control-user" id="i_senha"
-                                            placeholder="">
-                                        </div>
-                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <span>Código de segurança da empresa</span>
-                                            <input type="password" class="form-control form-control-user" id="fkEmpresa"
-                                                placeholder="">
+                                            placeholder="****" maxlength="45">
+                                    </div>
+
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <span>Código de segurança da empresa</span>
+                                        <input type="password" class="form-control form-control-user" id="fkCodEmpresa"
+                                            placeholder="5432" maxlength="4">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <span>Escolha a permissão</span>
                                     <select class="form-control form-control-user" id="fkPermissao">
-                                     <option value=""></option>
-                                     <option value="1">Administrador</option>
-                                     <option value="2">Usuário</option>
+                                        <option value="2">Usuário</option>
+                                        <option value="1">Administrador</option>
                                     </select>
                                 </div>
-                                <div class="teste">  
-                                                                           
-                                <a class="btn btn-primary btn-user btn-block" onclick="cadastrarUserDash()">
-                                    Cadastrar novo usuário
-                                </a>
-                        
+                                <div class="teste">
+
+                                    <a class="btn btn-primary btn-user btn-block" onclick="cadastrarUserDash()">
+                                        Cadastrar novo usuário
+                                    </a>
+
                                 </div>
                                 <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
                                     <i class="fab fa-google fa-fw"></i> Cadastre-se com Google
@@ -112,11 +112,24 @@
         </div>
 
     </div>
+
+    <div class="modal-containerL" id="modal_container">
+        <div class="modalL">
+            <h2 id="titulo_m"></h2>
+            <p id="p_msg"></p>
+        </div>
+        <button class="button1L" id="close">X</button>
+    </div>
 </body>
+
 </html>
 <script>
-    
+
     function cadastrarUserDash() {
+
+        const open = document.getElementById('open');
+        const modal_container = document.getElementById('modal_container');
+        const close = document.getElementById('close');
 
         //Recupere o valor da nova input pelo nome do id
         // Agora vá para o método fetch logo abaixo
@@ -125,14 +138,23 @@
         var telefoneU = document.getElementById('i_telefone').value;
         var emailU = document.getElementById('i_email').value;
         var senhaU = document.getElementById('i_senha').value;
-        var fkEmpresa = document.getElementById('fkEmpresa').value;
+        var fkCodEmpresa = document.getElementById('fkCodEmpresa').value;
         var fkPermissao = document.getElementById('fkPermissao').value;
 
-        if (nomeU == "" || sobreNomeU == "" || telefoneU == "" || emailU == "" || senhaU == "" || fkEmpresa == "" || fkPermissao == "") {           
-                
+        if (nomeU == "" || sobreNomeU == "" || telefoneU == "" || emailU == "" || senhaU == "" || fkCodEmpresa == "" || fkPermissao == "") {
 
+            titulo_m.innerHTML = `Preencha todos os campos para prosseguir.`
+
+
+            modal_container.classList.add('show');
+
+
+            close.addEventListener('click', () => {
+                modal_container.classList.remove('show');
+            });
             return false;
         }
+        
         /* else {
             setInterval(sumirMensagem, 5000)
         } */
@@ -151,7 +173,7 @@
                 telefoneServer: telefoneU,
                 emailServer: emailU,
                 senhaServer: senhaU,
-                fkEmpresaServer: fkEmpresa,
+                fkCodEmpresaServer: fkCodEmpresa,
                 fkPermissaoServer: fkPermissao
             })
         }).then(function (resposta) {
@@ -161,15 +183,31 @@
             if (resposta.ok) {
                 // card_erro.style.display = "block";
 
-                alert = ("Cadastro realizado com sucesso!...");
+                titulo_m.innerHTML = `Cadastro realizado com sucesso!`
+
+
+                modal_container.classList.add('show');
+
+
+                close.addEventListener('click', () => {
+                    modal_container.classList.remove('show');
+                });
 
                 setTimeout(() => {
-            
+
                     window.location = "index_dash.html";
-                }, "2000")
-                
+                }, "1000")
+
             } else {
-                throw ("Houve um erro ao tentar realizar o cadastro!");
+                titulo_m.innerHTML = `O código da empresa está incorreto!`
+
+
+                modal_container.classList.add('show');
+
+
+                close.addEventListener('click', () => {
+                    modal_container.classList.remove('show');
+                });
             }
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);

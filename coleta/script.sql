@@ -20,8 +20,8 @@ foreign key (fkTiers) references Tiers (idTiers)
 
 create table Usuario (
 idUsuario int primary key,
-fkEmpresa char(7),
-foreign key (fkEmpresa) references Empresa(codEmpresa),
+fkCodEmpresa char(7),
+foreign key (fkCodEmpresa) references Empresa(codEmpresa),
 nome varchar(45),
 sobreNome varchar(45),
 email varchar(45),
@@ -37,8 +37,8 @@ freqMin decimal (6,1),
 freqMax decimal (6,1),
 discoTotal decimal (6,2),
 memoriaTotal decimal (5,2),
-fkEmpresa char(7),
-	foreign key (fkEmpresa) references Empresa (codEmpresa)
+fkCodEmpresa char(7),
+	foreign key (fkCodEmpresa) references Empresa (codEmpresa)
 
 	-- Dados que estaram já inseridos no banco de dados(mocado)
 ); 

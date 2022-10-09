@@ -110,7 +110,7 @@ function cadastrarU(req, res) {
     var telefone = req.body.telefoneServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
-    var fkEmpresa = req.body.fkEmpresaServer;
+    var fkCodEmpresa = req.body.fkCodEmpresaServer;
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -123,12 +123,12 @@ function cadastrarU(req, res) {
         res.status(400).send("Seu email está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } else if (fkEmpresa == undefined) {
-        res.status(400).send("Seu fkEmpresa está undefined!");
+    } else if (fkCodEmpresa == undefined) {
+        res.status(400).send("Seu fkCodEmpresa está undefined!");
     }  else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrarU(nome, sobreNome, telefone, email, senha, fkEmpresa)
+        usuarioModel.cadastrarU(nome, sobreNome, telefone, email, senha, fkCodEmpresa)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -155,7 +155,7 @@ function cadastrarUserDash(req, res) {
     var telefone = req.body.telefoneServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
-    var fkEmpresa = req.body.fkEmpresaServer;
+    var fkCodEmpresa = req.body.fkCodEmpresaServer;
     var fkPermissao = req.body.fkPermissaoServer;
 
     // Faça as validações dos valores
@@ -169,14 +169,14 @@ function cadastrarUserDash(req, res) {
         res.status(400).send("Seu email está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } else if (fkEmpresa == undefined) {
-        res.status(400).send("Seu fkEmpresa está undefined!");
+    } else if (fkCodEmpresa == undefined) {
+        res.status(400).send("Seu fkCodEmpresa está undefined!");
     } else if (fkPermissao == undefined) {
         res.status(400).send("Sua permissão está undefined!");
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrarUserDash(nome, sobreNome, telefone, email, senha, fkEmpresa, fkPermissao)
+        usuarioModel.cadastrarUserDash(nome, sobreNome, telefone, email, senha, fkCodEmpresa, fkPermissao)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -202,14 +202,14 @@ function cadastrarUserDash(req, res) {
 
 function cadastrarM(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-    var fkEmpresa = req.body.fkEmpresaServer
+    var fkCodEmpresa = req.body.fkCodEmpresaServer
     var serial = req.body.serialServer;
     var linha = req.body.linhaServer;
     var coluna = req.body.colunaServer;
 
     // Faça as validações dos valores
-    if (fkEmpresa == undefined) {
-        res.status(400).send("Seu fkEmpresa está undefined!");
+    if (fkCodEmpresa == undefined) {
+        res.status(400).send("Seu fkCodEmpresa está undefined!");
     } else if (serial == undefined) {
         res.status(400).send("Seu serial está undefined!");
     } else if (linha == undefined) {
@@ -219,7 +219,7 @@ function cadastrarM(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrarM(fkEmpresa, serial, linha, coluna)
+        usuarioModel.cadastrarM(fkCodEmpresa, serial, linha, coluna)
             .then(
                 function (resultado) {
                     res.json(resultado);

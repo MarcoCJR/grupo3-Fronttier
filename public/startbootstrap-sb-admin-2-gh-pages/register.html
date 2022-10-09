@@ -41,27 +41,26 @@
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <span class="teste23">Nome da empresa</span>
                                         <input type="text" class="form-control form-control-user" id="nomeEmpresa"
-                                            placeholder="">
+                                            placeholder="Acquatec" maxlength="45">
                                     </div>
                                     <div class="col-sm-6">
                                         <span>CNPJ</span>
                                         <input type="text" class="form-control form-control-user" id="cnpjEmpresa"
-                                            placeholder="00.000.000/0000-22">
+                                            placeholder="00.000.000/0000-22" maxlength="18">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col-sm-6">
                                         <span class="teste23">Digite um código de segurança</span>
-                                        <input type="text" class="form-control form-control-user" id="codigoEmpresa"
-                                            placeholder="">
+                                        <input type="password" class="form-control form-control-user" id="codigoEmpresa"
+                                            placeholder="****" maxlength="4">
                                     </div>
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <span class="teste23">Escolha um plano</span>
                                         <select id="fkPlano" class="aa">
-                                            <option value=""></option>
-                                            <option value="1">Básico</option>
                                             <option value="2">Médio</option>
+                                            <option value="1">Básico</option>
                                             <option value="3">Avançado</option>
                                     </select>
                                     </div>
@@ -104,6 +103,14 @@
 
     </div>
 
+    <div class="modal-containerL" id="modal_container">
+        <div class="modalL">
+            <h2 id="titulo_m"></h2>
+            <p id="p_msg"></p>
+        </div>
+        <button class="button1L" id="close">X</button>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -120,6 +127,10 @@
 
     function cadastrar() {
 
+        const open = document.getElementById('open');
+        const modal_container = document.getElementById('modal_container');
+        const close = document.getElementById('close');
+
         //Recupere o valor da nova input pelo nome do id
         // Agora vá para o método fetch logo abaixo
         var nomeEmpresaVar = document.getElementById('nomeEmpresa').value;
@@ -128,9 +139,18 @@
         var codigoEmpresaVar= document.getElementById('codigoEmpresa').value;
        // var senhaVar = document.getElementById('i_senha').value;
         var plano = document.getElementById('fkPlano').value;
+
         if (nomeEmpresaVar == "" || cnpjVar == "" || plano == "") {           
 
-            alert("Dados em branco")
+            titulo_m.innerHTML = `Preencha todos os campos para prosseguir.`
+
+
+            modal_container.classList.add('show');
+
+
+            close.addEventListener('click', () => {
+                modal_container.classList.remove('show');
+            });
             return false;
         }
     /* else {
@@ -159,14 +179,31 @@
             if (resposta.ok) {
                 // card_erro.style.display = "block";
 
-                alert = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+                titulo_m.innerHTML = `Empresa cadastrada com sucesso!`
+
+
+                modal_container.classList.add('show');
+
+
+                close.addEventListener('click', () => {
+                    modal_container.classList.remove('show');
+                });
 
                 setTimeout(() => {
+
                     window.location = "cadastrarUsuario.html";
-                }, "2000")
-                
+                }, "1000")
+
             } else {
-                throw ("Houve um erro ao tentar realizar o cadastro!");
+                titulo_m.innerHTML = `O código da empresa já existe!`
+
+
+                modal_container.classList.add('show');
+
+
+                close.addEventListener('click', () => {
+                    modal_container.classList.remove('show');
+                });
             }
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);

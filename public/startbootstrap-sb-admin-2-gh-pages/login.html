@@ -60,7 +60,7 @@
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">mantenha-me
+                                                <label class="custom-control-label" for="customCheck">Mantenha-me
                                                     conectado
                                                 </label>
                                             </div>
@@ -95,6 +95,14 @@
 
     </div>
 
+    <div class="modal-containerL" id="modal_container">
+        <div class="modalL">
+            <h2 id="titulo_m"></h2>
+            <p id="p_msg"></p>
+        </div>
+        <button class="button1L" id="close">X</button>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -113,15 +121,25 @@
 
     function entrar() {
 
+        const open = document.getElementById('open');
+        const modal_container = document.getElementById('modal_container');
+        const close = document.getElementById('close');
+
         var emailVar = document.getElementById('email_input').value;
         var senhaVar = document.getElementById('senha_input').value;
 
 
         if (emailVar == "" || senhaVar == "") {
 
-            alert("Dados em branco")
-            // finalizarAguardar();
+            titulo_m.innerHTML = `Preencha todos os campos para prosseguir.`
 
+
+            modal_container.classList.add('show');
+
+
+            close.addEventListener('click', () => {
+                modal_container.classList.remove('show');
+            });
             return false;
         }
 
@@ -155,6 +173,16 @@
 
                     permissao = sessionStorage.permissaoUser = json.fkPermissao
 
+                    titulo_m.innerHTML = `Login realizado com sucesso!`
+
+
+                    modal_container.classList.add('show');
+
+
+                    close.addEventListener('click', () => {
+                        modal_container.classList.remove('show');
+                    });
+
                     if (sessionStorage.permissaoUser == 1) {
                         setTimeout(function () {
 
@@ -179,14 +207,16 @@
 
                 });
 
-
-
             } else {
 
-                console.log("Houve um erro ao tentar realizar o login!");
+                titulo_m.innerHTML = `Email ou senha inválidos!`
 
-                resposta.text().then(texto => {
-                    console.error(texto);
+
+                modal_container.classList.add('show');
+
+
+                close.addEventListener('click', () => {
+                    modal_container.classList.remove('show');
                 });
             }
 

@@ -37,28 +37,29 @@
                             </div>
                             <div class="user">
                                 <div class="form-group">
-                                    <input type="number" class="form-control form-control-user" id="fkEmpresa"
-                                        placeholder="Id da Empresa">
+                                    <h5>Código da Empresa</h5>
+                                    <input type="password" class="form-control form-control-user" id="fkCodEmpresa"
+                                        placeholder="5432" maxlength="4">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="numSerie"
-                                        placeholder="Número de série">
+                                    <h5>Número de Série</h5>
+                                    <input type="number" class="form-control form-control-user" id="numSerie"
+                                        placeholder="9999999">
                                 </div>
                                 <hr>
-                                <label for="">Posição</label>
+                                <h5>Posição</h5>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="posicao_linha"
+                                        <input type="number" class="form-control form-control-user" id="posicao_linha"
                                             placeholder="Linha">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="posicao_coluna"
+                                        <input type="number" class="form-control form-control-user" id="posicao_coluna"
                                             placeholder="Coluna">
                                     </div>
                                 </div>
                                 <hr>
-                                <a class="btn btn-primary btn-user btn-block"
-                                    onclick="cadastrarM()">
+                                <a class="btn btn-primary btn-user btn-block" onclick="cadastrarM()">
                                     Cadastrar Máquina
                                 </a>
                             </div>
@@ -72,6 +73,14 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="modal-containerL" id="modal_container">
+        <div class="modalL">
+            <h2 id="titulo_m"></h2>
+            <p id="p_msg"></p>
+        </div>
+        <button class="button1L" id="close">X</button>
     </div>
 
     <!-- Bootstrap core JavaScript-->
@@ -91,17 +100,29 @@
 
     function cadastrarM() {
 
+        const open = document.getElementById('open');
+        const modal_container = document.getElementById('modal_container');
+        const close = document.getElementById('close');
+
         //Recupere o valor da nova input pelo nome do id
         // Agora vá para o método fetch logo abaixo
-        var fkEmpresaVar = document.getElementById('fkEmpresa').value;
+        var fkCodEmpresaVar = document.getElementById('fkCodEmpresa').value;
         var serialVar = document.getElementById('numSerie').value;
         var linhaVar = document.getElementById('posicao_linha').value;
         var colunaVar = document.getElementById('posicao_coluna').value;
 
-        if (fkEmpresaVar == "" || serialVar == "" || linhaVar == "" || colunaVar == "") {
+        if (fkCodEmpresaVar == "" || serialVar == "" || linhaVar == "" || colunaVar == "") {
+
+            titulo_m.innerHTML = `Preencha todos os campos para prosseguir.`
 
 
-            alert("teste")
+            modal_container.classList.add('show');
+
+
+            close.addEventListener('click', () => {
+                modal_container.classList.remove('show');
+            });
+            return false;
         }
         /* else {
             setInterval(sumirMensagem, 5000)
@@ -116,7 +137,7 @@
             body: JSON.stringify({
                 // crie um atributo que recebe o valor recuperado aqui
                 // Agora vá para o arquivo routes/usuario.js
-                fkEmpresaServer: fkEmpresaVar,
+                fkCodEmpresaServer: fkCodEmpresaVar,
                 serialServer: serialVar,
                 linhaServer: linhaVar,
                 colunaServer: colunaVar
@@ -128,15 +149,26 @@
             if (resposta.ok) {
                 // card_erro.style.display = "block";
 
-                alert = ("Cadastro realizado com sucesso!...");
+                titulo_m.innerHTML = `Máquina cadastrada com sucesso!`
 
-                setTimeout(() => {
 
-                    window.location = "login.html";
-                }, "2000")
+                modal_container.classList.add('show');
+
+
+                close.addEventListener('click', () => {
+                    modal_container.classList.remove('show');
+                });
 
             } else {
-                throw ("Houve um erro ao tentar realizar o cadastro!");
+                titulo_m.innerHTML = `O código da empresa está incorreto!`
+
+
+            modal_container.classList.add('show');
+
+
+            close.addEventListener('click', () => {
+                modal_container.classList.remove('show');
+            });
             }
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);

@@ -5,8 +5,8 @@
 # freqMax decimal (6,1),
 # discoTotal decimal (6,2),
 # memoriaTotal decimal (5,2),
-# fkEmpresa char(7),
-# 	foreign key (fkEmpresa) references Empresa (codEmpresa)
+# fkCodEmpresa char(7),
+# 	foreign key (fkCodEmpresa) references Empresa (codEmpresa)
 # );
 
 # create table Dados(
