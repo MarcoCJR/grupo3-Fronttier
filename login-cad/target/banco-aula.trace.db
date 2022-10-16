@@ -1,0 +1,18 @@
+2022-10-16 00:15:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "EMPRESA" not found (this database is empty); SQL statement:
+
+            insert into Empresa (codEmpresa, nomeEmpresa, cnpj) values
+            (?, ?, ?)
+         [42104-214]
+2022-10-16 00:16:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "EMPRESA" not found (this database is empty); SQL statement:
+select count(*) from Empresa where codEmpresa = ? [42104-214]
+2022-10-16 00:16:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIO" not found (this database is empty); SQL statement:
+select count(*) from Usuario where email = ? and senha = ? and fkCodEmpresa = ? [42104-214]
+2022-10-16 00:17:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIO" not found (this database is empty); SQL statement:
+select count(*) from Usuario where email = ? and senha = ? and fkCodEmpresa = ? [42104-214]
+2022-10-16 00:18:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIO" not found (this database is empty); SQL statement:
+select count(*) from Usuario where email = ? and senha = ? and fkCodEmpresa = ? [42104-214]
