@@ -6114,3 +6114,15 @@
 .fa, .fas {
     font-weight: 900
 }
+
+.div_alerta{
+    display: none;
+    position: absolute;
+    height: 55px;
+    width: 345px;
+    background-color: rgb(167, 4, 4);
+    border-radius: 20px;
+    border: 2px solid red;
+    margin-left: 570px;
+    margin-top: 83px;
+}

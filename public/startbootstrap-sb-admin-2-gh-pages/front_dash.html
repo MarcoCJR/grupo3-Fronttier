@@ -572,6 +572,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <div class="div_alerta" id="alerta_div">
+        <p  style="color: white; margin-top: 15px; margin-left: 10px;">
+            CPU em risco! Cuidado! Be Careful! Atención!
+        </p>
+        </div>
 
 </body>
 
@@ -938,6 +943,19 @@
                     
                     dados.datasets[0].data.shift();  // apagar o primeiro de percentual da CPU
                     dados.datasets[0].data.push(novoRegistro[0].percentualCpu); 
+
+                    if(novoRegistro[0].percentualCpu >= 50){
+                        
+                        alerta_div.style.display = "block"
+                       
+                    }
+                    if(novoRegistro[0].percentualCpu < 50){
+                        
+                        alerta_div.style.display = "none"
+                       
+                    }
+
+
                     // incluir uma nova medida de umidade
                     //dados.datasets[1].data.shift();  // apagar o primeiro de temperatura
                     //dados.datasets[1].data.push(novoRegistro[0].temperatura); // incluir uma nova medida de temperatura

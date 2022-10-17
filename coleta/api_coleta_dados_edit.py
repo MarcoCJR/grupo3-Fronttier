@@ -8,7 +8,7 @@ while True:
 
     try:
         db_connection = mysql.connector.connect(
-            host='localhost', user='root', password='_Arc3usadmin7410', database='Fronttier2')
+            host='localhost', user='root', password='sptech@02', database='Fronttier2')
         print("Conectei no banco!")
     except mysql.connector.Error as error:
         if error.errno == errorcode.ER_BAD_DB_ERROR:
@@ -22,7 +22,7 @@ while True:
            
     
     
-    psutil.cpu_percent()
+    # psutil.cpu_percent()
     discoTotal = round(psutil.disk_usage('/').total*(2**-30),2)
     memoriaTotal = round(psutil.virtual_memory().total*(2**-30),2)           
     
