@@ -4,12 +4,12 @@ import org.apache.commons.dbcp2.BasicDataSource
 import org.springframework.jdbc.core.JdbcTemplate
 
 class Conexao {
-    val driverClassName = "org.h2.Driver"
+    val driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
 
     //    val url = "jdbc:h2:mem:banco-aula"
-    val url = "jdbc:h2:./banco-aula"
-    val username = "sa"
-    val password = ""
+    val url = "jdbc:sqlserver://grupo-fronttier3.database.windows.net;databaseName=Fronttier"
+    val username = "Fronttier3"
+    val password = "#Gfgrupo3"
 
     fun getJdbcTemplate(): JdbcTemplate {
         val dataSource = BasicDataSource()

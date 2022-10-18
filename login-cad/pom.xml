@@ -115,10 +115,13 @@
 
         <!-- Adiciona o Driver JDBC do banco H2 ao projeto -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>2.1.214</version>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>7.2.2.jre11</version>
+            <!-- ou versão 7.2.2.jre11, se sua JDK for a 11 -->
+            <!-- ou versão que já existir na .m2 local -->
         </dependency>
+
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
