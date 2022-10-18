@@ -390,7 +390,13 @@ h6 {
   background-size: cover;
   position: relative;
   padding-top: 82px;
+  display: flex;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-blend-mode: darken;
 }
+
 
 #hero:before {
   content: "";
