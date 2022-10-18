@@ -50,20 +50,20 @@ class FronttierRepositorio(val jdbcTemplate: JdbcTemplate) {
 
     fun inserirDados(fronttierRepositorio: Dados) {
         jdbcTemplate.update("""
-            insert into Dados (fkServidor, dataHora, freqMax, percentualCpu, sistemaOperacional, memoriaUsada) values
+            insert into dadosKotlin (fkServidor, dataHora, freqMax, percentualCpu, sistemaOperacional, memoriaUsada) values
             (?, ?, ?, ?, ?, ?)
         """, fronttierRepositorio.fkServidor, fronttierRepositorio.dataHora, fronttierRepositorio.freqMax, fronttierRepositorio.percentualCpu, fronttierRepositorio.sistemaOperacional, fronttierRepositorio.memoriaUsada)
     }
 
     fun listarDadosLimite(limitador: Int):List<Dados> {
-        return jdbcTemplate.query("select * from Dados order by idDados desc limit ?",
+        return jdbcTemplate.query("select * from dadosKotlin order by idDados desc limit ?",
             BeanPropertyRowMapper(Dados::class.java),
             limitador
         )
     }
 
     fun listarDados():List<Dados> {
-        return jdbcTemplate.query("select * from Dados",
+        return jdbcTemplate.query("select * from dadosKotlin",
             BeanPropertyRowMapper(Dados::class.java))
     }
 }

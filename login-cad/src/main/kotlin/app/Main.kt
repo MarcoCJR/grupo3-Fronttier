@@ -143,6 +143,7 @@ open class Main {
                                     } else {
 
                                         showMessageDialog(null, "Código da empresa não encontrado no banco!")
+                                        break
                                     }
 
                                     break
@@ -167,10 +168,10 @@ open class Main {
                     if (repositorio.validarLogin(emailLogin, senhaLogin, empresaLogin)) {
                         while (true) {
                             val opcao = showInputDialog(
-                                "Login realizado com sucesso! \r\n" +
-                                        "Digite cadastrar se deseja cadastrar uma nova máquina \n" +
-                                        "Digite ver se deseja ver os dados da máquina \n" +
-                                        "Qualquer valor que não seja os citados, finalizará o processo"
+                                "Login realizado com sucesso! \r\n \n" +
+                                        "\n Digite cadastrar se deseja cadastrar uma nova máquina \n\n" +
+                                        "Digite ver se deseja ver os dados da máquina \n\n" +
+                                        "Qualquer valor que não seja os citados, finalizará o processo \n"
                             )
 
 
@@ -277,7 +278,7 @@ open class Main {
                     // Memória RAM em GB
                     val ram = (memoria.emUso.toDouble() / 1024 / 1024 / 1024)
 
-                    val dados = Dados(0, 1, LocalDateTime.now(), frequencia, cpu, so, ram)
+                    val dados = Dados(0, 7, LocalDateTime.now(), frequencia, cpu, so, ram)
                     repositorio.inserirDados(dados)
 
                     coletaDados()
