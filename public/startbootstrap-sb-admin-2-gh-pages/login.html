@@ -163,7 +163,7 @@
                 console.log(resposta);
 
                 resposta.json().then(json => {
-                    console.log(json);
+                    console.log("OBJ", json);
                     console.log(JSON.stringify(json));
 
                     sessionStorage.EMAIL_USUARIO = json.email;
@@ -185,16 +185,17 @@
 
                     if (sessionStorage.permissaoUser == 1) {
                         setTimeout(function () {
-
+                            sessionStorage.EMAIL_USUARIO = json.email;
                             window.location = "index_dash.html";
-                        }, 1000); // apenas para exibir o loading
+                        }, 2000); // apenas para exibir o loading
                     }
 
                     if (sessionStorage.permissaoUser == 2) {
                         setTimeout(function () {
 
+
                             window.location = "telaDashUser.html";
-                        }, 1000);
+                        }, 2000);
                     }
 
 
@@ -202,7 +203,7 @@
                         setTimeout(function () {
 
                             window.location = "front_dash.html";
-                        }, 1000);
+                        }, 2000);
                     }
 
                 });

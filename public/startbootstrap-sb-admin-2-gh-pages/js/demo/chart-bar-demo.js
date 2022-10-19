@@ -34,7 +34,7 @@ var myBarChart = new Chart(ctx, {
   data: {
     labels: ["Junho", "Julho", "Agosto", "Setembro", "Outubro"],
     datasets: [{
-      label: "Revenue",
+      label: "Acessos",
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
@@ -102,8 +102,8 @@ var myBarChart = new Chart(ctx, {
       caretPadding: 10,
       callbacks: {
         label: function(tooltipItem, chart) {
-          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+          // var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+          // return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
         }
       }
     },

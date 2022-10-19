@@ -24,8 +24,6 @@ while True:
                       database='Fronttier', user='Fronttier3', password='#Gfgrupo3')
             
       
-      
-      
             
         # psutil.cpu_percent()
 
@@ -87,6 +85,6 @@ while True:
         print(cursor.rowcount, "Inserindo no banco.")
         conn.commit()
         conn.close()
-        time.sleep(1.0)
+        time.sleep(3.0)
 
  

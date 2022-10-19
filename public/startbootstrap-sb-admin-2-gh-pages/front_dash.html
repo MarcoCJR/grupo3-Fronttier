@@ -49,15 +49,14 @@
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+            <!-- <hr class="sidebar-divider">
+            Nav Item - Tables -->
+             <!-- <li class="nav-item"> -->
+                <!-- <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tabelas</span></a>
-            </li>
-
+                    <span>Tabelas</span></a> -->            
+            <!-- </li>  --> 
+        
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -65,6 +64,28 @@
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
+
+            
+            <!-- Alerta do percentual de uso da cpu -->
+            <div class="div_alerta" id="alerta_div">
+        
+            <p class="texto_alerta" id="i_alerta">
+            </p>
+            </div>
+    
+    
+            <!-- Alerta de memoria -->
+            <div class="div_alertaMemoria" id="alerta_memoria">
+            <p class="texto_alertaMemoria" id="i_alertaMemoria">
+            </p>
+            </div>
+
+            <!-- Alerta de disco -->
+            <div class="div_alertaDisco" id="alerta_disco">
+                <p class="texto_alertaDisco" id="i_alertaDisco">
+                </p>
+                </div>
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -571,12 +592,19 @@
     <script type="text/javascript" src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script> -->
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<!-- 
     <div class="div_alerta" id="alerta_div">
-        <p  style="color: white; margin-top: 15px; margin-left: 10px;">
-            CPU em risco! Cuidado! Be Careful! Atención!
+        
+        <p class="texto_alerta" id="i_alerta">
         </p>
         </div>
+
+
+         Alerta de memoria -->
+    <!-- <div class="div_alertaMemoria" id="alerta_memoria">
+        <p class="texto_alertaMemoria" id="i_alertaMemoria">
+        </p>
+        </div> --> -->
 
 </body>
 
@@ -584,7 +612,7 @@
 
 <script> 
 
-    usuario.innerHTML = sessionStorage; 
+    usuario.innerHTML = sessionStorage.NOME_USUARIO; 
         
    // Criação gráfico Percentual CPU
 
@@ -630,7 +658,7 @@
                     yAxisID: 'y-Percentual',
                     label: 'Percentual-Cpu',
                     borderColor: '#4e73df',
-                    backgroundColor: '#858796',
+                    backgroundColor:'#858796',
                     fill: true,
                     data: []
                 },
@@ -670,7 +698,7 @@
                     yAxisID: 'y-Disco',
                     label: 'Disco usado',
                     borderColor: '#4e73df',
-                    backgroundColor: '#858796',
+                    backgroundColor:'#858796',
                     fill: true,
                     data: []
                 }
@@ -695,7 +723,6 @@
                
         };
 
-
         
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
@@ -712,7 +739,16 @@
             dadosMemoria.datasets[0].data.push(registro.discoUsado);
         
         
+
+            
+            //function sumirMensagem() {
+            //alerta_div.style.display = "none"
+         //   i_alerta.style.display = "none"
+            //alerta_memoria.style.display = "none"
+           // i_alertaMemoria.style.display = "none"
         }
+
+        //}
 
         console.log(JSON.stringify(dados));
         
@@ -902,6 +938,7 @@
         window.grafico_linha3 = new Chart (myChartDisco,  {
             type: "line",
             data: dadosDisco,
+
             options:discoAtual
         });
             // Finalização do gráfico disco
@@ -912,22 +949,13 @@
             data: dadosMemoria,
             options:memoriaAtual
         });
-            // Finalização do gráfico disco    
-
-
-
-
+            // Finalização do gráfico disco  
 
 
         setTimeout(() => atualizarGrafico(idDados, dados, teste, dadosDisco, dadosMemoria), 2000);
     }
 
-
-    // Esta função *atualizarGrafico* atualiza o gráfico que foi renderizado na página,
-    // buscando a última medida inserida em tabela contendo as capturas, 
-
-    //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
-    //     Para ajustar o "select", ajuste o comando sql em src/models
+ 
     function atualizarGrafico(idDados, dados, teste, dadosDisco, dadosMemoria) {
 
         fetch(`/medidas/tempo-real/${idDados}`, { cache: 'no-store' }).then(function (response) {
@@ -937,51 +965,123 @@
                     console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
                     console.log(`Dados atuais do gráfico: ${dados} e ${teste} e ${dadosDisco} e ${dadosMemoria}`);
 
-                    // tirando e colocando valores no gráfico
-                    dados.labels.shift(); // apagar o primeiro
-                    dados.labels.push(novoRegistro[0].horario); // incluir um novo momento
+                    dados.labels.shift(); 
+                    dados.labels.push(novoRegistro[0].horario); 
                     
-                    dados.datasets[0].data.shift();  // apagar o primeiro de percentual da CPU
+                    dados.datasets[0].data.shift(); 
                     dados.datasets[0].data.push(novoRegistro[0].percentualCpu); 
 
-                    if(novoRegistro[0].percentualCpu >= 50){
+                    // Criando o alerta do percentual da CPU 
+                    if(novoRegistro[0].percentualCpu >= 60 && novoRegistro[0].percentualCpu < 80){
                         
                         alerta_div.style.display = "block"
-                       
+                        alerta_div.style.backgroundColor = "yellow"
+                        alerta_div.style.borderColor = "yellow"
+                        i_alerta.innerHTML = "CPU em estado de alerta! Cuidado!"
+
+                        setTimeout(() => sumirMensagem(idDados, dados), 5000);
                     }
-                    if(novoRegistro[0].percentualCpu < 50){
+
+                    if(novoRegistro[0].percentualCpu >= 80  && novoRegistro[0].percentualCpu  < 90){
                         
-                        alerta_div.style.display = "none"
-                       
+                        alerta_div.style.display = "block"
+                        alerta_div.style.backgroundColor = "orange"
+                        alerta_div.style.borderColor = "orange"
+                        i_alerta.innerHTML = "CPU em estado de emergência! Cuidado!"
+                        setTimeout(() => sumirMensagem(idDados, dados), 5000);
                     }
 
-
-                    // incluir uma nova medida de umidade
-                    //dados.datasets[1].data.shift();  // apagar o primeiro de temperatura
-                    //dados.datasets[1].data.push(novoRegistro[0].temperatura); // incluir uma nova medida de temperatura
                     
+                    if(novoRegistro[0].percentualCpu > 90){
+                        
+                        alerta_div.style.display = "block"
+                        alerta_div.style.backgroundColor = "red"
+                        alerta_div.style.borderColor = "red"
+                        i_alerta.innerHTML = "CPU em estado crítico! Cuidado!"
+                        setTimeout(() => sumirMensagem(idDados, dados), 5000);
+                    }
 
-                    teste.labels.shift(); // apagar o primeiro
-                    teste.labels.push(novoRegistro[0].horario); // incluir um novo momento
+                        
+
+                    teste.labels.shift(); 
+                    teste.labels.push(novoRegistro[0].horario); 
                 
                     teste.datasets[0].data.shift();
-                    teste.datasets[0].data.push(novoRegistro[0].freqAtual); // incluir uma nova medida de umidade
+                    teste.datasets[0].data.push(novoRegistro[0].freqAtual); 
+                    
+                    // Criando o alerta da frequencial atual da CPU
                     
                     
                     
-                    dadosDisco.labels.shift(); // apagar o primeiro
-                    dadosDisco.labels.push(novoRegistro[0].horario); // incluir um novo momento
+                    
+                    dadosDisco.labels.shift();
+                    dadosDisco.labels.push(novoRegistro[0].horario); 
                 
                     dadosDisco.datasets[0].data.shift();
-                    dadosDisco.datasets[0].data.push(novoRegistro[0].discoUsado); // incluir uma nova medida de umidade
+                    dadosDisco.datasets[0].data.push(novoRegistro[0].discoUsado); 
+                    // Alertas do disco
+
+                    if(novoRegistro[0].discoUsado >= 200 && novoRegistro[0].discoUsado < 220){
+
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "yellow"
+                        alerta_disco.style.borderColor = "yellow"
+                        i_alertaDisco.innerHTML = "Disco está em estado de alerta! Cuidado!"
+                        setTimeout(() => sumirMensagem(idDados, dadosDisco), 5000);
+                    }
+
+                        if(novoRegistro[0].discoUsado >= 220  && novoRegistro[0].discoUsado  < 240){
+                       
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "orange"
+                        alerta_disco.style.borderColor = "orange"
+                        i_alertaDisco.innerHTML = "Disco está em estado de emergência! Cuidado!"
+                        setTimeout(() => sumirMensagem(idDados, dadosDisco), 5000);
+                    }
+   
+                    if(novoRegistro[0].discoUsado > 240){
+   
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "red"
+                        alerta_disco.style.borderColor = "red"
+                        i_alertaDisco.innerHTML = "Disco está em estado crítico! Cuidado!"
+                        setTimeout(() => sumirMensagem(idDados, dadosDisco), 5000);
+                    }
+                 
+                    // finalizando alertas do disco
+
+
+                    dadosMemoria.labels.shift();
+                    dadosMemoria.labels.push(novoRegistro[0].horario); 
                     
-
-
-                    dadosMemoria.labels.shift(); // apagar o primeiro
-                    dadosMemoria.labels.push(novoRegistro[0].horario); // incluir um novo momento
-                
                     dadosMemoria.datasets[0].data.shift();
-                    dadosMemoria.datasets[0].data.push(novoRegistro[0].memoriaUsada); // incluir uma nova medida de umidade
+                    dadosMemoria.datasets[0].data.push(novoRegistro[0].memoriaUsada); 
+                    
+                 if(novoRegistro[0].memoriaUsada >= 6 && novoRegistro[0].memoriaUsada < 12){
+
+                     alerta_memoria.style.display = "block"
+                     alerta_memoria.style.backgroundColor = "yellow"
+                     alerta_memoria.style.borderColor = "yellow"
+                     i_alertaMemoria.innerHTML = "Memória RAM em estado de alerta! Cuidado!"
+                     setTimeout(() => sumirMensagem(idDados, dadosMemoria), 5000);
+                 }
+                     if(novoRegistro[0].memoriaUsada >= 12  && novoRegistro[0].memoriaUsada  < 14){
+                    
+                     alerta_memoria.style.display = "block"
+                     alerta_memoria.style.backgroundColor = "orange"
+                     alerta_memoria.style.borderColor = "orange"
+                     i_alertaMemoria.innerHTML = "Memória RAM em estado de emergência! Cuidado!"
+                     setTimeout(() => sumirMensagem(idDados, dadosMemoria), 5000);
+                 }
+
+                 if(novoRegistro[0].memoriaUsada > 14){
+
+                     alerta_memoria.style.display = "block"
+                     alerta_memoria.style.backgroundColor = "red"
+                     alerta_memoria.style.borderColor = "red"
+                     i_alertaMemoria.innerHTML = "Memória RAM em estado crítico! Cuidado!"
+                     setTimeout(() => sumirMensagem(idDados, dadosMemoria), 5000);
+                 }
                     
 
                     window.grafico_linha.update();
@@ -989,13 +1089,21 @@
                     window.grafico_linha3.update();
                     window.grafico_linha4.update();
 
-                    // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idDados, dados, teste, dadosDisco, dadosMemoria), 2000);
+
+
+                    
+                    function sumirMensagem() {
+                alerta_div.style.display = "none"
+               // i_alerta.style.display = "none"
+                alerta_memoria.style.display = "none"
+               // i_alertaMemoria.style.display = "none"
+            }
+
+                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idDados, dados, teste, dadosDisco, dadosMemoria), 5000);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
-                // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                proximaAtualizacao = setTimeout(() => atualizarGrafico(idDados, dados, teste, dadosDisco, dadosMemoria), 2000);
+                proximaAtualizacao = setTimeout(() => atualizarGrafico(idDados, dados, teste, dadosDisco, dadosMemoria), 5000);
             }
         })
             .catch(function (error) {

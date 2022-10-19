@@ -6116,13 +6116,67 @@
 }
 
 .div_alerta{
-    display: none;
-    position: absolute;
-    height: 55px;
-    width: 345px;
-    background-color: rgb(167, 4, 4);
+    /* display: none; */
+    /* position: absolute; */
+    height: 75px;
+    width: 200px;
+    /* background-color: rgb(167, 4, 4); */
     border-radius: 20px;
-    border: 2px solid red;
-    margin-left: 570px;
-    margin-top: 83px;
+    display: block;
+    /* border: 2px solid red; */
+    margin-left: 10px;
+    margin-top: 120px;
+}
+
+.texto_alerta{
+    color: black;
+    margin-top: 15px;
+    font-size: 15px;
+    margin-left: 10px;
+
+}
+
+
+
+.div_alertaDisco{
+    /* display: none; */
+    /* position: absolute; */
+    height: 75px;
+    width: 200px;
+    /* background-color: rgb(167, 4, 4); */
+    border-radius: 20px;
+    display: block;
+    /* border: 2px solid red; */
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+.texto_alertaDisco{
+    color: black;
+    font-size: 15px;
+    margin-top: 15px;
+    margin-left: 10px;
+
+}
+
+
+.div_alertaMemoria{
+    /* display: none; */
+    /* position: absolute; */
+    height: 75px;
+    width: 200px;
+    /* background-color: rgb(167, 4, 4); */
+    border-radius: 20px;
+    display: block;
+    /* border: 2px solid red; */
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+.texto_alertaMemoria{
+    color: black;
+    font-size: 15px;
+    margin-top: 15px;
+    margin-left: 10px;
+
 }

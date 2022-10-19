@@ -8,7 +8,7 @@ while True:
 
     try:
         db_connection = mysql.connector.connect(
-            host='localhost', user='root', password='sptech@02', database='Fronttier2')
+            host='localhost', user='root', password='Information5526', database='Fronttier2')
         print("Conectei no banco!")
     except mysql.connector.Error as error:
         if error.errno == errorcode.ER_BAD_DB_ERROR:
