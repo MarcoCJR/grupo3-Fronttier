@@ -1,7 +1,7 @@
 #!/bin/bash
 NC='\033[0m' 
 VERSAO=18
-REPOSITORIO=/etc/resolv.conf
+REPOSITORIO=home/ubuntu/Desktop
 	
 echo "$(tput setaf 52)[Assistente Fronttier]:$(tput setaf 15) Seja bem vindo, usuário. Sou o assistente da Fronttier e vou te auxiliar no processo de instalação! :D ;"
 sleep 1.5
@@ -64,7 +64,7 @@ if [ $? -eq 0 ]
                     echo "$(tput setaf 52)[Assistente Fronttier]:$(tput setaf 15) Pacotes atualizados"
 				fi
 		else 	
-		echo "$(tput setaf 52)[Assistente Fronttier]:$(tput setaf 15)  Você optou por não instalar o ODBC por enquanto, até a próxima então!"
+		echo "$(tput setaf 52)[Assistente Fronttier]:$(tput setaf 15) Você optou por não instalar o ODBC (Saiba que é recomendado para o funcionamento das outras ferramentas)."
 	fi
 fi
 
