@@ -45,7 +45,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="front_dash.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Dashboard - <span id="nomeEmp"></span></span></a>
             </li>
 
             <!-- Divider -->
@@ -259,7 +259,6 @@
                             </div>
                         </li>
 
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -273,8 +272,8 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                <a class="dropdown-item" href="">
+                                    <i onclick="buscarIdEmpres()" class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Perfil
                                 </a>
                                 <a class="dropdown-item" href="#">
@@ -308,7 +307,14 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1> 
+                        
+
+                        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="obterDadosGrafico(1)">Máquina 1</button>
+                        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="obterDadosGrafico(2)">Máquina 2</button>
+                        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="obterDadosGrafico(3)">Máquina 3</button>
+
+                        <span id="fkServidor"></span></span>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-share-alt fa-sm text-white-40"></i> Compartilhar </a>
                     </div>
@@ -586,8 +592,8 @@
     <script src="js/demo/chart-pie-demo.js"></script>
     <script src="js/demo/chart-bar-demo.js"></script>
 
-    <script src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
-    <script src="http://www.chartjs.org/dist/2.7.1/Chart.js"></script>
+    <script src="https://www.chartjs.org/dit/2.8.0/Chart.min.js"></script> 
+     <script src="http://www.chartjs.org/dist/2.7.1/Chart.js"></script> 
     
     <script type="text/javascript" src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script> -->
 
@@ -604,7 +610,7 @@
     <!-- <div class="div_alertaMemoria" id="alerta_memoria">
         <p class="texto_alertaMemoria" id="i_alertaMemoria">
         </p>
-        </div> --> -->
+        </div> --> 
 
 </body>
 
@@ -612,7 +618,8 @@
 
 <script> 
 
-    usuario.innerHTML = sessionStorage.NOME_USUARIO; 
+    usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    nomeEmp.innerHTML = sessionStorage.nomeEmp; 
         
    // Criação gráfico Percentual CPU
 
@@ -621,20 +628,21 @@
     window.onload = obterDadosGrafico(1);
 
 
-    function obterDadosGrafico(idDados) {
-//        alterarTitulo(idDados)
+    function obterDadosGrafico(idServidor) {
+    //        alterarTitulo(idServidor)
 
         if (proximaAtualizacao != undefined) {
             clearTimeout(proximaAtualizacao);
         }
 
-        fetch(`/medidas/ultimas/${idDados}`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidas/ultimas/${idServidor}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     resposta.reverse();
+                    
 
-                    plotarGrafico(resposta, idDados);
+                    plotarGrafico(resposta, idServidor);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -648,10 +656,10 @@
     // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
     // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
     // A função *plotarGrafico* também invoca a função *atualizarGrafico*
-    function plotarGrafico(resposta, idDados) {
+    function plotarGrafico(resposta, idServidor) {
         console.log('iniciando plotagem do gráfico...');
 
-        var dados = {
+        var dadosCpu = {
             labels: [],
             datasets: [
                 {
@@ -670,7 +678,7 @@
 
         // Criação criação gráfico
         
-        var teste = {
+        var dadosFreq = {
             labels: [],
             datasets: [
                 {
@@ -726,11 +734,11 @@
         
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
-            dados.labels.push(registro.horario);
-            dados.datasets[0].data.push(registro.percentualCpu);
+            dadosCpu.labels.push(registro.horario);
+            dadosCpu.datasets[0].data.push(registro.percentualCpu);
             
-            teste.labels.push(registro.horario);
-            teste.datasets[0].data.push(registro.freqAtual);
+            dadosFreq.labels.push(registro.horario);
+            dadosFreq.datasets[0].data.push(registro.freqAtual);
             
             dadosDisco.labels.push(registro.horario);
             dadosDisco.datasets[0].data.push(registro.discoUsado);
@@ -750,50 +758,50 @@
 
         //}
 
-        console.log(JSON.stringify(dados));
+        console.log(JSON.stringify(dadosCpu));
         
-        var graficoPercent =  {
+        var cpuAtual =  {
 
-                responsive: true,
-                animation: { duration: 500 },
-                hoverMode: 'index',
-                stacked: false,
-                title: {
+            responsive: true,
+            animation: { duration: 500 },
+            hoverMode: 'index',
+            stacked: false,
+            title: {
+                display: false,
+                text: 'Dados capturados'
+            },
+            scales: {
+                yAxes: [{
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    id: 'Frequência',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    }
+                }, {
+                    type: 'linear',
                     display: false,
-                    text: 'Dados capturados'
-                },
-                scales: {
-                    yAxes: [{
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                        id: 'Percentual',
-                        ticks: {
-                            beginAtZero: true,
-                            max: 100,
-                            min: 0
-                        }
-                    }, {
-                        type: 'linear',
-                        display: false,
-                        position: 'right',
-                        id: 'Percentual Cpu',
-                        ticks: {
-                            beginAtZero: true,
-                            max: 100,
-                            min: 0
-                        },
+                    position: 'right',
+                    id: 'Frequência',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    },
 
-                        gridLines: {
-                            drawOnChartArea: false,
-                        },
-                    }],
-                }
+                    gridLines: {
+                        drawOnChartArea: false,
+                    },
+                }],
             }
-
+        }
+            
         //   Criação gráfico freq
            
-            var teste1 =  {
+            var freqAtual =  {
 
                 responsive: true,
                 animation: { duration: 500 },
@@ -919,8 +927,8 @@
             // Criação gráfico percentual da CPU
         window.grafico_linha = new Chart (myChartPercent,  {
             type: "line",
-            data: dados,
-            options:graficoPercent
+            data: dadosCpu,
+            options:cpuAtual
         });
             // Finalização do gráfico percentual da CPU
 
@@ -928,48 +936,50 @@
             // Criação gráfico da freq da CPU
         window.grafico_linha2 = new Chart (myChartFreq,  {
             type: "line",
-            data: teste,
-            options:teste1
+            data: dadosFreq,
+            options:freqAtual
         });
-            // Finalização do gráfico da freq da CPU 
 
-        
-            // Criação do gráfico disco
+        // Finalização gráfico freq da cpu
+
+        // Criação gráfico memória
         window.grafico_linha3 = new Chart (myChartDisco,  {
             type: "line",
             data: dadosDisco,
-
             options:discoAtual
         });
-            // Finalização do gráfico disco
-
+        // Finalização gráfico memória
+        
+        // Criação do gráfico disco
+        
+        // Finalização do gráfico disco
+        
         // Criação do gráfico disco
         window.grafico_linha4 = new Chart (myChartMemoria,  {
             type: "line",
             data: dadosMemoria,
             options:memoriaAtual
         });
-            // Finalização do gráfico disco  
+        // Finalização do gráfico disco  
 
 
-        setTimeout(() => atualizarGrafico(idDados, dados, teste, dadosDisco, dadosMemoria), 2000);
+        setTimeout(() => atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria), 2000);
     }
 
- 
-    function atualizarGrafico(idDados, dados, teste, dadosDisco, dadosMemoria) {
+    function atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria) {
 
-        fetch(`/medidas/tempo-real/${idDados}`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidas/tempo-real/${idServidor}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (novoRegistro) {
 
                     console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-                    console.log(`Dados atuais do gráfico: ${dados} e ${teste} e ${dadosDisco} e ${dadosMemoria}`);
+                    console.log(`Dados atuais do gráfico: ${dadosCpu} e ${dadosFreq} e ${dadosDisco} e ${dadosMemoria}`);
 
-                    dados.labels.shift(); 
-                    dados.labels.push(novoRegistro[0].horario); 
+                    dadosCpu.labels.shift(); 
+                    dadosCpu.labels.push(novoRegistro[0].horario); 
                     
-                    dados.datasets[0].data.shift(); 
-                    dados.datasets[0].data.push(novoRegistro[0].percentualCpu); 
+                    dadosCpu.datasets[0].data.shift(); 
+                    dadosCpu.datasets[0].data.push(novoRegistro[0].percentualCpu); 
 
                     // Criando o alerta do percentual da CPU 
                     if(novoRegistro[0].percentualCpu >= 60 && novoRegistro[0].percentualCpu < 80){
@@ -979,7 +989,7 @@
                         alerta_div.style.borderColor = "yellow"
                         i_alerta.innerHTML = "CPU em estado de alerta! Cuidado!"
 
-                        setTimeout(() => sumirMensagem(idDados, dados), 5000);
+                        setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
                     }
 
                     if(novoRegistro[0].percentualCpu >= 80  && novoRegistro[0].percentualCpu  < 90){
@@ -988,7 +998,7 @@
                         alerta_div.style.backgroundColor = "orange"
                         alerta_div.style.borderColor = "orange"
                         i_alerta.innerHTML = "CPU em estado de emergência! Cuidado!"
-                        setTimeout(() => sumirMensagem(idDados, dados), 5000);
+                        setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
                     }
 
                     
@@ -998,21 +1008,18 @@
                         alerta_div.style.backgroundColor = "red"
                         alerta_div.style.borderColor = "red"
                         i_alerta.innerHTML = "CPU em estado crítico! Cuidado!"
-                        setTimeout(() => sumirMensagem(idDados, dados), 5000);
+                        setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
                     }
 
                         
 
-                    teste.labels.shift(); 
-                    teste.labels.push(novoRegistro[0].horario); 
+                    dadosFreq.labels.shift(); 
+                    dadosFreq.labels.push(novoRegistro[0].horario); 
                 
-                    teste.datasets[0].data.shift();
-                    teste.datasets[0].data.push(novoRegistro[0].freqAtual); 
+                    dadosFreq.datasets[0].data.shift();
+                    dadosFreq.datasets[0].data.push(novoRegistro[0].freqAtual); 
                     
-                    // Criando o alerta da frequencial atual da CPU
-                    
-                    
-                    
+                    // Criando o alerta da frequencial atual da CPU    
                     
                     dadosDisco.labels.shift();
                     dadosDisco.labels.push(novoRegistro[0].horario); 
@@ -1027,7 +1034,7 @@
                         alerta_disco.style.backgroundColor = "yellow"
                         alerta_disco.style.borderColor = "yellow"
                         i_alertaDisco.innerHTML = "Disco está em estado de alerta! Cuidado!"
-                        setTimeout(() => sumirMensagem(idDados, dadosDisco), 5000);
+                        setTimeout(() => sumirMensagem(idServidor, dadosDisco), 2000);
                     }
 
                         if(novoRegistro[0].discoUsado >= 220  && novoRegistro[0].discoUsado  < 240){
@@ -1036,7 +1043,7 @@
                         alerta_disco.style.backgroundColor = "orange"
                         alerta_disco.style.borderColor = "orange"
                         i_alertaDisco.innerHTML = "Disco está em estado de emergência! Cuidado!"
-                        setTimeout(() => sumirMensagem(idDados, dadosDisco), 5000);
+                        setTimeout(() => sumirMensagem(idServidor, dadosDisco), 2000);
                     }
    
                     if(novoRegistro[0].discoUsado > 240){
@@ -1045,7 +1052,7 @@
                         alerta_disco.style.backgroundColor = "red"
                         alerta_disco.style.borderColor = "red"
                         i_alertaDisco.innerHTML = "Disco está em estado crítico! Cuidado!"
-                        setTimeout(() => sumirMensagem(idDados, dadosDisco), 5000);
+                        setTimeout(() => sumirMensagem(idServidor, dadosDisco), 2000);
                     }
                  
                     // finalizando alertas do disco
@@ -1063,7 +1070,7 @@
                      alerta_memoria.style.backgroundColor = "yellow"
                      alerta_memoria.style.borderColor = "yellow"
                      i_alertaMemoria.innerHTML = "Memória RAM em estado de alerta! Cuidado!"
-                     setTimeout(() => sumirMensagem(idDados, dadosMemoria), 5000);
+                     setTimeout(() => sumirMensagem(idServidor, dadosMemoria), 2000);
                  }
                      if(novoRegistro[0].memoriaUsada >= 12  && novoRegistro[0].memoriaUsada  < 14){
                     
@@ -1071,7 +1078,7 @@
                      alerta_memoria.style.backgroundColor = "orange"
                      alerta_memoria.style.borderColor = "orange"
                      i_alertaMemoria.innerHTML = "Memória RAM em estado de emergência! Cuidado!"
-                     setTimeout(() => sumirMensagem(idDados, dadosMemoria), 5000);
+                     setTimeout(() => sumirMensagem(idServidor, dadosMemoria), 2000);
                  }
 
                  if(novoRegistro[0].memoriaUsada > 14){
@@ -1080,7 +1087,7 @@
                      alerta_memoria.style.backgroundColor = "red"
                      alerta_memoria.style.borderColor = "red"
                      i_alertaMemoria.innerHTML = "Memória RAM em estado crítico! Cuidado!"
-                     setTimeout(() => sumirMensagem(idDados, dadosMemoria), 5000);
+                     setTimeout(() => sumirMensagem(idServidor, dadosMemoria), 2000);
                  }
                     
 
@@ -1099,11 +1106,11 @@
                // i_alertaMemoria.style.display = "none"
             }
 
-                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idDados, dados, teste, dadosDisco, dadosMemoria), 5000);
+                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria), 2000);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
-                proximaAtualizacao = setTimeout(() => atualizarGrafico(idDados, dados, teste, dadosDisco, dadosMemoria), 5000);
+                proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria), 2000);
             }
         })
             .catch(function (error) {

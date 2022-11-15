@@ -7839,9 +7839,14 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
     margin-right: 0 !important
 }
 
-.mb-0, .my-0 {
-    margin-bottom: 0 !important
+.mb, .my-0 {
+    margin-bottom: 0 !important;
+    
 }
+/* #mb_teste{
+    color: red;
+    font-size: 13px;
+} */
 
 .ml-0, .mx-0 {
     margin-left: 0 !important
@@ -11639,9 +11644,8 @@ body.sidebar-toggled footer.sticky-footer {
     border: 1px solid rgba(254, 185, 0, 1);
     border-radius: 40px;
     box-shadow: 2px 2px 2px rgb(189, 188, 188);
-  }
-  
-  
+  } 
+    
   @media (max-width: 992px) {
     .alert-validate::before {
       visibility: visible;
@@ -11649,3 +11653,23 @@ body.sidebar-toggled footer.sticky-footer {
     }
   }
   /* Fim do Modal */
+
+  /* Btn maquina */
+  .btn-chart {
+    font-family: "Exo 2", sans-serif;
+    border: 0;
+    font-weight: 600;
+    font-size: 14px;
+    color: #4e73df;
+    /* padding: 10px 15px; */
+    background-color:transparent;
+    /* margin: 5px; */
+    border-radius: 4px;
+    /* font-weight: 400; */
+    /* line-height: 1.2; */
+  }
+
+  .btn-chart:hover{
+    background-color: #858796;
+  }
+  

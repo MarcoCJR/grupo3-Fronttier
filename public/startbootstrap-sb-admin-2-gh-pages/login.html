@@ -42,7 +42,12 @@
                                         <h1 class="h4 text-gray-900 mb-4">Bem-Vindo de volta!</h1>
                                     </div>
                                     <div class="user">
-
+                                        
+                                        <div class="form-group">
+                                            <input type="" class="form-control form-control-user" id="nomeEmp_input"
+                                                aria-describedby="emailHelp" placeholder="Insira o nome de sua empresa!">
+                                        </div>
+                                        
 
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" id="email_input"
@@ -125,11 +130,12 @@
         const modal_container = document.getElementById('modal_container');
         const close = document.getElementById('close');
 
+        var nomeVar = document.getElementById("nomeEmp_input").value;
         var emailVar = document.getElementById('email_input').value;
         var senhaVar = document.getElementById('senha_input').value;
 
 
-        if (emailVar == "" || senhaVar == "") {
+        if (nomeVar == "" || emailVar == "" || senhaVar == "") {
 
             titulo_m.innerHTML = `Preencha todos os campos para prosseguir.`
 
@@ -152,8 +158,10 @@
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
+                nomeEmpServer: nomeVar,
                 emailServer: emailVar,
-                senhaServer: senhaVar,
+                senhaServer: senhaVar
+                
             })
 
         }).then(function (resposta) {
@@ -168,10 +176,10 @@
 
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.COD_EMPRESA = json.codigoSegurancaVar;
+                    sessionStorage.COD_EMPRESA = json.fkCodEmpresa;
                     sessionStorage.permissaoUser = json.fkPermissao
-
                     permissao = sessionStorage.permissaoUser = json.fkPermissao
+                    sessionStorage.nomeEmp = json.nomeEmpresa
 
                     titulo_m.innerHTML = `Login realizado com sucesso!`
 
@@ -199,15 +207,53 @@
                     }
 
 
-                    if (sessionStorage.permissaoUser == 3) {
+                    if (sessionStorage.permissaoUser == 3 && sessionStorage.COD_EMPRESA == 1000) {
                         setTimeout(function () {
 
-                            window.location = "front_dash.html";
+                            window.location = "telaCadastroTec.html";
                         }, 2000);
-                    }
+                    
+                    
+                    }else if ( sessionStorage.permissaoUser == 3 && sessionStorage.COD_EMPRESA != 'null'){
+                            
+                            setTimeout(function () {
+                            window.location = "front_dash.html"
+                          }, 2000);
+                        
+                        /* sessionStorage.nomeEmp = json.nomeEmpresa
+                                       
+                        fetch("/usuarios/nomeEmpresa", {
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                              fkcodEmpresaServer: sessionStorage.COD_EMPRESA,
+                            })
+                          }).then(function (resposta) {
+                            console.log("ESTOU NO THEN DO entrar()!")
+            
+                            if (resposta.ok) {
+                              console.log(resposta);
+            
+                              resposta.json().then(json => {
+                                console.log(json);
+                                console.log(JSON.stringify(json));
+                                
+                                sessionStorage.nomeEmp = json.nomeEmpresa
+                                
+                                
+                                setTimeout(function () {
+                                  window.location = "front_dash.html"
+                                }, 2000); // apenas para exibir o loading
+                              });
+                            
+                        
+                            }
+
 
                 });
-
+                */
             } else {
 
                 titulo_m.innerHTML = `Email ou senha inválidos!`
@@ -224,6 +270,13 @@
         }).catch(function (erro) {
             console.log(erro);
         })
+
+    }    
+    
+    }).catch(function (erro) {
+    console.log(erro);
+    })   
+
 
         return false;
 

@@ -1,10 +1,13 @@
 from datetime import datetime
+from re import S
 import psutil
-import mysql.connector
 import time 
+import mysql.connector
 from mysql.connector import errorcode
 
-while True:
+i = 0
+while (i < 2000):
+    i+=1
 
     try:
         db_connection = mysql.connector.connect(
@@ -19,7 +22,8 @@ while True:
            print(error) 
            
            
-           
+    
+            
     
     
     # psutil.cpu_percent()
@@ -71,17 +75,20 @@ while True:
     
     cursor = db_connection.cursor()
     
-    sql = "INSERT INTO dados(dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (%s,%s,%s,%s,%s)"
-    values = [dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada]
+    # select = "select * from maquinaServidor where idServidor;"
+    # cursor.execute(select)
+    fkServidor = 3
+    sql = "INSERT INTO dados(fkServidor, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (%s,%s,%s,%s,%s,%s)"
+    values = [fkServidor, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada]
     cursor.execute(sql, values)
 
-    sql = "INSERT INTO dados(dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (%s,%s,%s,%s,%s)"
-    values = [dataHora, freqAtual, percentualCpu2, discoUsado2, memoriaUsada2]
-    cursor.execute(sql, values)
+    # sql = "INSERT INTO dados(dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (%s,%s,%s,%s,%s)"
+    # values = [dataHora, freqAtual, percentualCpu2, discoUsado2, memoriaUsada2]
+    # cursor.execute(sql, values)
 
-    sql = "INSERT INTO dados(dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (%s,%s,%s,%s,%s)"
-    values = [dataHora, freqAtual, percentualCpu3, discoUsado3, memoriaUsada3]
-    cursor.execute(sql, values)
+    # sql = "INSERT INTO dados(dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (%s,%s,%s,%s,%s)"
+    # values = [dataHora, freqAtual, percentualCpu3, discoUsado3, memoriaUsada3]
+    # cursor.execute(sql, values)
 
     
     print("\n")
@@ -89,4 +96,4 @@ while True:
 
     db_connection.commit()
     db_connection.close()    
-    time.sleep(2.0)
+    time.sleep(0.1)

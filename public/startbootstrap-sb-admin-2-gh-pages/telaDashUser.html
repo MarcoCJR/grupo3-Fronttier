@@ -45,7 +45,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index_dash.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Dashboard - <span id="nomeEmp"></span></span></a>
             </li>
 
             <!-- Divider -->
@@ -507,4 +507,5 @@
 </html> 
 <script>
     usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    nomeEmp.innerHTML = sessionStorage.nomeEmp
 </script>

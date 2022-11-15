@@ -71,13 +71,12 @@ while True:
 
         dataHora = datetime.now()
         formatoh = dataHora.strftime("%d/%m/%Y %H:%M:%S")
-
-
+        
 
         cursor = conn.cursor()
-
-        sql = "INSERT INTO [dados] (dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (?,?,?,?,?)"
-        values = [dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada]
+        fkServidor = 5
+        sql = "INSERT INTO [dados] (fkServidor, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (?,?,?,?,?)"
+        values = [fkServidor, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada]
         cursor.execute(sql, values)
 
 

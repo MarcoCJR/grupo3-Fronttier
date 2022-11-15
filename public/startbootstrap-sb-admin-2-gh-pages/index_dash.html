@@ -17,7 +17,7 @@
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        href="https://fonts.googleapnbis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
@@ -35,7 +35,8 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.html">
-                <div class="sidebar-brand-text mx-3"><img src="../assets/img/logo-light.png" style="width:100%; height: 100%;"></div>
+                <div class="sidebar-brand-text mx-3"><img src="../assets/img/logo-light.png"
+                        style="width:100%; height: 100%;"></div>
             </a>
 
             <!-- Divider -->
@@ -45,7 +46,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index_dash.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Dashboard - <span id="nomeEmp"></span></span></a>
             </li>
 
             <!-- Divider -->
@@ -192,8 +193,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -203,23 +203,23 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
-                                        <div class="text-truncate">Eu tenho os dados que você me pediu mês passado, como prefere recebe-los?</div>
+                                        <div class="text-truncate">Eu tenho os dados que você me pediu mês passado, como
+                                            prefere recebe-los?</div>
                                         <div class="small text-gray-500">Gian Silva · 1d</div>
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
-                                        <div class="text-truncate">Adorei o relatório do mês passado, Continue com o bom trabalho!</div>
+                                        <div class="text-truncate">Adorei o relatório do mês passado, Continue com o bom
+                                            trabalho!</div>
                                         <div class="small text-gray-500">Julia Tonini · 2d</div>
                                     </div>
                                 </a>
@@ -231,7 +231,8 @@
                                     </div>
                                     <div>
                                         <div class="text-truncate">Eu sou um bom garoto? Estou perguntando porque alguém
-                                            me disse que as pessoas dizem isso para todos os cachorros, memso quando eles não são..</div>
+                                            me disse que as pessoas dizem isso para todos os cachorros, memso quando
+                                            eles não são..</div>
                                         <div class="small text-gray-500">Pulguento · 2s</div>
                                     </div>
                                 </a>
@@ -246,8 +247,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="usuario">usuario</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -302,7 +302,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Frequência da CPU</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">gHz</div>
+                                            <div id="freq_cpu" class="mb font-weight-bold text-gray-800">GHZ</div>
                                         </div>
                                         <!-- <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -320,10 +320,10 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Uso da CPU</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> %</div>
+                                            <div id= "uso_cpu"class="h5 mb-0 font-weight-bold text-gray-800"> %</div>
                                         </div>
                                         <div class="col-auto">
-                                           <!-- <i class="fas fa-dollar-sign fa-2x text-gray-300"></i> -->
+                                            <!-- <i class="fas fa-dollar-sign fa-2x text-gray-300"></i> -->
                                         </div>
                                     </div>
                                 </div>
@@ -336,19 +336,20 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Disco Usado
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Disco
+                                                Usado
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">%</div>
+                                                    <div id="disco_usado" class="h5 mb-0 mr-3 font-weight-bold text-gray-800">%</div>
                                                 </div>
-                                                <div class="col">
+                                                <!-- <div class="col">
                                                     <div class="progress progress-sm mr-2">
                                                         <div class="progress-bar bg-info" role="progressbar"
                                                             style="width: 47%" aria-valuenow="50" aria-valuemin="0"
                                                             aria-valuemax="100"></div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -367,7 +368,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Memória Usada</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">%</div>
+                                            <div id="memoria_usada" class="h5 mb-0 font-weight-bold text-gray-800">%</div>
                                         </div>
                                         <div class="col-auto">
                                             <!-- <i class="fas fa-comments fa-2x text-gray-300"></i> -->
@@ -401,8 +402,8 @@
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
                                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">Disco Usado<span
-                                            class="float-right">120Gb</span></h4>
+                                    <h4 class="small font-weight-bold">Disco Usado<span class="float-right">120Gb</span>
+                                    </h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar" role="progressbar" style="width: 60%"
                                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
@@ -503,11 +504,56 @@
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
     <script src="js/demo/chart-bar-demo.js"></script>
-    <div id="teste"></div>
+    <!-- <div id="teste"></div> -->
 
 </body>
 
-</html> 
+</html>
 <script>
+
     usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    nomeEmp.innerHTML = sessionStorage.nomeEmp
+
+    let proximaAtualizacao;
+
+    window.onload = obterFrequencia(1);
+
+    var testeFreq = mb_teste.innerHTML = ""
+
+    function obterFrequencia(idDados) {
+
+        fetch(`/medidas/ultimasFreq/${idDados}`, { cache: 'no-store' }).then(function (response) {
+
+
+            if (response.ok) {
+                response.json().then(function (resposta) {
+
+                    console.log(`DADOS: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+
+                    console.log("RESPOSTA ABREVIADA", resposta[0].freqAtual)
+
+                    console.log("RESPOSTA ABREVIADA", resposta[0].percentualCpu)
+
+                    freq_cpu.innerHTML = `${resposta[0].freqAtual} GHZ`
+                    uso_cpu.innerHTML = `${resposta[0].percentualCpu}%`
+                    disco_usado.innerHTML = `${resposta[0].discoUsado} GB`
+                    memoria_usada.innerHTML = `${resposta[0].memoriaUsada} GB`
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+
+        }).catch(erro => {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        })
+
+
+    }
+
+
+
+
+
 </script>

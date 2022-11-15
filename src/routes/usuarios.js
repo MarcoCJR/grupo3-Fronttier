@@ -28,6 +28,16 @@ router.post("/cadastrarUserDash", function (req, res) {
     usuarioController.cadastrarUserDash(req, res);
 })
 
+
+router.post("/cadastrarTecnico", function (req, res) {
+    usuarioController.cadastrarTecnico(req, res);
+})
+
+
+router.post("/nomeEmpresa", function (req, res) {
+    usuarioController.nomeEmpresa(req, res);
+})
+
 router.post("/autenticar", function (req, res) {
     usuarioController.entrar(req, res);
 });
