@@ -21,11 +21,11 @@ from mysql.connector import errorcode
 # password='#Gfgrupo3' 
 
 try:
-        conn = pyodbc.connect(driver='{SQL Server}', host='grupo-fronttier3.database.windows.net',
+        conn = pyodbc.connect(driver='{ODBC Driver 17 for SQL Server}', host='grupo-fronttier3.database.windows.net',
                         database='Fronttier', user='Fronttier3', password='#Gfgrupo3')
         print("Conectei no banco! (Azure)")
         db_connection = mysql.connector.connect(
-                host='localhost', user='aluno', password='sptech', database='Fronttier2')
+                host='localhost', user='root', password='sptech@02', database='fronttier2')
         print("Conectei no banco! (Local)")
 except mysql.connector.Error as error:
         if error.errno == errorcode.ER_BAD_DB_ERROR:

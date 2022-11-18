@@ -11,7 +11,7 @@ while (i < 2000):
 
     try:
         db_connection = mysql.connector.connect(
-            host='localhost', user='root', password='Information5526', database='Fronttier2')
+            host='localhost', user='root', password='sptech@02', database='Fronttier2')
         print("Conectei no banco!")
     except mysql.connector.Error as error:
         if error.errno == errorcode.ER_BAD_DB_ERROR:
@@ -77,7 +77,7 @@ while (i < 2000):
     
     # select = "select * from maquinaServidor where idServidor;"
     # cursor.execute(select)
-    fkServidor = 3
+    fkServidor = 1
     sql = "INSERT INTO dados(fkServidor, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (%s,%s,%s,%s,%s,%s)"
     values = [fkServidor, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada]
     cursor.execute(sql, values)
