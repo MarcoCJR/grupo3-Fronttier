@@ -307,12 +307,12 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard - 1</h1> 
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard - 2</h1> 
                         
 
-                        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="atualizarGrafico(1)">Máquina 1</button>
-                        <a href="maquina2.html"><button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Máquina 2</button></a>
-                        <a href="maquina3.html"><button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Máquina 3</button></a>
+                       <a href="front_dash.html"><button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Máquina 1</button></a>
+                        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="atualizarGrafico(2)">Máquina 2</button>
+                       <a href="maquina3.html"><button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Máquina 3</button></a>
 
                         <span id="fkServidor"></span></span>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
@@ -625,7 +625,7 @@
 
     let proximaAtualizacao;
 
-    window.onload = obterDadosGrafico(8);
+    window.onload = obterDadosGrafico(2);
     
 
     function obterDadosGrafico(idServidor) {
@@ -967,7 +967,7 @@
     }
       
 
-    window.onload = atualizarGrafico(8);
+    window.onload = atualizarGrafico(2);
     
     function atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria) {
 
@@ -1123,10 +1123,14 @@
 
     }
     
-
-
-
     
     // Final da criação do gráfico da CPU 
+
+    // teste 
+
+
+
+
+
 
 </script>

@@ -1,5 +1,8 @@
 var medidaModel = require("../models/medidaModel");
 
+
+// Maquina 1 
+
 function buscarUltimasMedidas(req, res) {
 
     const limite_linhas = 7;
@@ -41,6 +44,12 @@ function buscarMedidasEmTempoReal(req, res) {
     }); 
 
 }
+
+// Fim maquina 1  
+
+// Maquina 2 
+
+
 
 
 // Criando medidas Freq
