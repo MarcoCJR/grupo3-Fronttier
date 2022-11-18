@@ -10,8 +10,10 @@ function buscarUltimasMedidas(idServidor, limite_linhas) {
                         freqAtual, 
                         discoUsado,
                         memoriaUsada,
+                        dataHora,
                         CONVERT(varchar, dataHora, 108) as horario
                         from dados 
+                        where fkServidor = ${idServidor}
                     order by idDados desc`;
 
     } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
@@ -21,7 +23,8 @@ function buscarUltimasMedidas(idServidor, limite_linhas) {
         discoUsado,
         memoriaUsada,
                         dataHora,
-                        DATE_FORMAT(dataHora,'%H:%i:%s') as horario
+                        DATE_FORMAT(dataHora,'%H:%i:%s') as horario,
+                        fkServidor
                     from dados
                     where fkServidor = ${idServidor} 
                     order by idDados desc limit ${limite_linhas}`;
@@ -45,9 +48,12 @@ function buscarMedidasEmTempoReal(idServidor) {
                         percentualCpu,
                         freqAtual,
                         discoUsado,
-                        memoriaUsada, 
-                             CONVERT(varchar, dataHora, 108) as horario
+                        memoriaUsada,
+                        dataHora, 
+                             CONVERT(varchar, dataHora, 108) as horario,
+                             fkServidor
                         from dados 
+                        where fkServidor = ${idServidor}
                     order by idDados desc`;
 
     } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
@@ -57,7 +63,8 @@ function buscarMedidasEmTempoReal(idServidor) {
         discoUsado,
         memoriaUsada,
                     dataHora,
-                        DATE_FORMAT(dataHora,'%H:%i:%s') as horario
+                        DATE_FORMAT(dataHora,'%H:%i:%s') as horario,
+                        fkservidor 
                         from dados
                         where fkServidor = ${idServidor}
                     order by idDados desc limit 1`;
@@ -81,12 +88,24 @@ function buscarMedidasEmTempoReal(idServidor) {
 
 
 
-function buscarMedidas(idAquario) {
+function buscarMedidas(idServidor) {
 
     instrucaoSql = ''
 
     if (process.env.AMBIENTE_PROCESSO == "producao") {
-        instrucaoSql = ``;
+        instrucaoSql = `
+        select  
+        percentualCpu,
+        freqAtual,
+        discoUsado,
+        memoriaUsada,
+                    dataHora,
+                        DATE_FORMAT(dataHora,'%H:%i:%s') as horario,
+                        fkservidor 
+                        from dados
+                        where fkServidor = ${idServidor}
+                    order by idDados desc limit 1
+        `;
 
     } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
         instrucaoSql = `select 

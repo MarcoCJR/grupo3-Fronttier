@@ -77,6 +77,7 @@ while True:
 #     discoUsado3 = round(discoTotal * percentualDisco3,2)
                 # discoLivre3 = discoTotal - discoUsado3
 
+ 
 #     memoriaUsada2 = round(memoriaTotal * percentualMemoria2,2)
                 # memoriaLivre2 = memoriaTotal - memoriaUsada2
 #     memoriaUsada3 = round(memoriaTotal * percentualMemoria3,2)
