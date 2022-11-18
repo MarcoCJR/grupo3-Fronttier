@@ -311,20 +311,11 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
 
-<<<<<<< HEAD
 
-                        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-                            onclick="obterDadosGrafico(1)">Máquina 1</button>
-                        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-                            onclick="obterDadosGrafico(2)">Máquina 2</button>
-                        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-                            onclick="obterDadosGrafico(3)">Máquina 3</button>
-=======
                         <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="atualizarGrafico(1)">Máquina 1</button>
                         <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="atualizarGrafico(2)">Máquina 2</button>
                         <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="atualizarGrafico(3)">Máquina 3</button>
->>>>>>> 071358e078430e39b04954c2b9af859cd95b5093
-
+                        
                         <span id="fkServidor"></span></span>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-share-alt fa-sm text-white-40"></i> Compartilhar </a>
@@ -983,14 +974,9 @@
     
 
     function atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria) {
-<<<<<<< HEAD
         let componente = ""
         let frase = ""
         let metrica = ""
-=======
-
-
->>>>>>> 071358e078430e39b04954c2b9af859cd95b5093
         fetch(`/medidas/tempo-real/${idServidor}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (novoRegistro) {
@@ -998,20 +984,11 @@
                     console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
                     console.log(`Dados atuais do gráfico: ${dadosCpu} e ${dadosFreq} e ${dadosDisco} e ${dadosMemoria}`);
 
-<<<<<<< HEAD
                     dadosCpu.labels.shift();
                     dadosCpu.labels.push(novoRegistro[0].horario);
 
                     dadosCpu.datasets[0].data.shift();
                     dadosCpu.datasets[0].data.push(novoRegistro[0].percentualCpu);
-=======
-                    
-                    dadosCpu.labels.shift(); 
-                    dadosCpu.labels.push(novoRegistro[0].horario); 
-                    
-                    dadosCpu.datasets[0].data.shift(); 
-                    dadosCpu.datasets[0].data.push(novoRegistro[0].percentualCpu); 
->>>>>>> 071358e078430e39b04954c2b9af859cd95b5093
 
                     // Criando o alerta do percentual da CPU 
                     if (novoRegistro[0].percentualCpu >= 60 && novoRegistro[0].percentualCpu < 80) {
@@ -1179,14 +1156,9 @@
                     window.grafico_linha3.update();
                     window.grafico_linha4.update();
 
-<<<<<<< HEAD
 
 
 
-=======
-                   
-                    
->>>>>>> 071358e078430e39b04954c2b9af859cd95b5093
                     function sumirMensagem() {
                         alerta_div.style.display = "none"
                         // i_alerta.style.display = "none"
@@ -1231,15 +1203,4 @@
 
     // Final da criação do gráfico da CPU 
 
-<<<<<<< HEAD
 </script>
-=======
-    // teste 
-
-
-
-
-
-
-</script>
->>>>>>> 071358e078430e39b04954c2b9af859cd95b5093
