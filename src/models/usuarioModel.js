@@ -97,8 +97,17 @@ function cadastrarM(fkCodEmpresa, serial, linha, coluna) {
     var instrucao = `
         INSERT INTO MaquinaServidor (fkCodEmpresa, numeroSerial, posicaoLinha, posicaoColuna) VALUES (${fkCodEmpresa}, '${serial}', ${linha}, ${coluna});
     `;
+    
     console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
+    database.executar(instrucao);
+    
+
+    var instrucao = `
+        INSERT INTO Metrica (Teste) VALUES ('teste');
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    database.executar(instrucao);
 }
 
 module.exports = {

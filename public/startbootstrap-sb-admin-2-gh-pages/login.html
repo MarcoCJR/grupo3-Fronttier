@@ -42,12 +42,13 @@
                                         <h1 class="h4 text-gray-900 mb-4">Bem-Vindo de volta!</h1>
                                     </div>
                                     <div class="user">
-                                        
+
                                         <div class="form-group">
                                             <input type="" class="form-control form-control-user" id="nomeEmp_input"
-                                                aria-describedby="emailHelp" placeholder="Insira o nome de sua empresa!">
+                                                aria-describedby="emailHelp"
+                                                placeholder="Insira o nome de sua empresa!">
                                         </div>
-                                        
+
 
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" id="email_input"
@@ -161,7 +162,7 @@
                 nomeEmpServer: nomeVar,
                 emailServer: emailVar,
                 senhaServer: senhaVar
-                
+
             })
 
         }).then(function (resposta) {
@@ -212,14 +213,14 @@
 
                             window.location = "telaCadastroTec.html";
                         }, 2000);
-                    
-                    
-                    }else if ( sessionStorage.permissaoUser == 3 && sessionStorage.COD_EMPRESA != 'null'){
-                            
-                            setTimeout(function () {
+
+
+                    } else if (sessionStorage.permissaoUser == 3 && sessionStorage.COD_EMPRESA != 'null') {
+
+                        setTimeout(function () {
                             window.location = "front_dash.html"
-                          }, 2000);
-                        
+                        }, 2000);
+
                         /* sessionStorage.nomeEmp = json.nomeEmpresa
                                        
                         fetch("/usuarios/nomeEmpresa", {
@@ -254,6 +255,12 @@
 
                 });
                 */
+                    }
+
+                }).catch(function (erro) {
+                    console.log(erro);
+                })
+
             } else {
 
                 titulo_m.innerHTML = `Email ou senha inválidos!`
@@ -270,12 +277,6 @@
         }).catch(function (erro) {
             console.log(erro);
         })
-
-    }    
-    
-    }).catch(function (erro) {
-    console.log(erro);
-    })   
 
 
         return false;
