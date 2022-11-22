@@ -1303,8 +1303,8 @@ pre code {
     }
 
     .col-lg-5 {
-        flex: 0 0 41.66667%;
-        max-width: 41.66667%
+        flex: 0 0 50%;
+        max-width: 50%
     }
 
     .col-lg-6 {
@@ -1314,7 +1314,7 @@ pre code {
 
     .col-lg-7 {
         flex: 0 0 58.33333%;
-        max-width: 58.33333%
+        max-width: 50.33333%
     }
 
     .col-lg-8 {
@@ -8053,7 +8053,8 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 }
 
 .p-5 {
-    padding: 3rem !important
+    padding: 3rem !important;
+    width: 110%;
 }
 
 .p-5 input {
@@ -11683,4 +11684,13 @@ body.sidebar-toggled footer.sticky-footer {
 
   .teste {
     background-color: purple;
+  }
+
+  .pipe {
+    background-color: #E13131;
+    height: 600px;
+    width: 2px;
+    margin-top: 40px;
+    margin-left: 12px;
+    border-radius: 10px;
   }

@@ -1,93 +1,117 @@
 <!DOCTYPE html>
 <html lang="pt">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
     <title>Fronttier | Maquina</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+      href="vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+  </head>
 
-</head>
-
-<body class="bg-gray-600">
-
+  <body class="bg-gray-600">
     <div class="container">
-
-        <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="card-body p-0">
-                <!-- Nested Row within Card Body -->
-                <div class="row justify-content-center">
-                    <div class="col-lg-7">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Nova Maquina</h1>
-                            </div>
-                            <div class="user">
-                                <div class="form-group">
-                                    <h5>Código da Empresa</h5>
-                                    <input type="password" class="form-control form-control-user" id="fkCodEmpresa"
-                                        placeholder="5432" maxlength="4">
-                                </div>
-                                <div class="form-group">
-                                    <h5>Número de Série</h5>
-                                    <input type="number" class="form-control form-control-user" id="numSerie"
-                                        placeholder="9999999">
-                                </div>
-                                <hr>
-                                <h5>Posição</h5>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="number" class="form-control form-control-user" id="posicao_linha"
-                                            placeholder="Linha">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="number" class="form-control form-control-user" id="posicao_coluna"
-                                            placeholder="Coluna">
-                                    </div>
-                                </div>
-                                <hr class="linha">
-
-                                <div class="teste">
-                            L
-                                </div>
-
-                                <hr>
-
-                                <a class="btn btn-primary btn-user btn-block" onclick="cadastrarM()">
-                                    Cadastrar Máquina
-                                </a>
-                            </div>
-                            <hr>
-                            <div class="text-center">
-                                <a class="small" href="front_dash.html">Voltar</a>
-                            </div>
-                        </div>
-                    </div>
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+          <!-- Nested Row within Card Body -->
+          <div class="row">
+            <div class="col-lg-7">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-4">Nova Maquina</h1>
                 </div>
-            </div>
-        </div>
+                <div class="user">
+                  <div class="form-group">
+                    <h5>Código da Empresa</h5>
+                    <input
+                      type="password"
+                      class="form-control form-control-user"
+                      id="fkCodEmpresa"
+                      placeholder="5432"
+                      maxlength="4"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <h5>Número de Série</h5>
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="numSerie"
+                      placeholder="9999999"
+                    />
+                  </div>
+                  <hr />
+                  <h5>Posição</h5>
+                  <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <input
+                        type="number"
+                        class="form-control form-control-user"
+                        id="posicao_linha"
+                        placeholder="Linha"
+                      />
+                    </div>
+                    <div class="col-sm-6">
+                      <input
+                        type="number"
+                        class="form-control form-control-user"
+                        id="posicao_coluna"
+                        placeholder="Coluna"
+                      />
+                    </div>
+                  </div>
+                  <hr class="linha" />
 
+                  <div class="teste">L</div>
+
+                  <hr />
+
+                  <a
+                    class="btn btn-primary btn-user btn-block"
+                    onclick="cadastrarM()"
+                  >
+                    Cadastrar Máquina
+                  </a>
+                </div>
+                <hr />
+                <div class="text-center">
+                  <a class="small" href="front_dash.html">Voltar</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="pipe">
+
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="modal-containerL" id="modal_container">
-        <div class="modalL">
-            <h2 id="titulo_m"></h2>
-            <p id="p_msg"></p>
-        </div>
-        <button class="button1L" id="close">X</button>
+      <div class="modalL">
+        <h2 id="titulo_m"></h2>
+        <p id="p_msg"></p>
+      </div>
+      <button class="button1L" id="close">X</button>
     </div>
 
     <!-- Bootstrap core JavaScript-->
@@ -99,91 +123,82 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
-</body>
-
+  </body>
 </html>
 <script>
+  function cadastrarM() {
+    const open = document.getElementById("open");
+    const modal_container = document.getElementById("modal_container");
+    const close = document.getElementById("close");
 
-    function cadastrarM() {
+    //Recupere o valor da nova input pelo nome do id
+    // Agora vá para o método fetch logo abaixo
+    var fkCodEmpresaVar = document.getElementById("fkCodEmpresa").value;
+    var serialVar = document.getElementById("numSerie").value;
+    var linhaVar = document.getElementById("posicao_linha").value;
+    var colunaVar = document.getElementById("posicao_coluna").value;
 
-        const open = document.getElementById('open');
-        const modal_container = document.getElementById('modal_container');
-        const close = document.getElementById('close');
+    if (
+      fkCodEmpresaVar == "" ||
+      serialVar == "" ||
+      linhaVar == "" ||
+      colunaVar == ""
+    ) {
+      titulo_m.innerHTML = `Preencha todos os campos para prosseguir.`;
 
-        //Recupere o valor da nova input pelo nome do id
-        // Agora vá para o método fetch logo abaixo
-        var fkCodEmpresaVar = document.getElementById('fkCodEmpresa').value;
-        var serialVar = document.getElementById('numSerie').value;
-        var linhaVar = document.getElementById('posicao_linha').value;
-        var colunaVar = document.getElementById('posicao_coluna').value;
+      modal_container.classList.add("show");
 
-        if (fkCodEmpresaVar == "" || serialVar == "" || linhaVar == "" || colunaVar == "") {
-
-            titulo_m.innerHTML = `Preencha todos os campos para prosseguir.`
-
-
-            modal_container.classList.add('show');
-
-
-            close.addEventListener('click', () => {
-                modal_container.classList.remove('show');
-            });
-            return false;
-        }
-        /* else {
+      close.addEventListener("click", () => {
+        modal_container.classList.remove("show");
+      });
+      return false;
+    }
+    /* else {
             setInterval(sumirMensagem, 5000)
         } */
 
-        // Enviando o valor da nova input
-        fetch("/usuarios/cadastrarM", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                // crie um atributo que recebe o valor recuperado aqui
-                // Agora vá para o arquivo routes/usuario.js
-                fkCodEmpresaServer: fkCodEmpresaVar,
-                serialServer: serialVar,
-                linhaServer: linhaVar,
-                colunaServer: colunaVar
-            })
-        }).then(function (resposta) {
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrarM", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        fkCodEmpresaServer: fkCodEmpresaVar,
+        serialServer: serialVar,
+        linhaServer: linhaVar,
+        colunaServer: colunaVar,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
 
-            console.log("resposta: ", resposta);
+        if (resposta.ok) {
+          // card_erro.style.display = "block";
 
-            if (resposta.ok) {
-                // card_erro.style.display = "block";
+          titulo_m.innerHTML = `Máquina cadastrada com sucesso!`;
 
-                titulo_m.innerHTML = `Máquina cadastrada com sucesso!`
+          modal_container.classList.add("show");
 
+          close.addEventListener("click", () => {
+            modal_container.classList.remove("show");
+          });
+        } else {
+          titulo_m.innerHTML = `O código da empresa está incorreto!`;
 
-                modal_container.classList.add('show');
+          modal_container.classList.add("show");
 
+          close.addEventListener("click", () => {
+            modal_container.classList.remove("show");
+          });
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
 
-                close.addEventListener('click', () => {
-                    modal_container.classList.remove('show');
-                });
-
-            } else {
-                titulo_m.innerHTML = `O código da empresa está incorreto!`
-
-
-            modal_container.classList.add('show');
-
-
-            close.addEventListener('click', () => {
-                modal_container.classList.remove('show');
-            });
-            }
-        }).catch(function (resposta) {
-            console.log(`#ERRO: ${resposta}`);
-        });
-
-        return false;
-    }
-
-
-
+    return false;
+  }
 </script>
