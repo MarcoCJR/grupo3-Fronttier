@@ -1,129 +1,124 @@
 <!DOCTYPE html>
 <html lang="pt">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <title>Fronttier | Maquina</title>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
 
-    <!-- Custom fonts for this template-->
-    <link
-      href="vendor/fontawesome-free/css/all.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet"
-    />
+  <title>Fronttier | Maquina</title>
 
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
-  </head>
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet" />
 
-  <body class="bg-gray-600">
-    <div class="container">
-      <div class="card o-hidden border-0 shadow-lg my-5">
-        <div class="card-body p-0">
-          <!-- Nested Row within Card Body -->
-          <div class="row">
-            <div class="col-lg-7">
-              <div class="p-5">
-                <div class="text-center">
-                  <h1 class="h4 text-gray-900 mb-4">Nova Maquina</h1>
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-gray-600">
+  <div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+          <div class="col-lg-7">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Nova Maquina</h1>
+              </div>
+              <div class="user">
+                <div class="form-group">
+                  <h5>Código da Empresa</h5>
+                  <input type="password" class="form-control form-control-user" id="fkCodEmpresa" placeholder="5432"
+                    maxlength="4" />
                 </div>
-                <div class="user">
-                  <div class="form-group">
-                    <h5>Código da Empresa</h5>
-                    <input
-                      type="password"
-                      class="form-control form-control-user"
-                      id="fkCodEmpresa"
-                      placeholder="5432"
-                      maxlength="4"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <h5>Número de Série</h5>
-                    <input
-                      type="number"
-                      class="form-control form-control-user"
-                      id="numSerie"
-                      placeholder="9999999"
-                    />
-                  </div>
-                  <hr />
-                  <h5>Posição</h5>
-                  <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
-                      <input
-                        type="number"
-                        class="form-control form-control-user"
-                        id="posicao_linha"
-                        placeholder="Linha"
-                      />
-                    </div>
-                    <div class="col-sm-6">
-                      <input
-                        type="number"
-                        class="form-control form-control-user"
-                        id="posicao_coluna"
-                        placeholder="Coluna"
-                      />
-                    </div>
-                  </div>
-                  <hr class="linha" />
-
-                  <div class="teste">L</div>
-
-                  <hr />
-
-                  <a
-                    class="btn btn-primary btn-user btn-block"
-                    onclick="cadastrarM()"
-                  >
-                    Cadastrar Máquina
-                  </a>
+                <div class="form-group">
+                  <h5>Número de Série</h5>
+                  <input type="number" class="form-control form-control-user" id="numSerie" placeholder="9999999" />
                 </div>
                 <hr />
-                <div class="text-center">
-                  <a class="small" href="front_dash.html">Voltar</a>
+                <h5>Posição</h5>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="number" class="form-control form-control-user" id="posicao_linha"
+                      placeholder="Linha" />
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="number" class="form-control form-control-user" id="posicao_coluna"
+                      placeholder="Coluna" />
+                  </div>
                 </div>
+                <hr />
+                <hr />
+
+                <a class="btn btn-primary btn-user btn-block" onclick="cadastrarM()">
+                  Cadastrar Máquina
+                </a>
+              </div>
+              <hr />
+              <div class="text-center">
+                <a class="small" href="front_dash.html">Voltar</a>
               </div>
             </div>
+          </div>
 
-            <div class="pipe">
+          <div class="pipe">
 
+          </div>
+
+          <div class="coluna">
+
+            
+
+            <div class="componentes">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4" style="margin-top: 7px;">Componentes</h1>
+              </div>
+              
+                <div class="form-group">
+                  <h5>Componente 1</h5>
+                  <select id="componente1">
+                    <option value=""></option>
+                  </select>
+                </div>
+              
+
+              <div class="primeiraDiv"></div>
+
+              <div class="segundaDiv"></div>
+
+              <div class="terceiraDiv"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="modal-containerL" id="modal_container">
-      <div class="modalL">
-        <h2 id="titulo_m"></h2>
-        <p id="p_msg"></p>
-      </div>
-      <button class="button1L" id="close">X</button>
+  <div class="modal-containerL" id="modal_container">
+    <div class="modalL">
+      <h2 id="titulo_m"></h2>
+      <p id="p_msg"></p>
     </div>
+    <button class="button1L" id="close">X</button>
+  </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-  </body>
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+</body>
+
 </html>
 <script>
   function cadastrarM() {

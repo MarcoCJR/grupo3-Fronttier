@@ -8054,7 +8054,7 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 
 .p-5 {
     padding: 3rem !important;
-    width: 110%;
+    width: 100%;
 }
 
 .p-5 input {
@@ -11678,19 +11678,54 @@ body.sidebar-toggled footer.sticky-footer {
 
   /* Cadastro Máquina */
 
-  .linha {
-    background-color: red;
-  }
-
-  .teste {
-    background-color: purple;
-  }
-
   .pipe {
+    align-self: center;
     background-color: #E13131;
-    height: 600px;
+    height: 500px;
     width: 2px;
-    margin-top: 40px;
-    margin-left: 12px;
     border-radius: 10px;
+  }
+
+  .coluna {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    width: 45%;
+  }
+
+  .componentes {
+    padding: 3rem;
+    margin-top: -44px;
+  }
+
+  .zeroDiv {
+    background-color: purple;
+    height: 40px;
+    width: 100px;
+    margin-top: -30px;
+  }
+
+  .primeiraDiv {
+    background-color: red;
+    height: 40px;
+    width: 100px;
+    margin-top: 30px;
+  }
+
+  .segundaDiv {
+    background-color: yellow;
+    height: 40px;
+    width: 100px;
+    margin-top: 30px;
+  }
+
+  .terceiraDiv {
+    background-color: blue;
+    height: 40px;
+    width: 100px;
+    margin-top: 30px;
+  }
+
+  .componentes select {
+    padding: 6px 12px;
   }
