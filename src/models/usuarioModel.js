@@ -110,6 +110,16 @@ function cadastrarM(fkCodEmpresa, serial, linha, coluna) {
     database.executar(instrucao);
 }
 
+function alertas(nomeEmp, maquina, componente, metrica, frase) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function alertas():", nomeEmp, maquina, componente, metrica, frase);
+
+    var instrucao = `
+        INSERT INTO Chamado (nomeEmp, maquina, componente, metrica, valor, dataHora) VALUES ('${nomeEmp}', '${maquina}', '${componente}', '${frase}', '${metrica}', GETDATE());
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     entrar,
     cadastrar,
@@ -118,5 +128,6 @@ module.exports = {
     cadastrarM, 
     cadastrarTecnico,
     cadastrarUserDash,
-    nomeEmpresa
+    nomeEmpresa,
+    alertas
 };

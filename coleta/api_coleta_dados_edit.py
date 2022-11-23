@@ -96,4 +96,4 @@ while (i < 2000):
 
     db_connection.commit()
     db_connection.close()    
-    time.sleep(0.1)
+    time.sleep(8.0)

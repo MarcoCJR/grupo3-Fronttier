@@ -313,6 +313,47 @@ function cadastrarM(req, res) {
 }
 
 
+function alertas(req, res) {
+    // Crie uma variável que vá recuperar os valores do Card do Pipefy
+    var nomeEmp = req.body.nomeEmpServer
+    var maquina = req.body.maquinaServer;
+    var componente = req.body.componenteServer;
+    var metrica = req.body.metricaServer;
+    var frase = req.body.fraseServer;
+
+    // Faça as validações dos valores
+    if (nomeEmp == undefined) {
+        res.status(400).send("Seu nomeEmp está undefined!");
+    } else if (maquina == undefined) {
+        res.status(400).send("Seu maquina está undefined!");
+    } else if (componente == undefined) {
+        res.status(400).send("Sua componente está undefined!");
+    } else if (metrica == undefined) {
+        res.status(400).send("Sua metrica está undefined!");
+    } else if (frase == undefined) {
+        res.status(400).send("Sua frase está undefined!");
+    } else {
+
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.alertas(nomeEmp, maquina, componente, metrica, frase)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao puxar os dados do Pipefy! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+
 module.exports = {
     entrar,
     cadastrar,
@@ -322,5 +363,6 @@ module.exports = {
     cadastrarUserDash,
     cadastrarM,
     cadastrarTecnico,
-    nomeEmpresa
+    nomeEmpresa,
+    alertas
 }

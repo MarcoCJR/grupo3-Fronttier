@@ -49,6 +49,12 @@
                     <span>Dashboard - <span id="nomeEmp"></span></span></a>
             </li>
 
+            <li class="nav-item active">
+                <a class="nav-link" href="analise_dash.html" target="_blank">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Análise de Notificações</span></a>
+            </li>
+
             <!-- Divider -->
             <!-- <hr class="sidebar-divider">
             Nav Item - Tables -->
@@ -995,9 +1001,9 @@
                     // Criando o alerta do percentual da CPU 
                     if (novoRegistro[0].percentualCpu >= 60 && novoRegistro[0].percentualCpu < 80) {
                         componente = "CPU"
-                        maquina = "Máquina 3" 
+                        maquina = "3" 
                         frase = "Alerta"
-                        metrica = novoRegistro[0].percentualCpu
+                        metrica = `${novoRegistro[0].percentualCpu} %`
 
                         alerta_div.style.display = "block"
                         alerta_div.style.backgroundColor = "yellow"
@@ -1011,9 +1017,9 @@
 
                     if (novoRegistro[0].percentualCpu >= 80 && novoRegistro[0].percentualCpu < 90) {
                         componente = "CPU"
-                        maquina = "Máquina 3" 
+                        maquina = "3" 
                         frase = "Emergência"
-                        metrica = novoRegistro[0].percentualCpu
+                        metrica = `${novoRegistro[0].percentualCpu} %`
 
                         alerta_div.style.display = "block"
                         alerta_div.style.backgroundColor = "orange"
@@ -1028,9 +1034,9 @@
 
                     if (novoRegistro[0].percentualCpu > 90) {
                         componente = "CPU"
-                        maquina = "Máquina 3" 
+                        maquina = "3" 
                         frase = "Crítico"
-                        metrica = novoRegistro[0].percentualCpu
+                        metrica = `${novoRegistro[0].percentualCpu} %`
 
                         alerta_div.style.display = "block"
                         alerta_div.style.backgroundColor = "red"
@@ -1061,7 +1067,7 @@
 
                     if (novoRegistro[0].discoUsado >= 200 && novoRegistro[0].discoUsado < 220) {
                         componente = "Disco"
-                        maquina = "Máquina 3" 
+                        maquina = "3" 
                         frase = "Alerta"
                         metrica = novoRegistro[0].discoUsado
 
@@ -1077,7 +1083,7 @@
 
                     if (novoRegistro[0].discoUsado >= 220 && novoRegistro[0].discoUsado < 240) {
                         componente = "Disco"
-                        maquina = "Máquina 3" 
+                        maquina = "3" 
                         frase = "Emergência"
                         metrica = novoRegistro[0].discoUsado
 
@@ -1093,7 +1099,7 @@
 
                     if (novoRegistro[0].discoUsado > 240) {
                         componente = "Disco"
-                        maquina = "Máquina 3" 
+                        maquina = "3" 
                         frase = "Crítico"
                         metrica = novoRegistro[0].discoUsado
 
@@ -1118,7 +1124,7 @@
 
                     if (novoRegistro[0].memoriaUsada >= 6 && novoRegistro[0].memoriaUsada < 12) {
                         componente = "RAM"
-                        maquina = "Máquina 3" 
+                        maquina = "3" 
                         frase = "Alerta"
                         metrica = novoRegistro[0].memoriaUsada
 
@@ -1134,7 +1140,7 @@
 
                     if (novoRegistro[0].memoriaUsada >= 12 && novoRegistro[0].memoriaUsada < 14) {
                         componente = "RAM"
-                        maquina = "Máquina 3" 
+                        maquina = "3" 
                         frase = "Emergência"
                         metrica = novoRegistro[0].memoriaUsada
 
@@ -1150,7 +1156,7 @@
 
                     if (novoRegistro[0].memoriaUsada > 14) {
                         componente = "RAM"
-                        maquina = "Máquina 3" 
+                        maquina = "3" 
                         frase = "Crítico"
                         metrica = novoRegistro[0].memoriaUsada
 
@@ -1212,6 +1218,37 @@
             .then(response => response.json())
             .then(response => console.log(response))
             .catch(err => console.error(err));
+
+            fetch("/usuarios/alertas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nomeEmpServer: nomeEmpresa,
+                maquinaServer: maquina,
+                componenteServer: componente,
+                metricaServer: metrica,
+                fraseServer: frase
+
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+
+                console.log(`Enviados para o banco com sucesso!`)
+
+            } else {
+
+                console.log(`Falha ao enviar para o banco!`)
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+
+        return false;
+    
     }
 
 

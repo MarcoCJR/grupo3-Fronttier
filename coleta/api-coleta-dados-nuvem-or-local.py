@@ -21,7 +21,7 @@ from mysql.connector import errorcode
 # password='#Gfgrupo3' 
 
 try:
-        conn = pyodbc.connect(driver='{ODBC Driver 17 for SQL Server}', host='grupo-fronttier3.database.windows.net',
+        conn = pyodbc.connect(driver='{SQL Server}', host='grupo-fronttier3.database.windows.net',
                         database='Fronttier', user='Fronttier3', password='#Gfgrupo3')
         print("Conectei no banco! (Azure)")
         db_connection = mysql.connector.connect(
@@ -92,11 +92,13 @@ while True:
 
 
 # AZURE
-    sql = "INSERT INTO [dados] (dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (?,?,?,?,?)"
-    values = [dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada]
+    fkServidor = 8
+    sql = "INSERT INTO [dados] (fkServidor,dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (?,?,?,?,?,?)"
+    values = [fkServidor,dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada]
     cursorAzure.execute(sql, values)
 
 # LOCAL
+
     sql = "INSERT INTO Dados (dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (%s,%s,%s,%s,%s)"
     values = [dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada]
     cursorLocal.execute(sql, values)
