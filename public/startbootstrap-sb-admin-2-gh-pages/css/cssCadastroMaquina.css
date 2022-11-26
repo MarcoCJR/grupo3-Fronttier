@@ -1,3 +1,15 @@
+/*!
+ * Start Bootstrap - SB Admin 2 v4.1.3 (thttps://startbootstrap.com/theme/sb-admin-2)
+ * Copyright 2013-2021 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin-2/blob/master/LICENSE)
+ */
+/*!
+ * Bootstrap v4.6.0 (https://getbootstrap.com/)
+ * Copyright 2011-2021 The Bootstrap Authors
+ * Copyright 2011-2021 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+
 /* Gráfico percentual da cpu */
 .graficoPercent{
     padding-top: 30px;
@@ -1291,8 +1303,8 @@ pre code {
     }
 
     .col-lg-5 {
-        flex: 0 0 41.66667%;
-        max-width: 41.66667%
+        flex: 0 0 50%;
+        max-width: 50%
     }
 
     .col-lg-6 {
@@ -1302,7 +1314,7 @@ pre code {
 
     .col-lg-7 {
         flex: 0 0 58.33333%;
-        max-width: 58.33333%
+        max-width: 50.33333%
     }
 
     .col-lg-8 {
@@ -8041,7 +8053,8 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 }
 
 .p-5 {
-    padding: 3rem !important
+    padding: 3rem !important;
+    width: 100%;
 }
 
 .p-5 input {
@@ -11659,4 +11672,80 @@ body.sidebar-toggled footer.sticky-footer {
 
   .btn-chart:hover{
     background-color: #858796;
+  }
+  
+  
+
+  /* Cadastro Máquina */
+
+  .pipe {
+    align-self: center;
+    background-color: #A62929;
+    height: 29rem;
+    width: 4px;
+    border-radius: 10px;
+  }
+
+  .coluna {
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    width: 49%;
+  }
+
+  .componentes {
+    padding: 3rem;
+    margin-top: -46px;
+    color: white;
+  }
+
+  .componentes select {
+    padding: 6px 12px;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #6e707e;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid grey;
+    border-radius: 0.35rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    height: 50px;
+    margin-bottom: 15px;
+  }
+
+  .btnCadastrar {
+    display: inline-block;
+    margin-left: 42%;
+    font-weight: 400;
+    color: #858796;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.35rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+
+  .bodyCadastro {
+    background-color: #858796;
+        margin: 0;
+        font-family: Nunito, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #858796;
+        text-align: left;
+  }
+
+  .textoComp {
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
   }
