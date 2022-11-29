@@ -27,32 +27,33 @@ function listar(req, res) {
 
 function nomeEmpresa(req, res) {
     var codEmpresa = req.body.fkcodEmpresaServer;
-    
-    if(codEmpresa == undefined) {
-        res.status(400).send("Seu fkEmpresa está undefined!");
-    }else {
-        
-usuarioModel.nomeEmpresa(codEmpresa)
-    .then(
-        function (resultado) {
-            console.log(`\nResultados encontrados: ${resultado.length}`);
-            console.log(`Resultados: ${JSON.stringify(resultado)}`); // transforma JSON em String
 
-            if (resultado.length != 0) {
-                console.log(resultado);
-                res.json(resultado);
-            } else if (resultado.length == 0) {
-                res.status(403).send("Não tem torre");
-            }
-        }
-    ).catch(
-        function (erro) {
-            console.log(erro);
-            console.log("\nHouve um erro ao realizar o encontrar nome emp! Erro: ", erro.sqlMessage);
-            res.status(500).json(erro.sqlMessage);
-        }
-    );
-}}
+    if (codEmpresa == undefined) {
+        res.status(400).send("Seu fkEmpresa está undefined!");
+    } else {
+
+        usuarioModel.nomeEmpresa(codEmpresa)
+            .then(
+                function (resultado) {
+                    console.log(`\nResultados encontrados: ${resultado.length}`);
+                    console.log(`Resultados: ${JSON.stringify(resultado)}`); // transforma JSON em String
+
+                    if (resultado.length != 0) {
+                        console.log(resultado);
+                        res.json(resultado);
+                    } else if (resultado.length == 0) {
+                        res.status(403).send("Não tem torre");
+                    }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao realizar o encontrar nome emp! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
 
 function entrar(req, res) {
 
@@ -66,7 +67,7 @@ function entrar(req, res) {
         res.status(400).send("Seu email está indefinida!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está indefinida!");
-    }  else {
+    } else {
 
         usuarioModel.entrar(nomeEmp, email, senha)
             .then(
@@ -160,7 +161,7 @@ function cadastrarU(req, res) {
         res.status(400).send("Sua senha está undefined!");
     } else if (fkCodEmpresa == undefined) {
         res.status(400).send("Seu fkCodEmpresa está undefined!");
-    }  else {
+    } else {
 
 
         usuarioModel.cadastrarU(nome, sobreNome, telefone, email, senha, fkCodEmpresa)
@@ -179,7 +180,7 @@ function cadastrarU(req, res) {
                 }
             );
     }
-} 
+}
 
 
 
@@ -313,6 +314,67 @@ function cadastrarM(req, res) {
 }
 
 
+function CadastrarComponente(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var idServidor = req.body.idServidorServer;
+    var fkComponente = req.body.fkComponenteServer;
+    // Faça as validações dos valores
+    if (idServidor == undefined) {
+        res.status(400).send("Seu idServidor está undefined!");
+    } else if (fkComponente == undefined) {
+        res.status(400).send("Seu fkComponente está undefined!");
+    } else {
+
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.CadastrarComponente(idServidor, fkComponente)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro da torre! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+
+function UltimaMaquina(req, res) {
+    var fkCodEmpresa = req.body.fkCodEmpresaServer;
+    
+    if(fkCodEmpresa == undefined) {
+        res.status(400).send("Seu fkCodEmpresa está undefined!");
+    }else {
+        
+usuarioModel.UltimaMaquina(fkCodEmpresa)
+    .then(
+        function (resultado) {
+            console.log(`\nResultados encontrados: ${resultado.length}`);
+            console.log(`Resultados: ${JSON.stringify(resultado)}`); // transforma JSON em String
+
+            if (resultado.length != 0) {
+                console.log(resultado);
+                res.json(resultado[resultado.length - 1]);
+            } else if (resultado.length == 0) {
+                res.status(403).send("Não tem Máquina");
+            }
+        }
+    ).catch(
+        function (erro) {
+            console.log(erro);
+            console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+}}
+
+
 function alertas(req, res) {
     // Crie uma variável que vá recuperar os valores do Card do Pipefy
     var nomeEmp = req.body.nomeEmpServer
@@ -362,6 +424,8 @@ module.exports = {
     cadastrarU,
     cadastrarUserDash,
     cadastrarM,
+    CadastrarComponente,
+    UltimaMaquina,
     cadastrarTecnico,
     nomeEmpresa,
     alertas

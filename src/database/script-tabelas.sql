@@ -28,6 +28,8 @@ fkPlano INT,
 FOREIGN KEY (fkPlano) REFERENCES Plano (idPlano)
 );
 
+INSERT INTO Empresa VALUES( 1234, "Teste", "123456789012345678", 1);
+
 CREATE TABLE Usuario (
 idUsuario INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45),
@@ -45,9 +47,31 @@ CREATE TABLE MaquinaServidor (
 idServidor INT PRIMARY KEY AUTO_INCREMENT,
 fkCodEmpresa INT,
 FOREIGN KEY (fkCodEmpresa) REFERENCES Empresa (codEmpresa),
-numeroSerial INT,
+numeroSerial INT UNIQUE,
 posicaoLinha INT,
 posicaoColuna INT
+);
+
+
+-- TABELA NOVA
+CREATE TABLE Componente (
+idComponente INT PRIMARY KEY,
+Nome VARCHAR(20),
+Comando VARCHAR(50)
+);
+
+INSERT INTO Componente VALUES (1, "freqCpu", "psutil.cpu_freq().current"),
+							  (2, "percentCpu", "psutil.cpu_percent()"),
+                              (3, "usoDisco", "round(psutil.disk_usage('/').used*(2**-30),2)"),
+                              (4, "usoRam", "round(psutil.virtual_memory().used*(2**-30),2)");
+
+-- TABELA NOVA
+CREATE TABLE MaquinaComponente (
+fkMaquina INT,
+fkComponente INT,
+PRIMARY KEY(fkMaquina, fkComponente),
+FOREIGN KEY (fkMaquina) REFERENCES MaquinaServidor(idServidor),
+FOREIGN KEY (fkComponente) REFERENCES Componente(idComponente)
 );
 
 CREATE TABLE Dados(
@@ -60,7 +84,10 @@ percentualCpu DECIMAL(4,1),
 discoUsado DECIMAL(6,2),
 memoriaUsada DECIMAL(5,2)
 );
-
+                              
 SELECT * FROM Empresa;
 SELECT * FROM Usuario;
 SELECT * FROM MaquinaServidor;
+select * from Componente;
+select * from MaquinaComponente ORDER BY fkMaquina;
+select * from Dados;

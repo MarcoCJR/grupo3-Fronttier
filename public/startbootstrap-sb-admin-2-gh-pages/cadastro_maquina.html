@@ -78,24 +78,24 @@
                 <select id="componente1">
                   <option value="0">- Nenhum -</option>
                   <option value="1">CPU</option>
-                  <option value="2">RAM</option>
-                  <option value="3">Disco Rígido</option>
+                  <option value="2">Disco Rígido</option>
+                  <option value="3">RAM</option>
                 </select>
 
                 <h5>Componente 2</h5>
                 <select id="componente2">
                   <option value="0">- Nenhum -</option>
                   <option value="1">CPU</option>
-                  <option value="2">RAM</option>
-                  <option value="3">Disco Rígido</option>
+                  <option value="2">Disco Rígido</option>
+                  <option value="3">RAM</option>
                 </select>
 
                 <h5>Componente 3</h5>
                 <select id="componente3">
                   <option value="0">- Nenhum -</option>
                   <option value="1">CPU</option>
-                  <option value="2">RAM</option>
-                  <option value="3">Disco Rígido</option>
+                  <option value="2">Disco Rígido</option>
+                  <option value="3">RAM</option>
                 </select>
 
               </div>
@@ -106,7 +106,7 @@
 
         </div>
         <div class="btnCadastrar">
-          <a class="btn btn-primary btn-user btn-block" onclick="validarComp()">
+          <a class="btn btn-primary btn-user btn-block" onclick="cadastrarM()">
             Cadastrar Máquina
           </a>
           <br>
@@ -139,22 +139,17 @@
 
 </html>
 <script>
+
   var vetor_componenteSel1 = []
   var vetor_componenteSel2 = []
   var vetor_componenteSel3 = []
 
 
-  function validarComp() {
+  function cadastrarM() {
     var comp1 = componente1.value
     var comp2 = componente2.value
     var comp3 = componente3.value
 
-    
-  }
-
-
-
-  function cadastrarM() {
     const open = document.getElementById("open");
     const modal_container = document.getElementById("modal_container");
     const close = document.getElementById("close");
@@ -165,6 +160,38 @@
     var serialVar = document.getElementById("numSerie").value;
     var linhaVar = document.getElementById("posicao_linha").value;
     var colunaVar = document.getElementById("posicao_coluna").value;
+
+
+    // INSERINDO COMPONENTES NOS VETORES
+
+    // Primeiro Select
+    if (comp1 == 1) {
+      vetor_componenteSel1.push(1, 2)
+    } else if (comp1 == 2) {
+      vetor_componenteSel1.push(3)
+    } else if (comp1 == 3) {
+      vetor_componenteSel1.push(4)
+    }
+
+    // Segundo Select
+    if (comp2 == 1) {
+      vetor_componenteSel2.push(1, 2)
+    } else if (comp2 == 2) {
+      vetor_componenteSel2.push(3)
+    } else if (comp2 == 3) {
+      vetor_componenteSel2.push(4)
+    }
+
+    // Terceiro Select
+    if (comp3 == 1) {
+      vetor_componenteSel3.push(1, 2)
+    } else if (comp3 == 2) {
+      vetor_componenteSel3.push(3)
+    } else if (comp3 == 3) {
+      vetor_componenteSel3.push(4)
+    }
+
+
 
     if (
       fkCodEmpresaVar == "" ||
@@ -204,6 +231,9 @@
         console.log("resposta: ", resposta);
 
         if (resposta.ok) {
+          setTimeout(function () {
+            CadastrarComponente()
+          }, 3000);
           // card_erro.style.display = "block";
 
           titulo_m.innerHTML = `Máquina cadastrada com sucesso!`;
@@ -227,6 +257,129 @@
         console.log(`#ERRO: ${resposta}`);
       });
 
-    return false;
+    setTimeout(function () {
+
+      // Função para pegar o Id da máquina, para poder cadastrar os componentes certinho
+      fetch("/usuarios/UltimaMaquina", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fkCodEmpresaServer: fkCodEmpresaVar,
+        })
+      }).then(function (resposta) {
+
+        if (resposta.ok) {
+          console.log(resposta);
+
+          resposta.json().then(json => {
+            console.log(json);
+            console.log(JSON.stringify(json));
+            sessionStorage.IDSERVIDOR = json.idServidor;
+            idServidorVar = sessionStorage.IDSERVIDOR
+            console.log("Pegou a ultima torre com sucesso: " + json.idServidor);
+
+          });
+        } else {
+          alert('Erro ao selecionar ultima torre!')
+          throw ("Houve um Erro ao selecionar ultima torre!");
+        }
+      }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    }, 2000);
   }
+
+
+
+  function CadastrarComponente() {
+
+    // COMPONENTES 1
+    vetor_componenteSel1.forEach(element => {
+      fetch("/usuarios/CadastrarComponente", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          idServidorServer: idServidorVar,
+          fkComponenteServer: element,
+        })
+      }).then(function (resposta) {
+
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          console.log("Inseriu um componente do 1 select");
+        } else {
+          throw ("Houve um erro ao tentar realizar o cadastro da torre!");
+        }
+      }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    });
+
+
+    // COMPONENTES 2
+    vetor_componenteSel2.forEach(element => {
+      fetch("/usuarios/CadastrarComponente", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          idServidorServer: idServidorVar,
+          fkComponenteServer: element,
+        })
+      }).then(function (resposta) {
+
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          console.log("Inseriu um componente do 2 select");
+        } else {
+          throw ("Houve um erro ao tentar realizar o cadastro da torre!");
+        }
+      }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    });
+
+
+    // COMPONENTES 3
+    vetor_componenteSel3.forEach(element => {
+      fetch("/usuarios/CadastrarComponente", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          idServidorServer: idServidorVar,
+          fkComponenteServer: element,
+        })
+      }).then(function (resposta) {
+
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          console.log("Inseriu um componente do 3 select");
+        } else {
+          throw ("Houve um erro ao tentar realizar o cadastro da torre!");
+        }
+      }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    });
+
+    vetor_componenteSel1 = []
+    vetor_componenteSel2 = []
+    vetor_componenteSel3 = []
+
+  }
+
 </script>

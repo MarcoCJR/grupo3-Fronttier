@@ -24,6 +24,14 @@ router.post("/cadastrarM", function (req, res) {
     usuarioController.cadastrarM(req, res);
 })
 
+router.post("/CadastrarComponente", function (req, res) {
+    usuarioController.CadastrarComponente(req, res);
+});
+
+router.post("/UltimaMaquina", function (req, res) {
+    usuarioController.UltimaMaquina(req, res);
+});
+
 router.post("/cadastrarUserDash", function (req, res) {
     usuarioController.cadastrarUserDash(req, res);
 })
