@@ -23,9 +23,11 @@ from mysql.connector import errorcode
 try:
         conn = pyodbc.connect(driver='{SQL Server}', host='grupo-fronttier3.database.windows.net',
                         database='Fronttier', user='Fronttier3', password='#Gfgrupo3')
+        cursorAzure = conn.cursor()
         print("Conectei no banco! (Azure)")
         db_connection = mysql.connector.connect(
                 host='localhost', user='root', password='sptech@02', database='fronttier2')
+        cursorLocal = db_connection.cursor()
         print("Conectei no banco! (Local)")
 except mysql.connector.Error as error:
         if error.errno == errorcode.ER_BAD_DB_ERROR:
@@ -34,6 +36,33 @@ except mysql.connector.Error as error:
                 print("Credenciais erradas")
         else:
                 print(error)
+
+def Logar():
+        print("Seja bem vindo ao Python da Fronttier")
+        print("Por favor, realize seu login")
+        
+        codEmpresa = input('Informe o código de sua empresa:')
+        email = input('Informe seu email:')
+        senha = input('Informe sua senha:')
+        ValidarLogin(codEmpresa, email, senha)
+
+
+def ValidarLogin(codEmpresa, email, senha):
+    try:
+        cursorLocal.execute('''
+        SELECT * FROM Usuario WHERE fkCodEmpresa = ? and Email = ? and Senha = ?
+        ''', codEmpresa, email, senha)
+        # Executando comando SQL
+        print("Fazendo login...")
+        global usuario
+        usuario = cursorLocal.fetchall()
+        print("Login efetuado com sucesso")
+        global fkEmpresa
+        fkEmpresa = codEmpresa
+
+    except pyodbc.Error as err:
+        print("Something went wrong: {}".format(err))
+        print("Falha ao realizar login por favor tente novamente")
 
 while True: 
       
@@ -85,10 +114,6 @@ while True:
 
     dataHora = datetime.now()
     formatoh = dataHora.strftime("%d/%m/%Y %H:%M:%S")
-
-
-    cursorLocal = db_connection.cursor()
-    cursorAzure = conn.cursor()
 
 
 # AZURE
