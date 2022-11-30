@@ -2101,7 +2101,8 @@ textarea.form-control {
 }
 
 .form-group {
-    margin-bottom: 1rem
+    margin-bottom: 1rem;
+    color: #858796;
 }
 
 .form-text {
@@ -11681,13 +11682,12 @@ body.sidebar-toggled footer.sticky-footer {
   .pipe {
     align-self: center;
     background-color: #A62929;
-    height: 29rem;
-    width: 4px;
+    height: 25rem;
+    width: 2px;
     border-radius: 10px;
   }
 
   .coluna {
-    background-color: #000;
     display: flex;
     flex-direction: column;
     width: 49%;
@@ -11706,11 +11706,11 @@ body.sidebar-toggled footer.sticky-footer {
     color: #6e707e;
     background-color: #fff;
     background-clip: padding-box;
-    border: 1px solid grey;
+    border: 1px solid #d1d3e2;
     border-radius: 0.35rem;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     height: 50px;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
   }
 
   .btnCadastrar {
@@ -11745,7 +11745,6 @@ body.sidebar-toggled footer.sticky-footer {
   }
 
   .textoComp {
-    color: white;
-    font-weight: bold;
+    color: #3a3b45;
     font-size: 1.5rem;
   }
