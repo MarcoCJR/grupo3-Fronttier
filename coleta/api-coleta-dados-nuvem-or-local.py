@@ -1,9 +1,13 @@
 # from operator import truediv
 # import turtle
+from statistics import mean
 import textwrap
 from datetime import datetime
 import psutil
 import time
+import numpy
+import functools
+import operator
 import pyodbc
 import mysql.connector
 from mysql.connector import errorcode
@@ -19,6 +23,16 @@ from mysql.connector import errorcode
 # database='Fronttier'
 # username='Fronttier3'
 # password='#Gfgrupo3'
+
+global freqCpu
+freqCpu = ""
+global percentCpu
+percentCpu = ""
+global usoDisco
+usoDisco = ""
+global usoRam
+usoRam = ""
+
 
 try:
     # conn = pyodbc.connect(driver='{SQL Server}', host='grupo-fronttier3.database.windows.net',
@@ -67,6 +81,96 @@ def Login():
 
 
 def SelectMaquina(codEmpresa):
-        print(codEmpresa)
+        
+        try:
+            mensagem =  "SELECT IdServidor FROM MaquinaServidor WHERE fkCodEmpresa = %s"
+            valores = [codEmpresa]
+            cursorLocal.execute(mensagem, valores)
 
+            idServidor = cursorLocal.fetchall()
+            print("Servidores Disponíveis: \n", idServidor)
+            global escolha
+            escolha = input("Escolha um Id da lista de máquinas acima:")
+            PegarComponente()
+
+        except pyodbc.Error as err:
+            print("Something went wrong: {}".format(err))    
+
+
+
+def PegarComponente():
+    # PEGAR fkCOMPONENTE
+
+            try:
+                mensagem =  "SELECT fkComponente FROM MaquinaComponente WHERE fkMaquina = %s"
+                valores = [escolha]
+                cursorLocal.execute(mensagem, valores)
+                # Executing the SQL command
+                print("Pegando os componentes da torre...")
+
+            except pyodbc.Error as err:
+                print("Something went wrong: {}".format(err))
+                print('teste exept')
+
+            fkComponente= cursorLocal.fetchall()
+            print(fkComponente)
+            vet_fkComponente = numpy.asarray(fkComponente)
+            print("Componentes da maquina:", vet_fkComponente)
+            
+            for x in vet_fkComponente:
+                print(x)
+                global y
+                y = int(x[0])
+                print(y)
+
+                # PEGAR CODIGO COMPONENTE
+                
+                try:
+                    mensagem =  "SELECT Comando FROM Componente WHERE idComponente = %s"
+                    valores = [y]
+                    cursorLocal.execute(mensagem, valores)
+                    # Executing the SQL command
+                    print("Pegando codigo do componente ", y,'...')
+
+                except pyodbc.Error as err:
+                    print("Something went wrong: {}".format(err))
+
+                comando = cursorLocal.fetchone()
+                print("Comando do componente ",y,":", comando)
+
+                def convertTuple(tup):
+                    str = functools.reduce(operator.add, (tup))
+                    return str
+
+                global strComando
+                strComando = convertTuple(comando)            
+
+                # PREGAR NOME COMPONENTE
+
+                try:
+                    mensagem =  "SELECT Nome FROM Componente WHERE idComponente = %s"
+                    valores = [y]
+                    cursorLocal.execute(mensagem, valores)
+                    # Executing the SQL command
+                    print("Pegando nome do componente", y)
+
+                except pyodbc.Error as err:
+                    print("Something went wrong: {}".format(err))
+
+                nome = cursorLocal.fetchone()
+                global strNome
+                strNome = convertTuple(nome)
+                if y > 4:
+                    print('Esse componente é em outra API!')
+                else:
+                    print("Nome componente ",y,":", strNome)
+                    exec(strNome + " = " + strComando)
+                    print("")
+                    print("")
+                    print("Teste1", freqCpu)
+                    print("Teste2", percentCpu)
+                    print("Teste3", usoDisco)
+                    print("Teste4", usoRam)
+
+                    
 Login()

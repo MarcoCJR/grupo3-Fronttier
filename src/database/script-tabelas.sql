@@ -34,7 +34,7 @@ CREATE TABLE Usuario (
 idUsuario INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45),
 sobreNome VARCHAR(45),
-telefone CHAR(15),
+telefone CHAR(11),
 email VARCHAR(45),
 senha VARCHAR (45),
 fkCodEmpresa INT,
@@ -42,6 +42,8 @@ FOREIGN KEY (fkCodEmpresa) REFERENCES Empresa(codEmpresa),
 fkPermissao INT,
 FOREIGN KEY (fkPermissao) REFERENCES Permissao (idPermissao)
 );
+
+INSERT INTO Usuario VALUES (null, "Marco", "Campos", "11940273200", "marco@gmail.com", "123", 1234, 3);
 
 CREATE TABLE MaquinaServidor (
 idServidor INT PRIMARY KEY AUTO_INCREMENT,
