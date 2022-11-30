@@ -1,6 +1,7 @@
 # from operator import truediv
 # import turtle
 # import speedtest
+from statistics import mean
 from app import *
 from lost import *
 from statistics import mean
@@ -125,7 +126,16 @@ def SelectMaquina(codEmpresa):
         except pyodbc.Error as err:
             print("Something went wrong: {}".format(err))    
 
-
+def InserirBanco():
+        print("Inserindo leitura no banco...")
+        exec(strNome + " = " + strComando, globals())
+        var_leitura = globals()[strNome]
+            
+        print(var_leitura)
+        var_leitura2 = mean(var_leitura)
+        print(var_leitura2)
+        var_leitura2 = var_leitura
+        print(var_leitura2)
 
 def PegarComponente():
     # PEGAR fkCOMPONENTE
@@ -193,13 +203,7 @@ def PegarComponente():
                     print('Esse componente é em outra API!')
                 else:
                     print("Nome componente ",y,":", strNome)
-                    exec(strNome + " = " + strComando)
-                    print("")
-                    print("")
-                    print("Teste1", freqCpu)
-                    print("Teste2", percentCpu)
-                    print("Teste3", usoDisco)
-                    print("Teste4", usoRam)
-
+                    print(strNome + " = " + strComando)
+                InserirBanco()
                     
 Login()
