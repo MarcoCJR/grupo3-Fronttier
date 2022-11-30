@@ -1,5 +1,8 @@
 # from operator import truediv
 # import turtle
+# import speedtest
+from app import *
+from lost import *
 from statistics import mean
 import textwrap
 from datetime import datetime
@@ -33,6 +36,32 @@ usoDisco = ""
 global usoRam
 usoRam = ""
 
+c=1
+while True:
+    enviar_email()
+
+    while c < 4:
+
+        token_resposta = input("Token: ")
+        resposta = int(token_resposta)
+
+        if c == 3:
+            print("Tente novamente mais tarde")
+            exit()
+
+        if token != resposta:
+            print("Token errado!")
+            c += 1
+            print(c)
+
+        else:
+            print("Token Correto")
+            break
+    break
+
+#st = speedtest.Speedtest(secure=1)
+
+#st.get_best_server()
 
 try:
     # conn = pyodbc.connect(driver='{SQL Server}', host='grupo-fronttier3.database.windows.net',
