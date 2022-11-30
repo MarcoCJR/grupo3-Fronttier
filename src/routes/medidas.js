@@ -22,6 +22,11 @@ router.get("/ultimasFreq/:idAquario", function (req, res) {
     medidaController.buscarMedidas(req, res);
 });
 
+// rota maquina 1 
+router.get("/ultimasTeste/:idChamado", function (req, res) {
+    medidaController.buscarMedidasChamados(req, res);
+});
+
 
     
 module.exports = router;
