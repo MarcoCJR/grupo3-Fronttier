@@ -35,6 +35,16 @@ router.get("/tempo-real-Disco/:idServidor", function (req, res) {
     medidaController.ultimasMedidasDisco(req, res);
 });
 
+//rota rede dash
 
+router.get("/ultimasRede/:idServidor", function (req, res) {
+    medidaController.buscarUltimasMedidasRede(req, res);
+});
+
+router.get("/tempo-real-rede/:idServidor", function (req, res) {
+    medidaController.buscarMedidasEmTempoRealRede(req, res);
+}) 
+
+// fim rede dash
     
 module.exports = router;

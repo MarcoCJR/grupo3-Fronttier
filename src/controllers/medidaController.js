@@ -134,11 +134,60 @@ function buscarMedidasDisco(req, res) {
     });
 }
 
+
+//Rede dash
+
+function buscarUltimasMedidasRede(req, res) {
+
+    const limite_linhas = 7;
+
+    var idServidor= req.params.idServidor;
+
+    console.log(`Recuperando as ultimas ${limite_linhas} medidas`);
+
+    medidaModel.buscarUltimasMedidasRede(idServidor, limite_linhas).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+
+function buscarMedidasEmTempoRealRede(req, res) {
+
+    var idServidor = req.params.idServidor;
+
+    console.log(`Recuperando medidas em tempo real`);
+
+    medidaModel.buscarMedidasEmTempoRealRede(idServidor).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    }); 
+
+}
+
+// fim rede dash
+
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
     buscarMedidas,
     buscarMedidasChamados,
     ultimasMedidasDisco,
-    buscarMedidasDisco
+    buscarMedidasDisco,
+    buscarMedidasEmTempoRealRede,
+    buscarUltimasMedidas
 }
