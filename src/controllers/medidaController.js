@@ -235,6 +235,7 @@ module.exports = {
     buscarUltimasMedidas,
     buscarMedidasAnalise,
     buscarMedidasEmTempoRealAnalise,
+    buscarUltimasMedidasRede
     // obterDadosComponentes
 
 }

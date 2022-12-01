@@ -665,12 +665,11 @@
                 {
                     yAxisID: 'y-Percentual',
                     label: 'Download',
-                    borderColor: '#0005eb',
+                    borderColor: '#6c6bad',
                     borderWidth: 4,
                     radius: 3,
-                    backgroundColor:'#40424400',
                     pointStyle: 'circle',
-                    fill: true,
+                    fill: false,
                     data: []
                 },
                 
@@ -691,9 +690,8 @@
                     borderWidth: 4,
                     radius: 3,
                     rotation: 2,
-                    backgroundColor:'#40424400',
                     pointStyle: 'circle',
-                    fill: true,
+                    fill: false,
                     data: []
                 }
                 
@@ -712,9 +710,12 @@
                 {
                     yAxisID: 'y-Disco',
                     label: 'Ping',
-                    borderColor: '#4e73df',
-                    backgroundColor:'#858796',
-                    fill: true,
+                    borderColor: '#6c6bad',
+                    borderWidth: 4,
+                    radius: 3,
+                    rotation: 2,
+                    pointStyle: 'circle',
+                    fill: false,
                     data: []
                 }
                 
@@ -949,14 +950,14 @@
                     // }
 
                     
-                    if(novoRegistro[0].download < 50){
+                    // if(novoRegistro[0].download < 50 && novoRegistro[0].download > 0){
                         
-                        alerta_div.style.display = "block"
-                        alerta_div.style.backgroundColor = "red"
-                        alerta_div.style.borderColor = "red"
-                        i_alerta.innerHTML = "<b> Rede lenta! Alto nível de instabilidade. </b>"
-                        setTimeout(() => sumirMensagem(idDado, dadosDownload), 2000);
-                    }
+                    //     alerta_div.style.display = "block"
+                    //     alerta_div.style.backgroundColor = "red"
+                    //     alerta_div.style.borderColor = "red"
+                    //     i_alerta.innerHTML = "<b> Rede lenta! Alto nível de instabilidade. </b>"
+                    //     setTimeout(() => sumirMensagem(idDado, dadosDownload), 2000);
+                    // }
 
                         
 
