@@ -59,4 +59,16 @@ router.get("/obterDadosComponentes/:idChamado", function (req, res) {
     medidaController.obterDadosComponentes(req, res);
 }) 
 
+router.get("/ultimasTemp/:idServidor", function (req, res) {
+    medidaController.buscarMedidasTemp(req, res);
+});
+
+router.get("/ultimasObterTemp/:idServidor", function (req, res) {
+    medidaController.buscarUltimasTemp(req, res);
+});
+
+router.get("/tempo-real-temp/:idServidor", function (req, res) {
+    medidaController.buscarTempoRealTemp(req, res);
+});
+
 module.exports = router;

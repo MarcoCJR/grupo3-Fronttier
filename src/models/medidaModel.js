@@ -364,6 +364,117 @@ function obterDadosComponentes(idChamado,nomeEmp) {
 
 // FINALIZAÇÃO ROTAS CHAMADOS
 
+function buscarUltimasTemp(idServidor, limite_linhas) {
+
+    instrucaoSql = ''
+
+    if (process.env.AMBIENTE_PROCESSO == "producao") {
+        instrucaoSql = `select top ${limite_linhas}
+                        percentualCpu, 
+                        tempCpu 
+                        dataHora,
+                        CONVERT(varchar, dataHora, 108) as horario
+                        from dadosTemp 
+                        where fkServidor = ${idServidor}
+                    order by idDadosTemp desc`;
+
+    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
+        instrucaoSql = `select 
+        percentualCpu,
+        tempAtual,
+                        dataHora,
+                        DATE_FORMAT(dataHora,'%H:%i:%s') as horario,
+                        fkServidor
+                    from dadosTemp
+                    where fkServidor = ${idServidor} 
+                    order by idDadosTemp desc limit ${limite_linhas}`;
+    }
+    else {
+
+        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
+        return
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarTempoRealTemp(idServidor) {
+
+    instrucaoSql = ''
+
+    if (process.env.AMBIENTE_PROCESSO == "producao") {
+        instrucaoSql = `select top 1
+                        percentualCpu,
+                        tempAtual,
+                        dataHora, 
+                             CONVERT(varchar, dataHora, 108) as horario,
+                             fkServidor
+                        from dadosTemp 
+                        where fkServidor = ${idServidor}
+                    order by idDadosTemp desc`;
+
+    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
+        instrucaoSql = `select  
+        percentualCpu,
+        tempAtual,
+                    dataHora,
+                        DATE_FORMAT(dataHora,'%H:%i:%s') as horario,
+                        fkServidor 
+                        from dadosTemp
+                        where fkServidor = ${idServidor}
+                    order by idDadosTemp desc limit 1`;
+
+    }
+    else {
+        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
+        return
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarMedidasTemp(idServidor) {
+
+    instrucaoSql = ''
+
+    if (process.env.AMBIENTE_PROCESSO == "producao") {
+        instrucaoSql = `
+        select  
+        percentualCpu,
+        freqAtual,
+        discoUsado,
+        memoriaUsada,
+                    dataHora,
+                        DATE_FORMAT(dataHora,'%H:%i:%s') as horario,
+                        fkservidor 
+                        from dados
+                        where fkServidor = ${idServidor}
+                    order by idDados desc limit 1
+        `;
+
+    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
+        instrucaoSql = `select 
+        idDadosTemp,
+        fkServidor,
+        percentualCpu,
+        tempAtual
+                    from dadosTemp
+                    where fkServidor = ${idServidor}
+                    order by idDadosTemp desc `;
+
+    }
+    else {
+        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
+        return
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+} 
+
+
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
@@ -376,5 +487,8 @@ module.exports = {
     ultimasMedidasDisco,
     buscarMedidasDisco,
     buscarUltimasMedidasRede,
-    buscarMedidasEmTempoRealRede
+    buscarMedidasEmTempoRealRede,
+    buscarUltimasTemp,    
+    buscarTempoRealTemp,
+    buscarMedidasTemp
 }

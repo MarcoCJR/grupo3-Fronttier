@@ -223,7 +223,72 @@ function buscarMedidasAnalise(req, res) {
     
     }
 
+    
+    // function temperatura
+    function buscarMedidasTemp(req, res) {
 
+        const limite_linhas = 6;
+        var idServidor = req.params.idServidor;
+    
+        console.log(`Recuperando medidas em tempo real`);
+    
+        medidaModel.buscarMedidasTemp(idServidor, limite_linhas).then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
+        }).catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+    }
+                ///////////////////////////////////////////////////////////
+
+    function buscarUltimasTemp(req, res) {
+
+    const limite_linhas = 6;
+
+    var idServidor = req.params.idServidor;
+
+    console.log(`Recuperando as ultimas ${limite_linhas} medidas`);
+
+    medidaModel.buscarUltimasTemp(idServidor, limite_linhas)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
+        }).catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+
+function buscarTempoRealTemp(req, res) {
+
+    var idServidor = req.params.idServidor;
+
+    console.log(`Recuperando medidas em tempo real`);
+
+    medidaModel.buscarTempoRealTemp(idServidor).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+
+}
+    
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
@@ -235,7 +300,10 @@ module.exports = {
     buscarUltimasMedidas,
     buscarMedidasAnalise,
     buscarMedidasEmTempoRealAnalise,
-    buscarUltimasMedidasRede
+    buscarUltimasMedidasRede,
+    buscarMedidasTemp,
+    buscarUltimasTemp,
+    buscarTempoRealTemp
     // obterDadosComponentes
 
 }

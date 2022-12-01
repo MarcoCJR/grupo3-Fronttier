@@ -1689,15 +1689,16 @@ pre code {
     color: #858796
 }
 
-.table td, .table th {
+.table td{
+    
     padding: .75rem;
     vertical-align: top;
-    border-top: 1px solid #e3e6f0
+    border-top: 3px solid #e3e6f0
 }
 
 .table thead th {
     vertical-align: bottom;
-    border-bottom: 2px solid #e3e6f0
+    border-bottom: 3px solid #e3e6f0
 }
 
 .table tbody+tbody {
@@ -11692,3 +11693,17 @@ body.sidebar-toggled footer.sticky-footer {
   .btn-chart:hover{
     background-color: #858796;
   }
+
+  .text-primary2{
+    color: #a9aab1;
+    font-size: 13px;
+     
+   }
+ 
+   .text-table{
+     color:#858796;
+    font-size: 13px;
+   }
+   .text-temp{
+    color: #000;
+   }
