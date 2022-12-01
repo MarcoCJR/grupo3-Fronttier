@@ -86,6 +86,20 @@ percentualCpu DECIMAL(4,1),
 discoUsado DECIMAL(6,2),
 memoriaUsada DECIMAL(5,2)
 );
+
+-- Nova tabela
+CREATE TABLE Disco(
+idDisco INT PRIMARY KEY AUTO_INCREMENT,
+fkServidor INT,
+FOREIGN KEY (fkServidor) REFERENCES MaquinaServidor (idServidor),
+dataHora DATETIME,
+discoTotal DECIMAL(6,2),
+discoUso DECIMAL (6,2),
+discoLivre DECIMAL (6,2),
+porcentagem DECIMAL(4,1),
+discoLido DECIMAL(6,2),
+discoEscrito DECIMAL(6,2)
+);
                               
 SELECT * FROM Empresa;
 SELECT * FROM Usuario;

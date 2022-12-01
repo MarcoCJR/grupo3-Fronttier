@@ -27,6 +27,14 @@ router.get("/ultimasTeste/:idChamado", function (req, res) {
     medidaController.buscarMedidasChamados(req, res);
 });
 
+router.get("/ultimasDisco/:idServidor", function (req, res) {
+    medidaController.buscarMedidasDisco(req, res);
+});
+
+router.get("/tempo-real-Disco/:idServidor", function (req, res) {
+    medidaController.ultimasMedidasDisco(req, res);
+});
+
 
     
 module.exports = router;

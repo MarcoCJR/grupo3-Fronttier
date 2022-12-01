@@ -22,6 +22,38 @@
     padding-right: 5px;  
  }
 
+ .graficoDiscoTotal{
+    padding-top: 30px;
+    padding-right: 5px;  
+ }
+
+
+ .graficoDiscoUsado{
+    padding-top: 30px;
+    padding-right: 5px;  
+ }
+
+
+ .graficoDiscoLivre{
+    padding-top: 30px;
+    padding-right: 5px;  
+ }
+
+
+ .graficoPorcentagen{
+    padding-top: 30px;
+    padding-right: 5px;  
+ }
+
+ .graficoDiscoLer{
+    padding-top: 30px;
+    padding-right: 5px;  
+ }
+
+ .graficoDiscoEscrito{
+    padding-top: 30px;
+    padding-right: 5px;  
+ }
 
  .teste23{
     font-size: 15px;
