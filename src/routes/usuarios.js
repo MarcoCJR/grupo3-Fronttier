@@ -54,4 +54,8 @@ router.post("/alertas", function (req, res) {
     usuarioController.alertas(req, res);
 });
 
+router.post("/obterDadosComponentes", function (req, res) {
+    usuarioController.obterDadosComponentes(req, res);
+});
+
 module.exports = router;

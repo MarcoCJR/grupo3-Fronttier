@@ -130,8 +130,79 @@ function buscarMedidas(idServidor) {
 
 
 
+// ÍNICIO ROTA CHAMADOS
+function buscarUltimasMedidasAnalise(idChamadoQ) {
+
+    instrucaoSql = ''
+
+    if (process.env.AMBIENTE_PROCESSO == "producao") {
+        instrucaoSql = `select nomeEmp, count(${idChamado}) as 'Qtde_Chamados' from Chamado group by nomeEmp;
+        `;
+
+    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
+        instrucaoSql = `select nomeEmp, count(idChamado) as 'Qtde_Chamados' from Chamado group by nomeEmp;
+        `;
+    }
+    else {
+
+        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
+        return
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
+function buscarMedidasEmTempoRealAnalise(idChamado) {
+
+    instrucaoSql = ''
+
+    if (process.env.AMBIENTE_PROCESSO == "producao") {
+        instrucaoSql = `select nomeEmp, count(${idChamado}) as 'Qtde_Chamados' from Chamado group by nomeEmp;
+        `;
+
+    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
+        instrucaoSql = `select nomeEmp, count(idChamado) as 'Qtde_Chamados' from Chamado group by nomeEmp;`;
+
+    }
+    else {
+        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
+        return
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+} 
+
+function obterDadosComponentes(idChamado,nomeEmp) {
+
+    instrucaoSql = ''
+
+    if (process.env.AMBIENTE_PROCESSO == "producao") {
+        instrucaoSql = `select componente, count((case when metrica = 'Alerta' then metrica end)) as Alerta, count((case when metrica = 'Emergência' then metrica end)) as Emergência, count((case when metrica = 'Crítico' then metrica end)) as Crítico from Chamado where nomeEmp = '${nomeEmp}' group by componente;
+        `;
+
+    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
+        instrucaoSql = `select nomeEmp, count(idChamado) as 'Qtde_Chamados' from Chamado group by nomeEmp;`;
+
+    }
+    else {
+        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
+        return
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+} 
+
+// FINALIZAÇÃO ROTAS CHAMADOS
+
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
-    buscarMedidas
+    buscarMedidas, 
+    buscarUltimasMedidasAnalise,
+    buscarMedidasEmTempoRealAnalise,
+    // obterDadosComponentes
 }

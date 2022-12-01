@@ -50,7 +50,8 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="analise_dash.html" target="_blank">
+                <a class="nav-link"
+                    href="javascript:IrAnalise(sessionStorage.nomeEmp,sessionStorage.COD_EMPRESA,sessionStorage.permissaoUser)">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Análise de Notificações</span></a>
             </li>
@@ -315,10 +316,10 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Análise das Notificações</h1> 
-                        
+                        <h1 class="h3 mb-0 text-gray-800">Análise das Notificações</h1>
 
-                        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="atualizarGrafico(1)">Máquina 1</button>
+                        <!-- 
+                        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="atualizarGraficoChamado(1)">Máquina 1</button> -->
                         <!-- <a href="maquina2.html"><button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Máquina 2</button></a>
                         <a href="maquina3.html"><button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Máquina 3</button></a> -->
 
@@ -355,7 +356,7 @@
                                 <div class="card-body">
                                     <div class="chart-area">
                                         <section class="graficoPercent">
-                                            <canvas id="myChartPercent"></canvas>
+                                            <canvas id="myChartGeral"></canvas>
                                         </section>
                                     </div>
                                 </div>
@@ -390,9 +391,7 @@
                                 <!-- Grafico FreqCpu -->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <section class="graficoFreq">
-                                            <canvas id="myChartFreq"></canvas>
-                                        </section>
+                                            <canvas id="myChartAnaliseCPU"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -427,9 +426,7 @@
                                 <!-- Gráfico Memória-->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <section class="graficoDisco">
-                                            <canvas id="myChartDisco"></canvas>
-                                        </section>
+                                            <canvas id="myChartDISCO"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -462,9 +459,7 @@
                                 <!-- Gráfico Disco -->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <section class="graficoMemoria">
-                                            <canvas id="myChartMemoria"></canvas>
-                                        </section>
+                                            <canvas id="myChartAnaliseRAM"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -634,24 +629,33 @@
 
     let proximaAtualizacao;
 
-    window.onload = obterDadosGrafico(1);
-    
+    window.onload = obterDadosGraficoAnalise(1), obterDadosComponentes();
 
-    function obterDadosGrafico(idServidor) {
-        //        alterarTitulo(idServidor)
+
+    function obterDadosGraficoAnalise(idChamado) {
+        //        alterarTitulo(idChamado)
+        let vetor_empresas = []
+        let vetor_qtd = []
 
         if (proximaAtualizacao != undefined) {
             clearTimeout(proximaAtualizacao);
         }
 
-        fetch(`/medidas/ultimas/${idServidor}`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidas/ultimasAnalise/${idChamado}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     resposta.reverse();
 
 
-                    plotarGrafico(resposta, idServidor);
+
+                    resposta.forEach(element => {
+                        vetor_empresas.push(element.nomeEmp)
+                        vetor_qtd.push(element.Qtde_Chamados)
+                    })
+
+
+                    plotarGrafico(vetor_empresas, 'myChartGeral', vetor_qtd);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -664,30 +668,70 @@
 
     // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
     // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
-    // A função *plotarGrafico* também invoca a função *atualizarGrafico*
-    function plotarGrafico(resposta, idServidor) {
+    // A função *plotarGrafico* também invoca a função *atualizarGraficoChamado*
+
+
+    function plotarGrafico(label, idCanva, vetor_qtd) {
         console.log('iniciando plotagem do gráfico...');
 
-        var dadosCpu = {
-            labels: [],
-            datasets: [
-                {
-                    yAxisID: 'y-Percentual',
-                    label: 'Percentual-Cpu',
-                    borderColor: '#4e73df',
-                    backgroundColor: '#858796',
-                    fill: true,
-                    data: []
-                },
+        var ctx = document.getElementById(idCanva).getContext('2d');
 
 
-            ]
+        const data = {
+            labels: label,
+            datasets: [{
+                label: 'Quantidade de Chamados',
+                data: vetor_qtd,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
 
+                borderWidth: 1
+            }]
         };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        };
+
+
+        // var dadosEmpresas = {
+        //     labels: label,
+        //     datasets: [
+        //         {
+        //             yAxisID: 'y-QtdeChamados',
+        //             label: 'Empresas Geral',
+        //             borderColor: '#4e73df',
+        //             backgroundColor: '#858796',
+        //             fill: true,
+        //             data: []
+        //         },
+
+
+        //     ]
+
+        // };
+
+
+
 
         // Criação criação gráfico
 
-        var dadosFreq = {
+        var dadosACPU = {
             labels: [],
             datasets: [
                 {
@@ -708,7 +752,7 @@
 
         // Criação dos dados disco
 
-        var dadosDisco = {
+        var dadosADISCO = {
             labels: [],
             datasets: [
                 {
@@ -724,7 +768,7 @@
 
         };
 
-        var dadosMemoria = {
+        var dadosAMEMORIA = {
             labels: [],
             datasets: [
                 {
@@ -740,36 +784,36 @@
 
         };
 
+        // labels puxa os valores d
+        // for (i = 0; i < resposta.length; i++) {
+        //     var registro = resposta[i];
+        //     dadosEmpresas.labels.push(registro.nomeEmp);
+        //     dadosEmpresas.datasets[0].data.push(registro.idChamado);
 
-        for (i = 0; i < resposta.length; i++) {
-            var registro = resposta[i];
-            dadosCpu.labels.push(registro.horario);
-            dadosCpu.datasets[0].data.push(registro.percentualCpu);
+        // dadosACPU.labels.push(registro.metrica);
+        // dadosACPU.datasets[0].data.push(registro.Qtde_CPU);
 
-            dadosFreq.labels.push(registro.horario);
-            dadosFreq.datasets[0].data.push(registro.freqAtual);
+        // dadosADISCO.labels.push(registro.metrica);
+        // dadosADISCO.datasets[0].data.push(registro.Qtde_Disco);
 
-            dadosDisco.labels.push(registro.horario);
-            dadosDisco.datasets[0].data.push(registro.discoUsado);
-
-            dadosMemoria.labels.push(registro.horario);
-            dadosMemoria.datasets[0].data.push(registro.discoUsado);
-
-
+        // dadosAMEMORIA.labels.push(registro.metrica);
+        // dadosAMEMORIA.datasets[0].data.push(registro.Qtde_Memoria);
 
 
-            //function sumirMensagem() {
-            //alerta_div.style.display = "none"
-            //   i_alerta.style.display = "none"
-            //alerta_memoria.style.display = "none"
-            // i_alertaMemoria.style.display = "none"
-        }
+
+
+        //function sumirMensagem() {
+        //alerta_div.style.display = "none"
+        //   i_alerta.style.display = "none"
+        //alerta_memoria.style.display = "none"
+        // i_alertaMemoria.style.display = "none"
+        //}
 
         //}
 
-        console.log(JSON.stringify(dadosCpu));
+        console.log(JSON.stringify(data));
 
-        var cpuAtual = {
+        var chamadosEmp = {
 
             responsive: true,
             animation: { duration: 500 },
@@ -781,7 +825,7 @@
             },
             scales: {
                 yAxes: [{
-                    type: 'linear',
+                    type: 'bar',
                     display: true,
                     position: 'left',
                     id: 'Frequência',
@@ -791,7 +835,7 @@
                         min: 0
                     }
                 }, {
-                    type: 'linear',
+                    type: 'bar',
                     display: false,
                     position: 'right',
                     id: 'Frequência',
@@ -810,417 +854,641 @@
 
         //   Criação gráfico freq
 
-        var freqAtual = {
+        // var analiseCPU = {
 
-            responsive: true,
-            animation: { duration: 500 },
-            hoverMode: 'index',
-            stacked: false,
-            title: {
-                display: false,
-                text: 'Dados capturados'
-            },
-            scales: {
-                yAxes: [{
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-                    id: 'Frequência',
-                    ticks: {
-                        beginAtZero: true,
-                        max: 100,
-                        min: 0
-                    }
-                }, {
-                    type: 'linear',
-                    display: false,
-                    position: 'right',
-                    id: 'Frequência',
-                    ticks: {
-                        beginAtZero: true,
-                        max: 100,
-                        min: 0
-                    },
+        //     responsive: true,
+        //     animation: { duration: 500 },
+        //     hoverMode: 'index',
+        //     stacked: false,
+        //     title: {
+        //         display: false,
+        //         text: 'Dados capturados'
+        //     },
+        //     scales: {
+        //         yAxes: [{
+        //             type: 'linear',
+        //             display: true,
+        //             position: 'left',
+        //             id: 'Frequência',
+        //             ticks: {
+        //                 beginAtZero: true,
+        //                 max: 100,
+        //                 min: 0
+        //             }
+        //         }, {
+        //             type: 'linear',
+        //             display: false,
+        //             position: 'right',
+        //             id: 'Frequência',
+        //             ticks: {
+        //                 beginAtZero: true,
+        //                 max: 100,
+        //                 min: 0
+        //             },
 
-                    gridLines: {
-                        drawOnChartArea: false,
-                    },
-                }],
-            }
-        }
-        // Final da criação da frequência 
-
-
-        // Criação gráfico disco
-        var discoAtual = {
-
-            responsive: true,
-            animation: { duration: 500 },
-            hoverMode: 'index',
-            stacked: false,
-            title: {
-                display: false,
-                text: 'Dados capturados'
-            },
-            scales: {
-                yAxes: [{
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-                    id: 'Disco',
-                    ticks: {
-                        beginAtZero: true,
-                        max: 100,
-                        min: 0
-                    }
-                }, {
-                    type: 'linear',
-                    display: false,
-                    position: 'right',
-                    id: 'Disco',
-                    ticks: {
-                        beginAtZero: true,
-                        max: 100,
-                        min: 0
-                    },
-
-                    gridLines: {
-                        drawOnChartArea: false,
-                    },
-                }],
-            }
-        }
+        //             gridLines: {
+        //                 drawOnChartArea: false,
+        //             },
+        //         }],
+        //     }
+        // }
+        // // Final da criação da frequência 
 
 
-        var memoriaAtual = {
+        // // Criação gráfico disco
+        // var analiseDISC = {
 
-            responsive: true,
-            animation: { duration: 500 },
-            hoverMode: 'index',
-            stacked: false,
-            title: {
-                display: false,
-                text: 'Dados capturados'
-            },
-            scales: {
-                yAxes: [{
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-                    id: 'Memória',
-                    ticks: {
-                        beginAtZero: true,
-                        max: 100,
-                        min: 0
-                    }
-                }, {
-                    type: 'linear',
-                    display: false,
-                    position: 'right',
-                    id: 'Memória',
-                    ticks: {
-                        beginAtZero: true,
-                        max: 100,
-                        min: 0
-                    },
+        //     responsive: true,
+        //     animation: { duration: 500 },
+        //     hoverMode: 'index',
+        //     stacked: false,
+        //     title: {
+        //         display: false,
+        //         text: 'Dados capturados'
+        //     },
+        //     scales: {
+        //         yAxes: [{
+        //             type: 'linear',
+        //             display: true,
+        //             position: 'left',
+        //             id: 'Disco',
+        //             ticks: {
+        //                 beginAtZero: true,
+        //                 max: 100,
+        //                 min: 0
+        //             }
+        //         }, {
+        //             type: 'linear',
+        //             display: false,
+        //             position: 'right',
+        //             id: 'Disco',
+        //             ticks: {
+        //                 beginAtZero: true,
+        //                 max: 100,
+        //                 min: 0
+        //             },
 
-                    gridLines: {
-                        drawOnChartArea: false,
-                    },
-                }],
-            }
-        }
+        //             gridLines: {
+        //                 drawOnChartArea: false,
+        //             },
+        //         }],
+        //     }
+        // }
+
+
+        // var analiseMEM = {
+
+        //     responsive: true,
+        //     animation: { duration: 500 },
+        //     hoverMode: 'index',
+        //     stacked: false,
+        //     title: {
+        //         display: false,
+        //         text: 'Dados capturados'
+        //     },
+        //     scales: {
+        //         yAxes: [{
+        //             type: 'linear',
+        //             display: true,
+        //             position: 'left',
+        //             id: 'Memória',
+        //             ticks: {
+        //                 beginAtZero: true,
+        //                 max: 100,
+        //                 min: 0
+        //             }
+        //         }, {
+        //             type: 'linear',
+        //             display: false,
+        //             position: 'right',
+        //             id: 'Memória',
+        //             ticks: {
+        //                 beginAtZero: true,
+        //                 max: 100,
+        //                 min: 0
+        //             },
+
+        //             gridLines: {
+        //                 drawOnChartArea: false,
+        //             },
+        //         }],
+        //     }
+        // }
         // Finalização gráfico disco
 
 
+        let myChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+        });
         // Criação gráfico percentual da CPU
-        window.grafico_linha = new Chart(myChartPercent, {
-            type: "line",
-            data: dadosCpu,
-            options: cpuAtual
-        });
-        // Finalização do gráfico percentual da CPU
+        
 
+        
+        setTimeout(() => atualizarGraficoAnalise(data,myChart,idCanva), 5000);
 
-        // Criação gráfico da freq da CPU
-        window.grafico_linha2 = new Chart(myChartFreq, {
-            type: "line",
-            data: dadosFreq,
-            options: freqAtual
-        });
-
-        // Finalização gráfico freq da cpu
-
-        // Criação gráfico memória
-        window.grafico_linha3 = new Chart(myChartDisco, {
-            type: "line",
-            data: dadosDisco,
-            options: discoAtual
-        });
-        // Finalização gráfico memória
-
-        // Criação do gráfico disco
-
-        // Finalização do gráfico disco
-
-        // Criação do gráfico disco
-        window.grafico_linha4 = new Chart(myChartMemoria, {
-            type: "line",
-            data: dadosMemoria,
-            options: memoriaAtual
-        });
-        // Finalização do gráfico disco  
-
-
-        setTimeout(() => atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria), 2000);
     }
-      
 
-    window.onload = atualizarGrafico(1);
-    
-    function atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria) {
-        let componente = ""
-        let maquina = ""
-        let frase = ""
-        let metrica = ""
-        fetch(`/medidas/tempo-real/${idServidor}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (novoRegistro) {
-
-                    console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-                    console.log(`Dados atuais do gráfico: ${dadosCpu} e ${dadosFreq} e ${dadosDisco} e ${dadosMemoria}`);
-
-                    dadosCpu.labels.shift();
-                    dadosCpu.labels.push(novoRegistro[0].horario);
-
-                    dadosCpu.datasets[0].data.shift();
-                    dadosCpu.datasets[0].data.push(novoRegistro[0].percentualCpu);
-
-                    // Criando o alerta do percentual da CPU 
-                    if (novoRegistro[0].percentualCpu >= 60 && novoRegistro[0].percentualCpu < 80) {
-                        componente = "CPU"
-                        maquina = "1" 
-                        frase = "Alerta"
-                        metrica = `${novoRegistro[0].percentualCpu} %`
-
-                        alerta_div.style.display = "block"
-                        alerta_div.style.backgroundColor = "yellow"
-                        alerta_div.style.borderColor = "yellow"
-                        i_alerta.innerHTML = "CPU em estado de alerta! Cuidado!"
-
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-                        setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
-                    }
-
-                    if (novoRegistro[0].percentualCpu >= 80 && novoRegistro[0].percentualCpu < 90) {
-                        componente = "CPU"
-                        maquina = "1"
-                        frase = "Emergência"
-                        metrica = `${novoRegistro[0].percentualCpu} %`
-
-                        alerta_div.style.display = "block"
-                        alerta_div.style.backgroundColor = "orange"
-                        alerta_div.style.borderColor = "orange"
-                        i_alerta.innerHTML = "CPU em estado de emergência! Cuidado!"
-
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-                        setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
-                    }
+    // Finalização do gráfico percentual da CPU
 
 
-                    if (novoRegistro[0].percentualCpu > 90) {
-                        componente = "CPU"
-                        maquina = "1"
-                        frase = "Crítico"
-                        metrica = `${novoRegistro[0].percentualCpu} %`
+    // Criação gráfico da freq da CPU
+    // window.grafico_linha2 = new Chart(myChartAnaliseCPU, {
+    //     type: "line",
+    //     data: dadosACPU,
+    //     options: analiseCPU
+    // });
 
-                        alerta_div.style.display = "block"
-                        alerta_div.style.backgroundColor = "red"
-                        alerta_div.style.borderColor = "red"
-                        i_alerta.innerHTML = "CPU em estado crítico! Cuidado!"
+    // Finalização gráfico freq da cpu
 
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+    // Criação gráfico memória
+    // window.grafico_linha3 = new Chart(myChartAnaliseRAM, {
+    //     type: "line",
+    //     data: dadosADISCO,
+    //     options: analiseDISC
+    // });
+    // Finalização gráfico memória
 
-                        setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
-                    }
+    // Criação do gráfico disco
+
+    // Finalização do gráfico disco
+
+    // Criação do gráfico disco
+    // window.grafico_linha4 = new Chart(myChartDISCO, {
+    //     type: "line",
+    //     data: dadosAMEMORIA,
+    //     options: analiseMEM
+    // });
+    // Finalização do gráfico disco  
+
+
+    // setTimeout(() => atualizarGraficoAnalise(idChamado, dadosEmpresas), 2000);
 
 
 
-                    dadosFreq.labels.shift();
-                    dadosFreq.labels.push(novoRegistro[0].horario);
+    // window.onload = atualizarGraficoAnalise(1);
 
-                    dadosFreq.datasets[0].data.shift();
-                    dadosFreq.datasets[0].data.push(novoRegistro[0].freqAtual);
+    function atualizarGraficoAnalise(data,myChart,idCanva) {
+        // let componente = ""
+        // let maquina = ""
+        // let frase = ""
+        // let metrica = ""
+        // fetch(`/medidas/tempo-real-Analise/${idChamado}`, { cache: 'no-store' }).then(function (response) {
+        //     if (response.ok) {
+        //         response.json().then(function (novoRegistro) {
 
-                    // Criando o alerta da frequencial atual da CPU    
+        //             console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+        //             console.log(`Dados atuais do gráfico: ${dadosEmpresas}`);
 
-                    dadosDisco.labels.shift();
-                    dadosDisco.labels.push(novoRegistro[0].horario);
+        //             // dadosEmpresas.labels.shift();
+        //             dadosEmpresas.labels.push(novoRegistro[0].nomeEmp);
 
-                    dadosDisco.datasets[0].data.shift();
-                    dadosDisco.datasets[0].data.push(novoRegistro[0].discoUsado);
-                    // Alertas do disco
+        //             // dadosEmpresas.datasets[0].data.shift();
+        //             dadosEmpresas.datasets[0].data.push(novoRegistro[0].idChamado);
 
-                    if (novoRegistro[0].discoUsado >= 200 && novoRegistro[0].discoUsado < 220) {
-                        componente = "Disco"
-                        maquina = "1"
-                        frase = "Alerta"
-                        metrica = novoRegistro[0].discoUsado
+        //             // Criando o alerta do percentual da CPU 
+        //             // if (novoRegistro[0].percentualCpu >= 60 && novoRegistro[0].percentualCpu < 80) {
+        //             //     componente = "CPU"
+        //             //     maquina = "1" 
+        //             //     frase = "Alerta"
+        //             //     metrica = `${novoRegistro[0].percentualCpu} %`
 
-                        alerta_disco.style.display = "block"
-                        alerta_disco.style.backgroundColor = "yellow"
-                        alerta_disco.style.borderColor = "yellow"
-                        i_alertaDisco.innerHTML = "Disco está em estado de alerta! Cuidado!"
+        //             //     alerta_div.style.display = "block"
+        //             //     alerta_div.style.backgroundColor = "yellow"
+        //             //     alerta_div.style.borderColor = "yellow"
+        //             //     i_alerta.innerHTML = "CPU em estado de alerta! Cuidado!"
 
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
-                        setTimeout(() => sumirMensagem(idServidor, dadosDisco), 2000);
-                    }
+        //             //     setTimeout(() => sumirMensagem(idChamado, dadosEmpresas), 2000);
+        //             // }
 
-                    if (novoRegistro[0].discoUsado >= 220 && novoRegistro[0].discoUsado < 240) {
-                        componente = "Disco"
-                        maquina = "1"
-                        frase = "Emergência"
-                        metrica = novoRegistro[0].discoUsado
+        //             // if (novoRegistro[0].percentualCpu >= 80 && novoRegistro[0].percentualCpu < 90) {
+        //             //     componente = "CPU"
+        //             //     maquina = "1"
+        //             //     frase = "Emergência"
+        //             //     metrica = `${novoRegistro[0].percentualCpu} %`
 
-                        alerta_disco.style.display = "block"
-                        alerta_disco.style.backgroundColor = "orange"
-                        alerta_disco.style.borderColor = "orange"
-                        i_alertaDisco.innerHTML = "Disco está em estado de emergência! Cuidado!"
+        //             //     alerta_div.style.display = "block"
+        //             //     alerta_div.style.backgroundColor = "orange"
+        //             //     alerta_div.style.borderColor = "orange"
+        //             //     i_alerta.innerHTML = "CPU em estado de emergência! Cuidado!"
 
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
-                        setTimeout(() => sumirMensagem(idServidor, dadosDisco), 2000);
-                    }
-
-                    if (novoRegistro[0].discoUsado > 240) {
-                        componente = "Disco"
-                        maquina = "1"
-                        frase = "Crítico"
-                        metrica = novoRegistro[0].discoUsado
-
-                        alerta_disco.style.display = "block"
-                        alerta_disco.style.backgroundColor = "red"
-                        alerta_disco.style.borderColor = "red"
-                        i_alertaDisco.innerHTML = "Disco está em estado crítico! Cuidado!"
-
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-                        setTimeout(() => sumirMensagem(idServidor, dadosDisco), 2000);
-                    }
-
-                    // finalizando alertas do disco
+        //             //     setTimeout(() => sumirMensagem(idChamado, dadosEmpresas), 2000);
+        //             // }
 
 
-                    dadosMemoria.labels.shift();
-                    dadosMemoria.labels.push(novoRegistro[0].horario);
+        //             // if (novoRegistro[0].percentualCpu > 90) {
+        //             //     componente = "CPU"
+        //             //     maquina = "1"
+        //             //     frase = "Crítico"
+        //             //     metrica = `${novoRegistro[0].percentualCpu} %`
 
-                    dadosMemoria.datasets[0].data.shift();
-                    dadosMemoria.datasets[0].data.push(novoRegistro[0].memoriaUsada);
+        //             //     alerta_div.style.display = "block"
+        //             //     alerta_div.style.backgroundColor = "red"
+        //             //     alerta_div.style.borderColor = "red"
+        //             //     i_alerta.innerHTML = "CPU em estado crítico! Cuidado!"
 
-                    if (novoRegistro[0].memoriaUsada >= 6 && novoRegistro[0].memoriaUsada < 12) {
-                        componente = "RAM"
-                        maquina = "1"
-                        frase = "Alerta"
-                        metrica = novoRegistro[0].memoriaUsada
+        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
-                        alerta_memoria.style.display = "block"
-                        alerta_memoria.style.backgroundColor = "yellow"
-                        alerta_memoria.style.borderColor = "yellow"
-                        i_alertaMemoria.innerHTML = "Memória RAM em estado de alerta! Cuidado!"
-
-
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-                        setTimeout(() => sumirMensagem(idServidor, dadosMemoria), 2000);
-                    }
-                    if (novoRegistro[0].memoriaUsada >= 12 && novoRegistro[0].memoriaUsada < 14) {
-                        componente = "RAM"
-                        maquina = "1"
-                        frase = "Emergência"
-                        metrica = novoRegistro[0].memoriaUsada
-
-                        alerta_memoria.style.display = "block"
-                        alerta_memoria.style.backgroundColor = "orange"
-                        alerta_memoria.style.borderColor = "orange"
-                        i_alertaMemoria.innerHTML = "Memória RAM em estado de emergência! Cuidado!"
-
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-                        setTimeout(() => sumirMensagem(idServidor, dadosMemoria), 2000);
-                    }
-
-                    if (novoRegistro[0].memoriaUsada > 14) {
-                        componente = "RAM"
-                        maquina = "1"
-                        frase = "Crítico"
-                        metrica = novoRegistro[0].memoriaUsada
-
-                        alerta_memoria.style.display = "block"
-                        alerta_memoria.style.backgroundColor = "red"
-                        alerta_memoria.style.borderColor = "red"
-                        i_alertaMemoria.innerHTML = "Memória RAM em estado crítico! Cuidado!"
-
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-                        setTimeout(() => sumirMensagem(idServidor, dadosMemoria), 2000);
-                    }
+        //             //     setTimeout(() => sumirMensagem(idChamado, dadosEmpresas), 2000);
+        //             // }
 
 
 
-                    window.grafico_linha.update();
-                    window.grafico_linha2.update();
-                    window.grafico_linha3.update();
-                    window.grafico_linha4.update();
+        //             dadosACPU.labels.shift();
+        //             dadosACPU.labels.push(novoRegistro[0].componente);
+
+        //             dadosACPU.datasets[0].data.shift();
+        //             dadosACPU.datasets[0].data.push(novoRegistro[0].Qtde_CPU);
+
+        //             // Criando o alerta da frequencial atual da CPU    
+
+        //             dadosADISCO.labels.shift();
+        //             dadosADISCO.labels.push(novoRegistro[0].componente);
+
+        //             dadosADISCO.datasets[0].data.shift();
+        //             dadosADISCO.datasets[0].data.push(novoRegistro[0].Qtde_Disco);
+        //             // Alertas do disco
+
+        //             // if (novoRegistro[0].discoUsado >= 200 && novoRegistro[0].discoUsado < 220) {
+        //             //     componente = "Disco"
+        //             //     maquina = "1"
+        //             //     frase = "Alerta"
+        //             //     metrica = novoRegistro[0].discoUsado
+
+        //             //     alerta_disco.style.display = "block"
+        //             //     alerta_disco.style.backgroundColor = "yellow"
+        //             //     alerta_disco.style.borderColor = "yellow"
+        //             //     i_alertaDisco.innerHTML = "Disco está em estado de alerta! Cuidado!"
+
+        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+        //             //     setTimeout(() => sumirMensagem(idChamado, dadosADISCO), 2000);
+        //             // }
+
+        //             // if (novoRegistro[0].discoUsado >= 220 && novoRegistro[0].discoUsado < 240) {
+        //             //     componente = "Disco"
+        //             //     maquina = "1"
+        //             //     frase = "Emergência"
+        //             //     metrica = novoRegistro[0].discoUsado
+
+        //             //     alerta_disco.style.display = "block"
+        //             //     alerta_disco.style.backgroundColor = "orange"
+        //             //     alerta_disco.style.borderColor = "orange"
+        //             //     i_alertaDisco.innerHTML = "Disco está em estado de emergência! Cuidado!"
+
+        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+        //             //     setTimeout(() => sumirMensagem(idChamado, dadosADISCO), 2000);
+        //             // }
+
+        //             // if (novoRegistro[0].discoUsado > 240) {
+        //             //     componente = "Disco"
+        //             //     maquina = "1"
+        //             //     frase = "Crítico"
+        //             //     metrica = novoRegistro[0].discoUsado
+
+        //             //     alerta_disco.style.display = "block"
+        //             //     alerta_disco.style.backgroundColor = "red"
+        //             //     alerta_disco.style.borderColor = "red"
+        //             //     i_alertaDisco.innerHTML = "Disco está em estado crítico! Cuidado!"
+
+        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+        //             //     setTimeout(() => sumirMensagem(idChamado, dadosADISCO), 2000);
+        //             // }
+
+        //             // finalizando alertas do disco
+
+
+        //             dadosAMEMORIA.labels.shift();
+        //             dadosAMEMORIA.labels.push(novoRegistro[0].componente);
+
+        //             dadosAMEMORIA.datasets[0].data.shift();
+        //             dadosAMEMORIA.datasets[0].data.push(novoRegistro[0].Qtde_Memoria);
+
+        //             // if (novoRegistro[0].memoriaUsada >= 6 && novoRegistro[0].memoriaUsada < 12) {
+        //             //     componente = "RAM"
+        //             //     maquina = "1"
+        //             //     frase = "Alerta"
+        //             //     metrica = novoRegistro[0].memoriaUsada
+
+        //             //     alerta_memoria.style.display = "block"
+        //             //     alerta_memoria.style.backgroundColor = "yellow"
+        //             //     alerta_memoria.style.borderColor = "yellow"
+        //             //     i_alertaMemoria.innerHTML = "Memória RAM em estado de alerta! Cuidado!"
+
+
+        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+        //             //     setTimeout(() => sumirMensagem(idChamado, dadosAMEMORIA), 2000);
+        //             // }
+        //             // if (novoRegistro[0].memoriaUsada >= 12 && novoRegistro[0].memoriaUsada < 14) {
+        //             //     componente = "RAM"
+        //             //     maquina = "1"
+        //             //     frase = "Emergência"
+        //             //     metrica = novoRegistro[0].memoriaUsada
+
+        //             //     alerta_memoria.style.display = "block"
+        //             //     alerta_memoria.style.backgroundColor = "orange"
+        //             //     alerta_memoria.style.borderColor = "orange"
+        //             //     i_alertaMemoria.innerHTML = "Memória RAM em estado de emergência! Cuidado!"
+
+        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+        //             //     setTimeout(() => sumirMensagem(idChamado, dadosAMEMORIA), 2000);
+        //             // }
+
+        //             // if (novoRegistro[0].memoriaUsada > 14) {
+        //             //     componente = "RAM"
+        //             //     maquina = "1"
+        //             //     frase = "Crítico"
+        //             //     metrica = novoRegistro[0].memoriaUsada
+
+        //             //     alerta_memoria.style.display = "block"
+        //             //     alerta_memoria.style.backgroundColor = "red"
+        //             //     alerta_memoria.style.borderColor = "red"
+        //             //     i_alertaMemoria.innerHTML = "Memória RAM em estado crítico! Cuidado!"
+
+        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+        //             //     setTimeout(() => sumirMensagem(idChamado, dadosAMEMORIA), 2000);
+        //             // }
+
+
+
+        //             window.grafico_linha.update();
+        //             // window.grafico_linha2.update();
+        //             // window.grafico_linha3.update();
+        //             // window.grafico_linha4.update();
 
 
 
 
-                    function sumirMensagem() {
-                        alerta_div.style.display = "none"
-                        // i_alerta.style.display = "none"
-                        alerta_memoria.style.display = "none"
-                        // i_alertaMemoria.style.display = "none"
-                    }
+        //             function sumirMensagem() {
+        //                 alerta_div.style.display = "none"
+        //                 // i_alerta.style.display = "none"
+        //                 alerta_memoria.style.display = "none"
+        //                 // i_alertaMemoria.style.display = "none"
+        //             }
 
-                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria), 2000);
+        //             proximaAtualizacao = setTimeout(() => atualizarGraficoAnalise(idChamado, dadosEmpresas), 2000);
+        //         });
+        //     } else {
+        //         console.error('Nenhum dado encontrado ou erro na API');
+        //         proximaAtualizacao = setTimeout(() => atualizarGraficoAnalise(idChamado, dadosEmpresas), 2000);
+        //     }
+        // })
+        //     .catch(function (error) {
+        //         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        //     });
+
+    }
+
+
+    // GRÁFICOS COMPONENTES 
+    function obterDadosComponentes() {
+
+        let nomeEmpresa = sessionStorage.nomeEmp;
+
+        console.log(nomeEmpresa)
+
+        let vetor_componente = []
+        let vetor_alerta = []
+        let vetor_emergencia = []
+        let vetor_critico = []
+
+        fetch("/usuarios/obterDadosComponentes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nomeEmpresaServer: nomeEmpresa,
+
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                console.log(resposta)
+                console.log(`Enviados para o banco com sucesso!`)
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+
+                    json.forEach(element => {
+                        console.log("TO DENTRO DO FOREACH")
+                        vetor_componente.push(element.componente)
+                        vetor_alerta.push(element.Alerta)
+                        vetor_emergencia.push(element.Emergência)
+                        vetor_critico.push(element.Crítico)
+                    });
                 });
+                console.log(vetor_componente)
+                console.log(vetor_alerta)
+                console.log(vetor_emergencia)
+                console.log(vetor_critico)
+
             } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-                proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria), 2000);
+
+                console.log(`Falha ao enviar para o banco!`)
             }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+
+        console.log("ANTES DA PLOTA CPU")
+        setTimeout(() => plotarGraficoCPU1(vetor_componente, 'myChartAnaliseCPU', vetor_alerta, vetor_emergencia, vetor_critico), 1000);
+        console.log("DEPOIS DA PLOTAR CPU")
+
+        console.log("ANTES DA PLOTAR DISCO")
+        setTimeout(() => plotarGraficoDISCO2(vetor_componente, 'myChartDISCO', vetor_alerta, vetor_emergencia, vetor_critico), 1000);
+        console.log("DEPOIS DA PLOTAR DISCO")
+
+        console.log("ANTES DA PLOTAR RAM")
+        setTimeout(() => plotarGraficoRAM3(vetor_componente, 'myChartAnaliseRAM', vetor_alerta, vetor_emergencia, vetor_critico), 1000);
+        console.log("DEPOIS DA PLOTAR RAM")
+    }
+
+
+// PLOTAGEM GRÁFICO ANÁLISE DA CPU 
+    function plotarGraficoCPU1(vetor_componente, idCanva, vetor_alerta, vetor_emergencia, vetor_critico) {
+        console.log("PLOTEI TOMA")
+        console.log(vetor_alerta[0])
+
+        var ctx = document.getElementById(idCanva).getContext('2d');
+
+        const data = {
+            labels: [
+                'Alerta',
+                'Emergência',
+                'Crítico'
+            ],
+            datasets: [{
+                label: 'Qtde Chamados',
+                data: [(vetor_alerta[0]),(vetor_emergencia[0]),(vetor_critico[0])],
+                backgroundColor: [
+                    'yellow',
+                    'orange',
+                    'red'
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        console.log(data)
+
+
+        let myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+        });
+
+        setTimeout(() => atualizarGraficosComponentes(data,myChart,idCanva), 20000);
 
     }
 
+// PLOTAGEM GRÁFICO ANÁLISE DO DISCO 
+    function plotarGraficoDISCO2(vetor_componente, idCanva, vetor_alerta, vetor_emergencia, vetor_critico) {
+        console.log("PLOTEI TOMA")
+        console.log(vetor_alerta[1])
+
+        var ctx = document.getElementById(idCanva);
+
+        const data = {
+            labels: [
+                'Alerta',
+                'Emergência',
+                'Crítico'
+            ],
+            datasets: [{
+                label: 'Qtde Chamados',
+                data: [(vetor_alerta[1]),(vetor_emergencia[1]),(vetor_critico[1])],
+                backgroundColor: [
+                    'yellow',
+                    'orange',
+                    'red'
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        console.log(data)
+
+
+        let myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+        });
+
+        setTimeout(() => atualizarGraficosComponentes(data,myChart,idCanva), 20000);
+
+    }
+
+// PLOTAGEM GRÁFICO ANÁLISE DA RAM
+    function plotarGraficoRAM3(vetor_componente, idCanva, vetor_alerta, vetor_emergencia, vetor_critico) {
+        console.log("PLOTEI TOMA")
+        console.log(vetor_alerta[2])
+
+        var ctx = document.getElementById(idCanva).getContext('2d');
+
+        const data = {
+            labels: [
+                'Alerta',
+                'Emergência',
+                'Crítico'
+            ],
+            datasets: [{
+                label: 'Qtde Chamados',
+                data: [(vetor_alerta[2]),(vetor_emergencia[2]),(vetor_critico[2])],
+                backgroundColor: [
+                    'yellow',
+                    'orange',
+                    'red'
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        console.log(data)
+
+
+
+        let myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+        });
+
+        setTimeout(() => atualizarGraficosComponentes(data,myChart,idCanva), 20000);
+
+    }
+
+    //ATUALIZAR GRÁFICOS COMPONENTES
+
+    function atualizarGraficosComponentes(data, myChart, idCanva){
+        
+        if(idCanva == 'myChartGeral'){
+        
+
+        myChart.destroy()
+        
+        
+        vetor_empresas = []
+        vetor_qtd = []
+
+        setTimeout (() => obterDadosGraficoAnalise(), 1000)
+       
+
+        } else if (idCanva == 'myChartDISCO' || idCanva == 'myChartAnaliseCPU' || idCanva == 'myChartAnaliseRAM') {
+            myChart.destroy()
+
+
+        vetor_componente = []
+        vetor_alerta = []
+        vetor_emergencia = []
+        vetor_critico = []
+        
+        setTimeout (() => obterDadosComponentes(), 1000)
+        }
+
+    }
+
+    // FUNÇÃO PIPEFY
     function alertas(nomeEmpresa, maquina, componente, metrica, frase) {
 
 
-            const options = {
-                method: 'POST',
-                headers: {
-                    accept: 'application/json',
-                    Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjozMDIwODI1MDksImVtYWlsIjoiZnJvbnR0aWVyQG91dGxvb2suY29tLmJyIiwiYXBwbGljYXRpb24iOjMwMDIxMjE0NH19.OHN0z_a9dbv4j7j7eDCwVvjP8XvsO8gZd7t89QaIKBivgioA6hM5v5DGLfyMZmZk1jThT3lYt4m01Aurl9yuww',
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    query: `mutation {           createCard(input: {             pipe_id:302659208,             title: "Card",             fields_attributes:[               {field_id: "empresa", field_value: "${nomeEmpresa}"},{field_id: "m_quina", field_value: "${maquina}"},{field_id: "componente", field_value: "${componente}"},{field_id: "m_trica", field_value: " ${frase}: ${metrica}"},              ],           }) {               card {                 title               }             }           }`
-                })
-            };
-            fetch('https://api.pipefy.com/graphql', options)
-                .then(response => response.json())
-                .then(response => console.log(response))
-                .catch(err => console.error(err));
-        }
+        const options = {
+            method: 'POST',
+            headers: {
+                accept: 'application/json',
+                Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjozMDIwODI1MDksImVtYWlsIjoiZnJvbnR0aWVyQG91dGxvb2suY29tLmJyIiwiYXBwbGljYXRpb24iOjMwMDIxMjE0NH19.OHN0z_a9dbv4j7j7eDCwVvjP8XvsO8gZd7t89QaIKBivgioA6hM5v5DGLfyMZmZk1jThT3lYt4m01Aurl9yuww',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                query: `mutation {           createCard(input: {             pipe_id:302659208,             title: "Card",             fields_attributes:[               {field_id: "empresa", field_value: "${nomeEmpresa}"},{field_id: "m_quina", field_value: "${maquina}"},{field_id: "componente", field_value: "${componente}"},{field_id: "m_trica", field_value: " ${frase}: ${metrica}"},              ],           }) {               card {                 title               }             }           }`
+            })
+        };
+        fetch('https://api.pipefy.com/graphql', options)
+            .then(response => response.json())
+            .then(response => console.log(response))
+            .catch(err => console.error(err));
+    }
 
 
+    function IrAnalise(nomeEmp, COD_EMPRESA, permissaoUser) {
+        sessionStorage.nomeEmp = nomeEmp
+        sessionStorage.COD_EMPRESA = COD_EMPRESA
+        sessionStorage.permissaoUser = permissaoUser
 
-    
+        window.open('../startbootstrap-sb-admin-2-gh-pages/analise_dash.html', '_blank')
+    }
+
+
     // Final da criação do gráfico da CPU 
 
 </script>

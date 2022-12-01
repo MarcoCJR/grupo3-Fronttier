@@ -75,9 +75,76 @@ function buscarMedidasEmTempoReal(req, res) {
     });
 }
 
+
+
+// ROTA CHAMADO
+function buscarMedidasAnalise(req, res) {
+
+    var idChamado = req.params.idChamado;
+
+    console.log(`Recuperando medidas em tempo real`);
+
+    medidaModel.buscarMedidasEmTempoRealAnalise(idChamado).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    }); 
+
+}
+
+function buscarMedidasEmTempoRealAnalise(req, res) {
+
+    var idChamado = req.params.idChamado;
+
+    console.log(`Recuperando medidas em tempo real`);
+
+    medidaModel.buscarMedidasEmTempoRealAnalise(idChamado).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    }); 
+
+}
+
+function obterDadosComponentes(req, res) {
+
+    var idChamado = req.params.idChamado;
+
+    console.log(`Recuperando medidas em tempo real`);
+
+    medidaModel.obterDadosComponentes(idChamado).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    }); 
+
+}
+
+
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
-    buscarMedidas
+    buscarMedidas,
+    buscarMedidasAnalise,
+    buscarMedidasEmTempoRealAnalise,
+    obterDadosComponentes
 
 }

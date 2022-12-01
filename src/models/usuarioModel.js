@@ -134,6 +134,15 @@ function alertas(nomeEmp, maquina, componente, metrica, frase) {
     return database.executar(instrucao);
 }
 
+function obterDadosComponentes(nomeEmpresa) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function obterDadosComponentes():", nomeEmpresa);
+
+    var instrucao = `select componente, count((case when metrica = 'Alerta' then metrica end)) as Alerta, count((case when metrica = 'Emergência' then metrica end)) as Emergência, count((case when metrica = 'Crítico' then metrica end)) as Crítico from Chamado where nomeEmp = '${nomeEmpresa}' group by componente;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     entrar,
     cadastrar,
@@ -145,5 +154,6 @@ module.exports = {
     cadastrarTecnico,
     cadastrarUserDash,
     nomeEmpresa,
-    alertas
+    alertas,
+    obterDadosComponentes
 };
