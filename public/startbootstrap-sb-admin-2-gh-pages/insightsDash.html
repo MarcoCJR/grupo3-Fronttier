@@ -23,9 +23,23 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
+
+    <style>
+        html, body, #myBarChart2 {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        }
+      </style> 
+
+
 </head>
 
 <body id="page-top">
+
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -49,9 +63,10 @@
                     <span>Dashboard - <span id="nomeEmp"></span></span></a>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+             <!-- Divider -->
+             <hr class="sidebar-divider my-0">
 
+            <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="insightsDash.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -295,15 +310,15 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-40"></i> Salvar </a>
+                        <h1 class="h3 mb-0 text-gray-800">INSIGHTS</h1>
+                        <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-40"></i> Salvar </a>-->
                     </div>
 
-                    <!-- Content Row CARDS -->
+                    <!-- Content Row CARDS
                     <div class="row">
 
-                        <!-- Earnings (Monthly) Card Example -->
+                         Earnings (Monthly) Card Example 
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
@@ -313,15 +328,15 @@
                                                 Frequência da CPU</div>
                                             <div id="freq_cpu" class="mb font-weight-bold text-gray-800">GHZ</div>
                                         </div>
-                                        <!-- <div class="col-auto">
+                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div> -->
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Earnings (Monthly) Card Example -->
+                         Earnings (Monthly) Card Example 
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
@@ -332,14 +347,14 @@
                                             <div id= "uso_cpu"class="h5 mb-0 font-weight-bold text-gray-800"> %</div>
                                         </div>
                                         <div class="col-auto">
-                                            <!-- <i class="fas fa-dollar-sign fa-2x text-gray-300"></i> -->
+                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i> 
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Earnings (Monthly) Card Example -->
+                         Earnings (Monthly) Card Example 
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
@@ -352,24 +367,24 @@
                                                 <div class="col-auto">
                                                     <div id="disco_usado" class="h5 mb-0 mr-3 font-weight-bold text-gray-800">%</div>
                                                 </div>
-                                                <!-- <div class="col">
+                                                <div class="col">
                                                     <div class="progress progress-sm mr-2">
                                                         <div class="progress-bar bg-info" role="progressbar"
                                                             style="width: 47%" aria-valuenow="50" aria-valuemin="0"
                                                             aria-valuemax="100"></div>
                                                     </div>
-                                                </div> -->
+                                                </div> 
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <!-- <i class="fas fa-clipboard-list fa-2x text-gray-300"></i> -->
+                                             <i class="fas fa-clipboard-list fa-2x text-gray-300"></i> 
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Pending Requests Card Example -->
+                         Pending Requests Card Example 
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
@@ -380,13 +395,13 @@
                                             <div id="memoria_usada" class="h5 mb-0 font-weight-bold text-gray-800">%</div>
                                         </div>
                                         <div class="col-auto">
-                                            <!-- <i class="fas fa-comments fa-2x text-gray-300"></i> -->
+                                             <i class="fas fa-comments fa-2x text-gray-300"></i> 
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Content Row -->
                     <div class="row">
@@ -396,38 +411,11 @@
                             <!-- Project Card Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Monitoramento</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">RECLAME AQUI</h6>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="small font-weight-bold">Frequência CPU<span
-                                            class="float-right">800gHz</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 50%"
-                                            aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Percentual CPU<span
-                                            class="float-right">40%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Disco Usado<span class="float-right">120Gb</span>
-                                    </h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar" role="progressbar" style="width: 60%"
-                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Memória Usada<span
-                                            class="float-right">10Gb</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
-                                            aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Saúde da máquina<span
-                                            class="float-right">100%!</span></h4>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
-                                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="chart-bar">
+                                        <div id="myBarChart2"></div>
                                     </div>
                                 </div>
                             </div>
@@ -437,11 +425,12 @@
                             <!-- Bar Chart -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Possíveis picos de acesso</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">PIPEFY</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="chart-bar">
-                                        <canvas id="myBarChart"></canvas>
+                                        &nbsp;
+                                        <canvas id="myChartChamados"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -520,47 +509,109 @@
 </html>
 <script>
 
+    anychart.onDocumentReady(function() {
+        var data = [
+            {"x": "Mandarin", "value": 1090000000, category: "Sino-Tibetan"},
+            {"x": "English", "value": 983000000, category: "Indo-European"},
+            {"x": "Hindustani", "value": 544000000, category: "Indo-European"},
+            {"x": "Spanish", "value": 527000000, category: "Indo-European"},
+            {"x": "Arabic", "value": 422000000, category: "Afro-Asiatic"},
+            {"x": "Malay", "value": 281000000, category: "Austronesian"},
+            {"x": "Russian", "value": 267000000, category: "Indo-European"},
+            {"x": "Bengali", "value": 261000000, category: "Indo-European"},
+            {"x": "Portuguese", "value": 229000000, category: "Indo-European"},
+            {"x": "French", "value": 229000000, category: "Indo-European"},
+            {"x": "Hausa", "value": 150000000, category: "Afro-Asiatic"},
+            {"x": "Punjabi", "value": 148000000, category: "Indo-European"},
+            {"x": "Japanese", "value": 129000000, category: "Japonic"},
+            {"x": "German", "value": 129000000, category: "Indo-European"},
+            {"x": "Persian", "value": 121000000, category: "Indo-European"}
+        ];
+
+        // create a tag (word) cloud chart
+        var chart = anychart.tagCloud(data);
+
+        // set a chart title
+        // chart.title('15 most spoken languages')
+        // set an array of angles at which the words will be laid out
+        chart.angles([0])
+        // enable a color range
+        chart.colorRange(true);
+        // set the color range length
+        chart.colorRange().length('50%');
+
+        chart.angles([0, 270])
+
+        // display the word cloud chart
+        chart.container("myBarChart2");
+        chart.draw();
+
+        chart.listen("pointClick", function(e){
+            var url = "https://en.wikipedia.org/wiki/" + e.point.get("x");
+            window.open(url, "_blank");
+        });
+
+    });
+
     usuario.innerHTML = sessionStorage.NOME_USUARIO;
-    nomeEmp.innerHTML = sessionStorage.nomeEmp
+    nomeEmp.innerHTML = sessionStorage.nomeEmp;
 
-    let proximaAtualizacao;
+    let nomeEmpresa = sessionStorage.nomeEmp;
 
-    window.onload = obterFrequencia(8);
+    let vetor_componente = []
+    let vetor_qtd = [] 
+    
+    window.onload = obterDadosGrafico(1);
 
-    function obterFrequencia(idDados) {
+    function obterDadosGrafico(idChamado) {
+        //        alterarTitulo(idChamdado)npm start
 
-        fetch(`/medidas/ultimasFreq/${idDados}`, { cache: 'no-store' }).then(function (response) {
-
-
+        fetch(`/medidas/ultimasTeste/${idChamado}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
-
-                    console.log(`DADOS: ${JSON.stringify(resposta)}`);
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     resposta.reverse();
 
-                    console.log("RESPOSTA ABREVIADA", resposta[0].freqAtual)
 
-                    console.log("RESPOSTA ABREVIADA", resposta[0].percentualCpu)
 
-                    freq_cpu.innerHTML = `${resposta[0].freqAtual} GHZ`
-                    uso_cpu.innerHTML = `${resposta[0].percentualCpu}%`
-                    disco_usado.innerHTML = `${resposta[0].discoUsado} GB`
-                    memoria_usada.innerHTML = `${resposta[0].memoriaUsada} GB`
+                    resposta.forEach(element => {
+                        vetor_componente.push(element.componente)
+                        vetor_qtd.push(element.qtd)
+                    })
 
+
+                    plotarGrafico(vetor_componente, 'myChartChamados', vetor_qtd);
                 });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-
-        }).catch(erro => {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        })
-
-
+            }   else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
     }
 
-
-
-
-
+    function plotarGrafico(label, idCanva, vetor_qtd) {
+        window.grafico_linha = new Chart(document.getElementById(idCanva), {
+                  type: 'bar',
+                  data: {
+                      labels: label,
+                      datasets: [
+                          {
+                              label: "Quantidade de Chamados",
+                              backgroundColor: ["#3e95cd", "#8e5ea2"],
+                              data: vetor_qtd
+                          }
+                      ]
+                  },
+                  options: {
+                      legend: { display: false },
+                      title: {
+                          display: true,
+                          text: 'QUANTIDADE DE CHAMADOS',
+                      }
+                  }
+        });
+    }
+        
 </script>

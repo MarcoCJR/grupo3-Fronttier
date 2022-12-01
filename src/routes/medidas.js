@@ -16,12 +16,37 @@ router.get("/tempo-real/:idServidor", function (req, res) {
 // fim rota maquina 1 
 
 
+
 // rotas Freq
 router.get("/ultimasFreq/:idAquario", function (req, res) {
     medidaController.buscarMedidas(req, res);
 });
 
-// rota Chamado
+// rota maquina 1 
+router.get("/ultimasTeste/:idChamado", function (req, res) {
+    medidaController.buscarMedidasChamados(req, res);
+});
+
+router.get("/ultimasDisco/:idServidor", function (req, res) {
+    medidaController.buscarMedidasDisco(req, res);
+});
+
+router.get("/tempo-real-Disco/:idServidor", function (req, res) {
+    medidaController.ultimasMedidasDisco(req, res);
+});
+
+//rota rede dash
+
+router.get("/ultimasRede/:idServidor", function (req, res) {
+    medidaController.buscarUltimasMedidasRede(req, res);
+});
+
+router.get("/tempo-real-rede/:idServidor", function (req, res) {
+    medidaController.buscarMedidasEmTempoRealRede(req, res);
+})
+
+// fim rede dash
+
 router.get("/ultimasAnalise/:idChamado", function (req, res) {
     medidaController.buscarMedidasAnalise(req, res);
 });
@@ -34,5 +59,4 @@ router.get("/obterDadosComponentes/:idChamado", function (req, res) {
     medidaController.obterDadosComponentes(req, res);
 }) 
 
-    
 module.exports = router;

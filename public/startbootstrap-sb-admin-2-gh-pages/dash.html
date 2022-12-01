@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="../assets/img/favicon.png" rel="icon">
+    <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <title>Fronttier | Dashboard Técnico de Disco</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.html">
+                <div class="sidebar-brand-text mx-3"><img src="../assets/img/logo-light.png"
+                        style="width:100%; height: 100%;"></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="front_dash.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard - <span id="nomeEmp"></span></span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="analise_dash.html" target="_blank">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Análise de Notificações</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="front_dash.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Monitoramento Disco</span></a>
+            </li>
+
+            <!-- Divider -->
+            <!-- <hr class="sidebar-divider">
+            Nav Item - Tables -->
+            <!-- <li class="nav-item"> -->
+            <!-- <a class="nav-link" href="tables.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Tabelas</span></a> -->
+            <!-- </li>  -->
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+
+            <!-- Alerta do percentual de uso da cpu -->
+            <div class="div_alerta" id="alerta_div">
+
+                <p class="texto_alerta" id="i_alerta">
+                </p>
+            </div>
+
+
+            <!-- Alerta de memoria -->
+            <div class="div_alertaMemoria" id="alerta_memoria">
+                <p class="texto_alertaMemoria" id="i_alertaMemoria">
+                </p>
+            </div>
+
+            <!-- Alerta de disco -->
+            <div class="div_alertaDisco" id="alerta_disco">
+                <p class="texto_alertaDisco" id="i_alertaDisco">
+                </p>
+            </div>
+
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Pesquisar..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">3+</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Central de alertas
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">8 de Setembro, 2022</div>
+                                        <span class="font-weight-bold">Um novo documento foi baixado!</span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">8 de Setembro, 2022</div>
+                                        A meta diária foi alcançada!
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">8 de Setembro, 2022</div>
+                                        Alerta de Uso: Foi notificada alto uso da memória.
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Mostrar mais</a>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Counter - Messages -->
+                                <span class="badge badge-danger badge-counter">5</span>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Central de mensagens
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate">Olá! Poderia me ajudar com um problema?</div>
+                                        <div class="small text-gray-500">Debbie Flores · 58m</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
+                                        <div class="status-indicator"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Eu tenho os dados que você me pediu mês passado, como
+                                            prefere recebe-los?</div>
+                                        <div class="small text-gray-500">Gian Silva · 1d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
+                                        <div class="status-indicator bg-warning"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Adorei o relatório do mês passado, Continue com o bom
+                                            trabalho!</div>
+                                        <div class="small text-gray-500">Julia Tonini · 2d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Eu sou um bom garoto? Estou perguntando porque alguém
+                                            me disse que as pessoas dizem isso para todos os cachorros, memso quando
+                                            eles não são..</div>
+                                        <div class="small text-gray-500">Pulguento · 2s</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Ler mais</a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"
+                                    id="usuario">Técnico<span>usuario</span></span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="">
+                                    <i onclick="buscarIdEmpres()"
+                                        class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Configurações
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Registro de atividade
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="cadastro_maquina.html">
+                                    <i class="fas fa-people-arrows fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cadastro Maquina
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Sair
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard - 1</h1>
+
+
+                        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                            onclick="atualizarGrafico(8)">Máquina 1</button>
+
+                        <span id="fkServidor"></span></span>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-share-alt fa-sm text-white-40"></i> Compartilhar </a>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Area Chart -->
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Monitoramento - Disco Total</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Opções:</div>
+                                            <a class="dropdown-item" href="#">Atualizar</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Esconder</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <section class="graficoDiscoTotal">
+                                            <canvas id="myChartDiscoTotal"></canvas>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Final Monitoramento CPU -->
+
+
+
+                        <!-- Monitoramento FreqCpu 1  -->
+
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Monitoramento - Disco Usado</h6>
+                                    <div class="dropdown no-arrow">
+                                        <!-- <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Opções:</div>
+                                            <a class="dropdown-item" href="#">Atualizar</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Esconder</a>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <!-- Grafico FreqCpu -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <section class="graficoDiscoUsado">
+                                            <canvas id="myChartDiscoUsado"></canvas>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Final monitoramento CPU -->
+
+
+
+                        <!-- Monitoramento da memória -->
+
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Monitoramento - Disco Livre</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Opções:</div>
+                                            <a class="dropdown-item" href="#">Atualizar</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Esconder</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Gráfico Memória-->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <section class="graficoDiscoLivre">
+                                            <canvas id="myChartDiscoLivre"></canvas>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Final do teste 1 -->
+
+
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Monitoramento - Porcentagem do Disco</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Opções:</div>
+                                            <a class="dropdown-item" href="#">Atualizar</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Esconder</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Gráfico Disco -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <section class="graficoPorcentagem">
+                                            <canvas id="myChartPorcentagem"></canvas>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Monitoramento - Leitura do Disco</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Opções:</div>
+                                            <a class="dropdown-item" href="#">Atualizar</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Esconder</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Gráfico Disco -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <section class="graficoDiscoLer">
+                                            <canvas id="myChartDiscoLer"></canvas>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Monitoramento - Disco Escrito</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Opções:</div>
+                                            <a class="dropdown-item" href="#">Atualizar</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Esconder</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Gráfico Disco -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <section class="graficoDiscoEscrito">
+                                            <canvas id="myChartDiscoEscrito"></canvas>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <!-- Content Row
+                    <div class="row">
+
+                        Content Column
+                        <div class="col-lg-6 mb-4">
+                            Project Card Example
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Monitoramento</h6>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="small font-weight-bold">Frequência CPU<span
+                                            class="float-right">800gHz</span></h4>
+                                    <div class="progress mb-4">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 50%"
+                                            aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <h4 class="small font-weight-bold">Percentual CPU <span
+                                            class="float-right">50%</span></h4>
+                                    <div class="progress mb-4">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
+                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <h4 class="small font-weight-bold">Disco Usado<span
+                                            class="float-right">120Gb</span></h4>
+                                    <div class="progress mb-4">
+                                        <div class="progress-bar" role="progressbar" style="width: 60%"
+                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <h4 class="small font-weight-bold">Memória Usada<span
+                                            class="float-right">10Gb</span></h4>
+                                    <div class="progress mb-4">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 30%"
+                                            aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <h4 class="small font-weight-bold">Temperatura média<span
+                                            class="float-right">25°</span></h4>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
+                                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 mb-4">
+                            Bar Chart
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Histórico de Bursts</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-bar">
+                                        <canvas id="myBarChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                /.container-fluid -->
+
+                </div>
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Fronttier 2022</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Aperte "SAIR" abaixo para sair da sua conta.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                        <a class="btn btn-primary" href="login.html">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
+
+        <!-- Page level plugins -->
+        <script src="vendor/chart.js/Chart.min.js"></script>
+
+        <!-- Page level custom scripts -->
+        <!-- <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/demo/chart-bar-demo.js"></script>
+
+    <script src="https://www.chartjs.org/dit/2.8.0/Chart.min.js"></script> 
+     <script src="http://www.chartjs.org/dist/2.7.1/Chart.js"></script> 
+    
+    <script type="text/javascript" src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script> -->
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- 
+    <div class="div_alerta" id="alerta_div">
+        
+        <p class="texto_alerta" id="i_alerta">
+        </p>
+        </div>
+
+
+         Alerta de memoria -->
+        <!-- <div class="div_alertaMemoria" id="alerta_memoria">
+        <p class="texto_alertaMemoria" id="i_alertaMemoria">
+        </p>
+        </div> -->
+
+</body>
+
+</html>
+
+<script>
+
+    usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    nomeEmp.innerHTML = sessionStorage.nomeEmp;
+
+    let nomeEmpresa = sessionStorage.nomeEmp;
+
+    // Criação gráfico Percentual CPU
+
+    let proximaAtualizacao;
+
+    window.onload = obterDadosGrafico(1);
+
+
+    function obterDadosGrafico(idServidor) {
+        //        alterarTitulo(idServidor)
+
+        if (proximaAtualizacao != undefined) {
+            clearTimeout(proximaAtualizacao);
+        }
+
+        fetch(`/medidas/ultimasDisco/${idServidor}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+
+
+                    plotarGrafico(resposta, idServidor);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
+    // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
+    // A função *plotarGrafico* também invoca a função *atualizarGrafico*
+    function plotarGrafico(resposta, idServidor) {
+        console.log('iniciando plotagem do gráfico...');
+
+        var discoTotal = {
+            labels: [],
+            datasets: [
+                {
+                    yAxisID: 'y-disco_total',
+                    label: 'DiscoTotal',
+                    borderColor: '#4e73df',
+                    backgroundColor: '#858796',
+                    fill: true,
+                    data: []
+                },
+
+
+            ]
+
+        };
+
+        // Criação criação gráfico
+
+        var discoUsado = {
+            labels: [],
+            datasets: [
+                {
+                    yAxisID: 'y-disco_usado',
+                    label: 'DiscoUsado',
+                    borderColor: '#4e73df',
+                    backgroundColor: '#858796',
+                    fill: true,
+                    data: []
+                }
+
+            ]
+
+        };
+
+        // Final criação frequêcia CPU
+
+
+        // Criação dos dados disco
+
+        var discoLivre = {
+            labels: [],
+            datasets: [
+                {
+                    yAxisID: 'y-disco_livre',
+                    label: 'DiscoLivre',
+                    borderColor: '#4e73df',
+                    backgroundColor: '#858796',
+                    fill: true,
+                    data: []
+                }
+
+            ]
+
+        };
+
+        var porcentagem = {
+            labels: [],
+            datasets: [
+                {
+                    yAxisID: 'y-porcentagem',
+                    label: 'Porcentagem',
+                    borderColor: '#4e73df',
+                    backgroundColor: '#858796',
+                    fill: true,
+                    data: []
+                }
+
+            ]
+
+        };
+
+
+
+        var discoLer = {
+            labels: [],
+            datasets: [
+                {
+                    yAxisID: 'y-disco_ler',
+                    label: 'DiscoLer',
+                    borderColor: '#4e73df',
+                    backgroundColor: '#858796',
+                    fill: true,
+                    data: []
+                }
+
+            ]
+
+        };
+
+
+
+        var discoEscrito = {
+            labels: [],
+            datasets: [
+                {
+                    yAxisID: 'y-disco_escrito',
+                    label: 'DiscoEscrito',
+                    borderColor: '#4e73df',
+                    backgroundColor: '#858796',
+                    fill: true,
+                    data: []
+                }
+
+            ]
+
+        };
+
+
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+            discoTotal.labels.push(registro.horario);
+            discoTotal.datasets[0].data.push(registro.discoTotal);
+
+            // discoUsado.labels.push(registro.horario);
+            discoUsado.datasets[0].data.push(registro.discoUso);
+
+            discoLivre.labels.push(registro.horario);
+            discoLivre.datasets[0].data.push(registro.discoLivre);
+
+            porcentagem.labels.push(registro.horario);
+            porcentagem.datasets[0].data.push(registro.porcentagem);
+
+            discoLer.labels.push(registro.horario);
+            discoLer.datasets[0].data.push(registro.discoLido);
+
+            discoEscrito.labels.push(registro.horario);
+            discoEscrito.datasets[0].data.push(registro.discoEscrito);
+
+
+            //function sumirMensagem() {
+            //alerta_div.style.display = "none"
+            //   i_alerta.style.display = "none"
+            //alerta_memoria.style.display = "none"
+            // i_alertaMemoria.style.display = "none"
+        }
+
+        //}
+
+        console.log(JSON.stringify(discoTotal));
+
+        var discoTotalAtual = {
+
+            responsive: true,
+            animation: { duration: 500 },
+            hoverMode: 'index',
+            stacked: false,
+            title: {
+                display: false,
+                text: 'Dados capturados'
+            },
+            scales: {
+                yAxes: [{
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    id: 'Frequência',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    }
+                }, {
+                    type: 'linear',
+                    display: false,
+                    position: 'right',
+                    id: 'Frequência',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    },
+
+                    gridLines: {
+                        drawOnChartArea: false,
+                    },
+                }],
+            }
+        }
+
+        //   Criação gráfico freq
+
+        var discoUsadoAtual = {
+
+            responsive: true,
+            animation: { duration: 500 },
+            hoverMode: 'index',
+            stacked: false,
+            title: {
+                display: false,
+                text: 'Dados capturados'
+            },
+            scales: {
+                yAxes: [{
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    id: 'Frequência',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    }
+                }, {
+                    type: 'linear',
+                    display: false,
+                    position: 'right',
+                    id: 'Frequência',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    },
+
+                    gridLines: {
+                        drawOnChartArea: false,
+                    },
+                }],
+            }
+        }
+        // Final da criação da frequência 
+
+
+        // Criação gráfico disco
+        var discoLivreAtual = {
+
+            responsive: true,
+            animation: { duration: 500 },
+            hoverMode: 'index',
+            stacked: false,
+            title: {
+                display: false,
+                text: 'Dados capturados'
+            },
+            scales: {
+                yAxes: [{
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    id: 'Disco',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    }
+                }, {
+                    type: 'linear',
+                    display: false,
+                    position: 'right',
+                    id: 'Disco',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    },
+
+                    gridLines: {
+                        drawOnChartArea: false,
+                    },
+                }],
+            }
+        }
+
+
+        var porcentagemAtual = {
+
+            responsive: true,
+            animation: { duration: 500 },
+            hoverMode: 'index',
+            stacked: false,
+            title: {
+                display: false,
+                text: 'Dados capturados'
+            },
+            scales: {
+                yAxes: [{
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    id: 'Memória',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    }
+                }, {
+                    type: 'linear',
+                    display: false,
+                    position: 'right',
+                    id: 'Memória',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    },
+
+                    gridLines: {
+                        drawOnChartArea: false,
+                    },
+                }],
+            }
+        }
+        // Finalização gráfico disco
+
+        // Criação gráfico discoLerAtual
+
+        var discoLidoAtual = {
+
+            responsive: true,
+            animation: { duration: 500 },
+            hoverMode: 'index',
+            stacked: false,
+            title: {
+                display: false,
+                text: 'Dados capturados'
+            },
+            scales: {
+                yAxes: [{
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    id: 'Memória',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    }
+                }, {
+                    type: 'linear',
+                    display: false,
+                    position: 'right',
+                    id: 'Memória',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    },
+
+                    gridLines: {
+                        drawOnChartArea: false,
+                    },
+                }],
+            }
+        }
+
+        // Finalização gráfico discoLidoAtual
+
+        // Criação gráfico discoEscritoAtual
+
+        var discoEscritoAtual = {
+
+            responsive: true,
+            animation: { duration: 500 },
+            hoverMode: 'index',
+            stacked: false,
+            title: {
+                display: false,
+                text: 'Dados capturados'
+            },
+            scales: {
+                yAxes: [{
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    id: 'Memória',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    }
+                }, {
+                    type: 'linear',
+                    display: false,
+                    position: 'right',
+                    id: 'Memória',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    },
+
+                    gridLines: {
+                        drawOnChartArea: false,
+                    },
+                }],
+            }
+        }
+
+
+        // Criação gráfico percentual da CPU
+        window.grafico_linha = new Chart(myChartDiscoTotal, {
+            type: "line",
+            data: discoTotal,
+            options: discoTotalAtual
+        });
+        // Finalização do gráfico percentual da CPU
+
+
+        // Criação gráfico da freq da CPU
+        window.grafico_linha2 = new Chart(myChartDiscoUsado, {
+            type: "line",
+            data: discoUsado,
+            options: discoUsadoAtual
+        });
+
+        // Finalização gráfico freq da cpu
+
+        // Criação gráfico memória
+        window.grafico_linha3 = new Chart(myChartDiscoLivre, {
+            type: "line",
+            data: discoLivre,
+            options: discoLivreAtual
+        });
+        // Finalização gráfico memória
+
+        // Criação do gráfico disco
+        window.grafico_linha4 = new Chart(myChartPorcentagem, {
+            type: "line",
+            data: porcentagem,
+            options: porcentagemAtual
+        });
+        // Finalização do gráfico disco 
+        
+        // Criação do gráfico disco
+        window.grafico_linha5 = new Chart(myChartDiscoLer, {
+            type: "bar",
+            data: discoLer,
+            options: discoLidoAtual
+        });
+        // Finalização do gráfico disco 
+
+        // Criação do gráfico disco
+        window.grafico_linha6 = new Chart(myChartDiscoEscrito, {
+            type: "bar",
+            data: discoEscrito,
+            options: discoEscritoAtual
+        });
+        // Finalização do gráfico disco 
+
+
+        setTimeout(() => atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre, porcentagem, discoLer, discoEscrito), 2000);
+    }
+
+
+    window.onload = atualizarGrafico(1);
+
+    function atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre, porcentagem, discoLer, discoEscrito) {
+        let componente = ""
+        let maquina = ""
+        let frase = ""
+        let metrica = ""
+        fetch(`/medidas/tempo-real-Disco/${idServidor}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (novoRegistro) {
+
+                    console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+                    console.log(`Dados atuais do gráfico: ${discoTotal} e ${discoUsado} e ${discoLivre} e ${porcentagem} e ${discoLer} e ${discoEscrito}`);
+
+                    discoTotal.labels.shift();
+                    discoTotal.labels.push(novoRegistro[0].horario);
+
+                    discoTotal.datasets[0].data.shift();
+                    discoTotal.datasets[0].data.push(novoRegistro[0].discoTotal);
+
+                    // Criando o alerta do percentual da CPU 
+                    if (novoRegistro[0].discoTotal >= 60 && novoRegistro[0].discoTotal < 80) {
+                        componente = "Disco Total"
+                        maquina = "1"
+                        frase = "Alerta"
+                        metrica = `${novoRegistro[0].discoTotal} %`
+
+                        alerta_div.style.display = "block"
+                        alerta_div.style.backgroundColor = "yellow"
+                        alerta_div.style.borderColor = "yellow"
+                        i_alerta.innerHTML = "CPU em estado de alerta! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoTotal), 2000);
+                    }
+
+                    if (novoRegistro[0].discoTotal >= 80 && novoRegistro[0].discoTotal < 90) {
+                        componente = "Disco Total"
+                        maquina = "1"
+                        frase = "Emergência"
+                        metrica = `${novoRegistro[0].discoTotal} %`
+
+                        alerta_div.style.display = "block"
+                        alerta_div.style.backgroundColor = "orange"
+                        alerta_div.style.borderColor = "orange"
+                        i_alerta.innerHTML = "CPU em estado de emergência! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoTotal), 2000);
+                    }
+
+
+                    if (novoRegistro[0].discoTotal > 90) {
+                        componente = "Disco Total"
+                        maquina = "1"
+                        frase = "Crítico"
+                        metrica = `${novoRegistro[0].discoTotal} %`
+
+                        alerta_div.style.display = "block"
+                        alerta_div.style.backgroundColor = "red"
+                        alerta_div.style.borderColor = "red"
+                        i_alerta.innerHTML = "CPU em estado crítico! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoTotal), 2000);
+                    }
+
+
+                    // Cuidado
+
+                    discoUsado.labels.shift();
+                    discoUsado.labels.push(novoRegistro[0].horario);
+
+                    discoUsado.datasets[0].data.shift();
+                    discoUsado.datasets[0].data.push(novoRegistro[0].discoUso);
+
+
+                    if (novoRegistro[0].discoUsado >= 60 && novoRegistro[0].discoUsado < 80) {
+                        componente = "Disco Usado"
+                        maquina = "1"
+                        frase = "Alerta"
+                        metrica = `${novoRegistro[0].discoUsado} %`
+
+                        alerta_div.style.display = "block"
+                        alerta_div.style.backgroundColor = "yellow"
+                        alerta_div.style.borderColor = "yellow"
+                        i_alerta.innerHTML = "CPU em estado de alerta! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoUsado), 2000);
+                    }
+
+                    if (novoRegistro[0].discoUsado >= 80 && novoRegistro[0].discoUsado < 90) {
+                        componente = "Disco Usado"
+                        maquina = "1"
+                        frase = "Emergência"
+                        metrica = `${novoRegistro[0].discoUsado} %`
+
+                        alerta_div.style.display = "block"
+                        alerta_div.style.backgroundColor = "orange"
+                        alerta_div.style.borderColor = "orange"
+                        i_alerta.innerHTML = "CPU em estado de emergência! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoUsado), 2000);
+                    }
+
+
+                    if (novoRegistro[0].discoUsado > 90) {
+                        componente = "Disco Usado"
+                        maquina = "1"
+                        frase = "Crítico"
+                        metrica = `${novoRegistro[0].discoUsado} %`
+
+                        alerta_div.style.display = "block"
+                        alerta_div.style.backgroundColor = "red"
+                        alerta_div.style.borderColor = "red"
+                        i_alerta.innerHTML = "CPU em estado crítico! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoUsado), 2000);
+                    }
+
+
+
+
+
+                    // Criando o alerta da frequencial atual da CPU    
+
+                    discoLivre.labels.shift();
+                    discoLivre.labels.push(novoRegistro[0].horario);
+
+                    discoLivre.datasets[0].data.shift();
+                    discoLivre.datasets[0].data.push(novoRegistro[0].discoLivre);
+                    // Alertas do disco
+
+                    if (novoRegistro[0].discoLivre >= 200 && novoRegistro[0].discoLivre < 220) {
+                        componente = "Disco Livre"
+                        maquina = "1"
+                        frase = "Alerta"
+                        metrica = novoRegistro[0].discoLivre
+
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "yellow"
+                        alerta_disco.style.borderColor = "yellow"
+                        i_alertaDisco.innerHTML = "Disco está em estado de alerta! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoLivre), 2000);
+                    }
+
+                    if (novoRegistro[0].discoLivre >= 220 && novoRegistro[0].discoLivre < 240) {
+                        componente = "Disco Livre"
+                        maquina = "1"
+                        frase = "Emergência"
+                        metrica = novoRegistro[0].discoUsado
+
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "orange"
+                        alerta_disco.style.borderColor = "orange"
+                        i_alertaDisco.innerHTML = "Disco está em estado de emergência! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoLivre), 2000);
+                    }
+
+                    if (novoRegistro[0].discoLivre > 240) {
+                        componente = "Disco Livre"
+                        maquina = "1"
+                        frase = "Crítico"
+                        metrica = novoRegistro[0].discoLivre
+
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "red"
+                        alerta_disco.style.borderColor = "red"
+                        i_alertaDisco.innerHTML = "Disco está em estado crítico! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoLivre), 2000);
+                    }
+
+                    // finalizando alertas do disco
+
+
+                    porcentagem.labels.shift();
+                    porcentagem.labels.push(novoRegistro[0].horario);
+
+                    porcentagem.datasets[0].data.shift();
+                    porcentagem.datasets[0].data.push(novoRegistro[0].porcentagem);
+
+                    if (novoRegistro[0].porcentagem >= 6 && novoRegistro[0].porcentagem < 12) {
+                        componente = "Porcentagem Disco"
+                        maquina = "1"
+                        frase = "Alerta"
+                        metrica = novoRegistro[0].porcentagem
+
+                        alerta_memoria.style.display = "block"
+                        alerta_memoria.style.backgroundColor = "yellow"
+                        alerta_memoria.style.borderColor = "yellow"
+                        i_alertaMemoria.innerHTML = "Memória RAM em estado de alerta! Cuidado!"
+
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, porcentagem), 2000);
+                    }
+                    if (novoRegistro[0].porcentagem >= 12 && novoRegistro[0].porcentagem < 14) {
+                        componente = "Porcentagem Disco"
+                        maquina = "1"
+                        frase = "Emergência"
+                        metrica = novoRegistro[0].porcentagem
+
+                        alerta_memoria.style.display = "block"
+                        alerta_memoria.style.backgroundColor = "orange"
+                        alerta_memoria.style.borderColor = "orange"
+                        i_alertaMemoria.innerHTML = "Memória RAM em estado de emergência! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, porcentagem), 2000);
+                    }
+
+                    if (novoRegistro[0].porcentagem > 14) {
+                        componente = "Porcentagem Disco"
+                        maquina = "1"
+                        frase = "Crítico"
+                        metrica = novoRegistro[0].porcentagem
+
+                        alerta_memoria.style.display = "block"
+                        alerta_memoria.style.backgroundColor = "red"
+                        alerta_memoria.style.borderColor = "red"
+                        i_alertaMemoria.innerHTML = "Memória RAM em estado crítico! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, porcentagem), 2000);
+                    }
+
+
+                    // Finalizando os alertas de porcentagem
+
+                    // Alertas de Disco Lido
+
+                    discoLer.labels.shift();
+                    discoLer.labels.push(novoRegistro[0].horario);
+
+                    discoLer.datasets[0].data.shift();
+                    discoLer.datasets[0].data.push(novoRegistro[0].discoLer);
+                    // Alertas do disco
+
+                    if (novoRegistro[0].discoLer >= 200 && novoRegistro[0].discoLer < 220) {
+                        componente = "Disco Lido"
+                        maquina = "1"
+                        frase = "Alerta"
+                        metrica = novoRegistro[0].discoLer
+
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "yellow"
+                        alerta_disco.style.borderColor = "yellow"
+                        i_alertaDisco.innerHTML = "Disco está em estado de alerta! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoLer), 2000);
+                    }
+
+                    if (novoRegistro[0].discoLer >= 220 && novoRegistro[0].discoLer < 240) {
+                        componente = "Disco Lido"
+                        maquina = "1"
+                        frase = "Emergência"
+                        metrica = novoRegistro[0].discoLer
+
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "orange"
+                        alerta_disco.style.borderColor = "orange"
+                        i_alertaDisco.innerHTML = "Disco está em estado de emergência! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoLer), 2000);
+                    }
+
+                    if (novoRegistro[0].discoLer > 240) {
+                        componente = "Disco Lido"
+                        maquina = "1"
+                        frase = "Crítico"
+                        metrica = novoRegistro[0].discoLer
+
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "red"
+                        alerta_disco.style.borderColor = "red"
+                        i_alertaDisco.innerHTML = "Disco está em estado crítico! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoLer), 2000);
+                    }
+
+
+
+                    // finalização alertas de discoLer
+
+                    // Alertas de Disco Escrito --AQUI 
+
+                    discoEscrito.labels.shift();
+                    discoEscrito.labels.push(novoRegistro[0].horario);
+
+                    discoEscrito.datasets[0].data.shift();
+                    discoEscrito.datasets[0].data.push(novoRegistro[0].discoEscrito);
+
+                    if (novoRegistro[0].discoEscrito >= 200 && novoRegistro[0].discoEscrito < 220) {
+                        componente = "Disco Escrito"
+                        maquina = "1"
+                        frase = "Alerta"
+                        metrica = novoRegistro[0].discoEscrito
+
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "yellow"
+                        alerta_disco.style.borderColor = "yellow"
+                        i_alertaDisco.innerHTML = "Disco está em estado de alerta! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoEscrito), 2000);
+                    }
+
+                    if (novoRegistro[0].discoEscrito >= 220 && novoRegistro[0].discoEscrito < 240) {
+                        componente = "Disco Escrito"
+                        maquina = "1"
+                        frase = "Emergência"
+                        metrica = novoRegistro[0].discoEscrito
+
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "orange"
+                        alerta_disco.style.borderColor = "orange"
+                        i_alertaDisco.innerHTML = "Disco está em estado de emergência! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoEscrito), 2000);
+                    }
+
+                    if (novoRegistro[0].discoEscrito > 240) {
+                        componente = "Disco Escrito"
+                        maquina = "1"
+                        frase = "Crítico"
+                        metrica = novoRegistro[0].discoEscrito
+
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "red"
+                        alerta_disco.style.borderColor = "red"
+                        i_alertaDisco.innerHTML = "Disco está em estado crítico! Cuidado!"
+
+                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                        setTimeout(() => sumirMensagem(idServidor, discoEscrito), 2000);
+                    }
+
+
+                    // finalização do Disco Escrito
+
+                    window.grafico_linha.update();
+                    window.grafico_linha2.update();
+                    window.grafico_linha3.update();
+                    window.grafico_linha4.update();
+                    window.grafico_linha5.update();
+                    window.grafico_linha6.update();
+
+
+
+
+                    function sumirMensagem() {
+                        alerta_div.style.display = "none"
+                        // i_alerta.style.display = "none"
+                        alerta_memoria.style.display = "none"
+                        // i_alertaMemoria.style.display = "none"
+                    }
+
+                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre, porcentagem, discoLer, discoEscrito), 2000);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+                proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre, porcentagem, discoLer, discoEscrito), 2000);
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+
+    }
+
+    function alertas(nomeEmpresa, maquina, componente, metrica, frase) {
+
+
+        const options = {
+            method: 'POST',
+            headers: {
+                accept: 'application/json',
+                Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjozMDIwODI1MDksImVtYWlsIjoiZnJvbnR0aWVyQG91dGxvb2suY29tLmJyIiwiYXBwbGljYXRpb24iOjMwMDIxMjE0NH19.OHN0z_a9dbv4j7j7eDCwVvjP8XvsO8gZd7t89QaIKBivgioA6hM5v5DGLfyMZmZk1jThT3lYt4m01Aurl9yuww',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                query: `mutation {           createCard(input: {             pipe_id:302659208,             title: "Card",             fields_attributes:[               {field_id: "empresa", field_value: "${nomeEmpresa}"},{field_id: "m_quina", field_value: "${maquina}"},{field_id: "componente", field_value: "${componente}"},{field_id: "m_trica", field_value: " ${frase}: ${metrica}"},              ],           }) {               card {                 title               }             }           }`
+            })
+        };
+        fetch('https://api.pipefy.com/graphql', options)
+            .then(response => response.json())
+            .then(response => console.log(response))
+            .catch(err => console.error(err));
+
+
+        fetch("/usuarios/alertas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nomeEmpServer: nomeEmpresa,
+                maquinaServer: maquina,
+                componenteServer: componente,
+                metricaServer: metrica,
+                fraseServer: frase
+
+
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+
+                console.log(`Enviados para o banco com sucesso!`)
+
+            } else {
+
+                console.log(`Falha ao enviar para o banco!`)
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+
+        return false;
+    }
+
+
+
+
+
+
+    // Final da criação do gráfico da CPU 
+
+</script>

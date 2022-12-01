@@ -79,32 +79,25 @@ function buscarMedidasEmTempoReal(idServidor) {
     return database.executar(instrucaoSql);
 } 
 
-
-
-
-
-
 // Criação teste freq
 
-
-
-function buscarMedidas(idServidor) {
+function buscarMedidas(idServidor, limite_linhas) {
 
     instrucaoSql = ''
 
     if (process.env.AMBIENTE_PROCESSO == "producao") {
         instrucaoSql = `
-        select  
+        select top 1
         percentualCpu,
         freqAtual,
         discoUsado,
         memoriaUsada,
                     dataHora,
-                        DATE_FORMAT(dataHora,'%H:%i:%s') as horario,
-                        fkservidor 
+                        CONVERT(varchar, dataHora, 108) as horario,
+                        fkServidor 
                         from dados
                         where fkServidor = ${idServidor}
-                    order by idDados desc limit 1
+                    order by idDados desc
         `;
 
     } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
@@ -126,9 +119,182 @@ function buscarMedidas(idServidor) {
     return database.executar(instrucaoSql);
 } 
 
+function buscarMedidasChamados(idChamado) {
+
+    instrucaoSql = ''
+
+    if (process.env.AMBIENTE_PROCESSO == "producao") {
+        instrucaoSql = `
+        select componente, count(${idChamado}) as 'qtd' from Chamado group by componente;
+        `;
+    } 
+    else {
+        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
+        return
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+} 
+
+function ultimasMedidasDisco(idServidor, limite_linhas) {
+
+    instrucaoSql = ''
+
+    if (process.env.AMBIENTE_PROCESSO == "producao") {
+        instrucaoSql = `select top ${limite_linhas}
+                        discoTotal, 
+                        discoUso, 
+                        discoLivre,
+                        porcentagem,
+                        discoLido,
+                        discoEscrito,
+                        dataHora,
+                        CONVERT(varchar, dataHora, 108) as horario
+                        from Disco 
+                        where fkServidor = ${idServidor}
+                    order by idDisco desc`;
+
+    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
+        instrucaoSql = `select 
+        discoTotal,
+        discoUso,
+        discoLivre,
+        porcentagem,
+        discoLido,
+        discoEscrito
+                        dataHora,
+                        DATE_FORMAT(dataHora,'%H:%i:%s') as horario,
+                        fkServidor
+                    from Disco
+                    where fkServidor = ${idServidor} 
+                    order by idDisco desc limit ${limite_linhas}`;
+    }
+    else {
+
+        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
+        return
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 
 
+function buscarMedidasDisco(idServidor) {
 
+    instrucaoSql = ''
+
+    if (process.env.AMBIENTE_PROCESSO == "producao") {
+        instrucaoSql = `select top 1
+                        discoTotal,
+                        discoUso,
+                        discoLivre,
+                        porcentagem,
+                        discoLido,
+                        discoEscrito,
+                        dataHora, 
+                             CONVERT(varchar, dataHora, 108) as horario,
+                             fkServidor
+                        from Disco 
+                        where fkServidor = ${idServidor}
+                    order by idDisco desc`;
+
+    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
+        instrucaoSql = `select  
+        discoTotal,
+        discoUso,
+        discoLivre,
+        porcentagem,
+        discoLido,
+        discoEscrito,
+                    dataHora,
+                        DATE_FORMAT(dataHora,'%H:%i:%s') as horario,
+                        fkServidor 
+                        from Disco
+                        where fkServidor = ${idServidor}
+                    order by idDisco desc limit 1`;
+
+    }
+    else {
+        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
+        return
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+} 
+
+// Rede dash
+
+function buscarUltimasMedidasRede(idServidor, limite_linhas) {
+
+    instrucaoSql = ''
+
+    if (process.env.AMBIENTE_PROCESSO == "producao") {
+        instrucaoSql = `select top ${limite_linhas}
+                        download, 
+                        upload, 
+                        ping,
+                        CONVERT(varchar, dataHora, 108) as horario
+                        from dados 
+                    order by idDados desc`;
+
+    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
+        instrucaoSql = `select 
+        download,
+        upload,
+        ping,
+            dataHora,
+                    DATE_FORMAT(dataHora,'%H:%i:%s') as horario
+                    from Dados
+                    order by idDados desc limit ${limite_linhas}`;
+    }
+    else {
+
+        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
+        return
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
+function buscarMedidasEmTempoRealRede(idServidor) {
+
+    instrucaoSql = ''
+
+    if (process.env.AMBIENTE_PROCESSO == "producao") {
+        instrucaoSql = `select top 1
+                        download,
+                        upload,
+                        ping, 
+                             CONVERT(varchar, dataHora, 108) as horario
+                        from dados 
+                    order by idDados desc`;
+
+    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
+        instrucaoSql = `select 
+        download,
+        upload,
+        ping,
+            dataHora,
+                    DATE_FORMAT(dataHora,'%H:%i:%s') as horario
+                    from Dados
+                    order by idDados desc limit 1`;
+
+    }
+    else {
+        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
+        return
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+} 
+
+// fim rede dash
 
 // ÍNICIO ROTA CHAMADOS
 function buscarUltimasMedidasAnalise(idChamadoQ) {
@@ -205,4 +371,10 @@ module.exports = {
     buscarUltimasMedidasAnalise,
     buscarMedidasEmTempoRealAnalise,
     // obterDadosComponentes
+    buscarMedidas,
+    buscarMedidasChamados,
+    ultimasMedidasDisco,
+    buscarMedidasDisco,
+    buscarUltimasMedidasRede,
+    buscarMedidasEmTempoRealRede
 }
