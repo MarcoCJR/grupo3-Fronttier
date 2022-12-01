@@ -213,7 +213,7 @@ function buscarMedidasDisco(idServidor) {
                         fkServidor 
                         from Disco
                         where fkServidor = ${idServidor}
-                    order by idDisco desc limit 1`;
+                    order by idDisco desc limit 7`;
 
     }
     else {
@@ -223,7 +223,7 @@ function buscarMedidasDisco(idServidor) {
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
-} 
+}  
 
 // Rede dash
 
