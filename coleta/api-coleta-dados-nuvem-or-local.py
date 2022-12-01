@@ -2,8 +2,8 @@
 # import turtle
 # import speedtest
 from statistics import mean
-from app import *
-from lost import *
+# from app import *
+# from lost import *
 from statistics import mean
 import textwrap
 from datetime import datetime
@@ -37,28 +37,28 @@ usoDisco = ""
 global usoRam
 usoRam = ""
 
-c=1
-while True:
-    enviar_email()
+# c=1
+# while True:
+#     enviar_email()
 
-    while c < 4:
+#     while c < 4:
 
-        token_resposta = input("Token: ")
-        resposta = int(token_resposta)
+#         token_resposta = input("Token: ")
+#         resposta = int(token_resposta)
 
-        if c == 3:
-            print("Tente novamente mais tarde")
-            exit()
+#         if c == 3:
+#             print("Tente novamente mais tarde")
+#             exit()
 
-        if token != resposta:
-            print("Token errado!")
-            c += 1
-            print(c)
+#         if token != resposta:
+#             print("Token errado!")
+#             c += 1
+#             print(c)
 
-        else:
-            print("Token Correto")
-            break
-    break
+#         else:
+#             print("Token Correto")
+#             break
+#     break
 
 #st = speedtest.Speedtest(secure=1)
 
@@ -70,7 +70,7 @@ try:
     # cursorAzure = conn.cursor()
     # print("Conectei no banco! (Azure)")
     db_connection = mysql.connector.connect(
-        host='localhost', user='aluno', password='sptech', database='fronttier2')
+        host='localhost', user='root', password='_Arc3usadmin7410', database='fronttier2')
     cursorLocal = db_connection.cursor()
     print("Conectei no banco! (Local)")
 except mysql.connector.Error as error:
@@ -132,10 +132,21 @@ def InserirBanco():
         var_leitura = globals()[strNome]
             
         print(var_leitura)
-        var_leitura2 = mean(var_leitura)
-        print(var_leitura2)
-        var_leitura2 = var_leitura
-        print(var_leitura2)
+
+        teste = strNome.strip('')
+        print(teste)
+
+        try:
+            mensagem =  "INSERT INTO Dados (fkServidor, dataHora, %s) VALUES (%s, %s, %s)"
+            valores = [teste, escolha, var_leitura]
+            cursorLocal.execute(mensagem, valores)
+            cursorLocal.commit()
+
+            print("Leitura inserida no banco")
+
+        except pyodbc.Error as err:
+            cursorLocal.rollback()
+            print("Something went wrong: {}".format(err))
 
 def PegarComponente():
     # PEGAR fkCOMPONENTE
@@ -154,6 +165,20 @@ def PegarComponente():
             fkComponente= cursorLocal.fetchall()
             print(fkComponente)
             vet_fkComponente = numpy.asarray(fkComponente)
+            print("")
+            print("")
+
+            if [1] in vet_fkComponente:
+                print("tem primeiro da cpu")
+            if [2] in vet_fkComponente:
+                print("tem segundo da cpu")
+            if [3] in vet_fkComponente:
+                print("tem terceiro do disco")
+            if [4] in vet_fkComponente:
+                print("tem quarto da ram")    
+
+            print("")
+            print("")
             print("Componentes da maquina:", vet_fkComponente)
             
             for x in vet_fkComponente:

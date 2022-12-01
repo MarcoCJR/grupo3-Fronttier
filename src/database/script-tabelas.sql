@@ -62,10 +62,10 @@ Nome VARCHAR(20),
 Comando VARCHAR(50)
 );
 
-INSERT INTO Componente VALUES (1, "freqCpu", "psutil.cpu_freq().current"),
-							  (2, "percentCpu", "psutil.cpu_percent()"),
-                              (3, "usoDisco", "round(psutil.disk_usage('/').used*(2**-30),2)"),
-                              (4, "usoRam", "round(psutil.virtual_memory().used*(2**-30),2)");
+INSERT INTO Componente VALUES (1, "freqAtual", "psutil.cpu_freq().current"),
+							  (2, "percentualCpu", "psutil.cpu_percent()"),
+                              (3, "discoUsado", "round(psutil.disk_usage('/').used*(2**-30),2)"),
+                              (4, "memoriaUsada", "round(psutil.virtual_memory().used*(2**-30),2)");
 
 -- TABELA NOVA
 CREATE TABLE MaquinaComponente (
