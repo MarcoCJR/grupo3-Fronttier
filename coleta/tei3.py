@@ -3,17 +3,22 @@ import time
 from datetime import datetime
 import mysql.connector
 from mysql.connector import errorcode
+import pyodbc
 
 
 try:
+    conn = pyodbc.connect(driver='{SQL Server}', host='grupo-fronttier3.database.windows.net',
+                          database='Fronttier', user='Fronttier3', password='#Gfgrupo3')
+    cursorAzure = conn.cursor()
+    print("Conectei no banco! (Azure)")
         
-        db_connection = mysql.connector.connect(
+    db_connection = mysql.connector.connect(
             host='localhost',
             user='aluno',
             password='sptech',
             database='Fronttier2'
         )
-        print("Conexão com o Banco de Dados MySQL efetuada com sucesso!")
+    print("Conexão com o Banco de Dados MySQL efetuada com sucesso!")
         # LeituraLocal(conn)
     # Validações de Erro:
 except mysql.connector.Error as err:
@@ -40,17 +45,18 @@ while True:
 
     datahora = datetime.now()
     # formato = datahora.strftime("%d/%m/%Y %H:%M:%S")
-
-    crsr = db_connection.cursor()
     
-    fkServidor = 1
-    sql = "INSERT INTO Disco (fkServidor,dataHora, discoTotal, discoUso, discoLivre, porcentagem, discoLido, discoEscrito) VALUES (%s, %s,%s,%s,%s,%s,%s,%s)"
-    values = [fkServidor, datahora, discoTotal, discoUsado, discoLivre, porcentagem, discoLido, discoEscrito]
-    crsr.execute(sql, values)
+    fkServidor = 8
+    cursorAzure.execute('''
+    INSERT INTO Dados (fkServidor,dataHora, discoTotal, discoUso, discoLivre, porcentagem, discoLido, discoEscrito) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ''',fkServidor, datahora, discoTotal, discoUsado, discoLivre, porcentagem, discoLido, discoEscrito)
+    print("Dados inseridos no banco!")
+    print("")
+    cursorAzure.commit()
 
     print("Inserindo leitura no banco de dados local!")
     
-    db_connection.commit()
+    conn.commit()
 
     time.sleep(3.0)
     

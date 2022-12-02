@@ -151,9 +151,9 @@ function ultimasMedidasDisco(idServidor, limite_linhas) {
                         discoEscrito,
                         dataHora,
                         CONVERT(varchar, dataHora, 108) as horario
-                        from Disco 
+                        from dados 
                         where fkServidor = ${idServidor}
-                    order by idDisco desc`;
+                    order by idDados desc`;
 
     } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
         instrucaoSql = `select 
@@ -166,9 +166,9 @@ function ultimasMedidasDisco(idServidor, limite_linhas) {
                         dataHora,
                         DATE_FORMAT(dataHora,'%H:%i:%s') as horario,
                         fkServidor
-                    from Disco
+                    from dados
                     where fkServidor = ${idServidor} 
-                    order by idDisco desc limit ${limite_linhas}`;
+                    order by idDados desc limit ${limite_linhas}`;
     }
     else {
 
@@ -196,9 +196,9 @@ function buscarMedidasDisco(idServidor) {
                         dataHora, 
                              CONVERT(varchar, dataHora, 108) as horario,
                              fkServidor
-                        from Disco 
+                        from dados 
                         where fkServidor = ${idServidor}
-                    order by idDisco desc`;
+                    order by idDados desc`;
 
     } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
         instrucaoSql = `select  
@@ -211,7 +211,7 @@ function buscarMedidasDisco(idServidor) {
                     dataHora,
                         DATE_FORMAT(dataHora,'%H:%i:%s') as horario,
                         fkServidor 
-                        from Disco
+                        from dados
                         where fkServidor = ${idServidor}
                     order by idDisco desc limit 7`;
 
