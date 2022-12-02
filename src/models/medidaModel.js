@@ -162,7 +162,7 @@ function ultimasMedidasDisco(idServidor, limite_linhas) {
         discoLivre,
         porcentagem,
         discoLido,
-        discoEscrito
+        discoEscrito,
                         dataHora,
                         DATE_FORMAT(dataHora,'%H:%i:%s') as horario,
                         fkServidor

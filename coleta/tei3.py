@@ -6,11 +6,12 @@ from mysql.connector import errorcode
 
 
 try:
+        
         db_connection = mysql.connector.connect(
             host='localhost',
-            user='root',
-            password='_Arc3usadmin7410',
-            database='fronttier2'
+            user='aluno',
+            password='sptech',
+            database='Fronttier2'
         )
         print("Conexão com o Banco de Dados MySQL efetuada com sucesso!")
         # LeituraLocal(conn)

@@ -1163,7 +1163,7 @@
         
         // Criação do gráfico disco
         window.grafico_linha5 = new Chart(myChartDiscoLer, {
-            type: "bar",
+            type: "line",
             data: discoLer,
             options: discoLidoAtual
         });
@@ -1171,7 +1171,7 @@
 
         // Criação do gráfico disco
         window.grafico_linha6 = new Chart(myChartDiscoEscrito, {
-            type: "bar",
+            type: "line",
             data: discoEscrito,
             options: discoEscritoAtual
         });
@@ -1438,7 +1438,7 @@
                     discoLer.labels.push(novoRegistro[0].horario);
 
                     discoLer.datasets[0].data.shift();
-                    discoLer.datasets[0].data.push(novoRegistro[0].discoLer);
+                    discoLer.datasets[0].data.push(novoRegistro[0].discoLido);
                     // Alertas do disco
 
                     if (novoRegistro[0].discoLer >= 200 && novoRegistro[0].discoLer < 220) {
