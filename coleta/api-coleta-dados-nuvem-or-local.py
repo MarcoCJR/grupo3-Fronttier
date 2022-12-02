@@ -27,15 +27,6 @@ from mysql.connector import errorcode
 # username='Fronttier3'
 # password='#Gfgrupo3'
 
-global freqAtual
-freqAtual = None
-global percentualCpu
-percentualCpu = None
-global discoUsado
-discoUsado = None
-global memoriaUsada
-usoMemoria = None
-
 # c=1
 # while True:
 #     enviar_email()
@@ -84,9 +75,11 @@ def Login():
     print("Seja bem vindo ao Python da Fronttier")
     print("Por favor, realize seu login")
 
+    print("")
     codEmpresa = input('Informe o código de sua empresa: ')
     email = input('Informe seu email: ')
     senha = input('Informe sua senha: ')
+    print("")
 
     try:
         cursorAzure.execute('''
@@ -94,13 +87,14 @@ def Login():
         ''', codEmpresa, email, senha)
         
         print("Fazendo login...")
-        global usuario
-        usuario = cursorAzure.fetchall()
+
+        cursorAzure.fetchall()
         SelectMaquina(codEmpresa)
 
-    except pyodbc.Error as err:
-        print("Something went wrong: {}".format(err))
-        print("Falha ao realizar login por favor tente novamente")
+    except:
+        print("Credenciais incorretas! Tente novamente...")
+        print("")
+        Login()
 
 
 def SelectMaquina(codEmpresa):
@@ -111,15 +105,11 @@ def SelectMaquina(codEmpresa):
             ''', codEmpresa)
 
             idServidor = cursorAzure.fetchall()
+            print("")
             print("Servidores Disponíveis: \n", idServidor)
             global escolha
-            escolha = input("Escolha um Id da lista de máquinas acima:")
-
-            cursorAzure.execute('''
-            INSERT INTO Dados (fkServidor, freqAtual, percentualCpu) VALUES (?, ?, 100.1)
-            ''',escolha, freqAtual)
-            print("Leitura TESTE inserida no banco")
-            cursorAzure.commit()
+            print("")
+            escolha = input("Escolha um Id da lista de máquinas acima: ")
             
             PegarComponente()
 
@@ -127,106 +117,71 @@ def SelectMaquina(codEmpresa):
             print("Something went wrong: {}".format(err))    
 
 def InserirBanco():
-        print("Inserindo leitura no banco...")
-        exec(strNome + " = " + strComando, globals())
-        var_leitura = globals()[strNome]
-            
-        print(var_leitura)
 
-        teste = strNome.strip('')
-        print(teste)
 
-        # try:
-        #     cursorAzure.execute('''
-        #     INSERT INTO Dados (fkServidor, freqAtual, percentualCpu) VALUES (?, ?, 100.1)
-        #     ''',escolha, freqAtual)
-        #     print("Leitura inserida no banco")
+        freqAtual = None
+        percentualCpu = None
+        discoUsado = None
+        memoriaUsada = None
 
-        # except pyodbc.Error as err:
-        #     cursorAzure.rollback()
-        #     print("Something went wrong: {}".format(err))
+        if [1] in vet_fkComponente:
+            freqAtual = psutil.cpu_freq().current
+        if [2] in vet_fkComponente:
+            percentualCpu = psutil.cpu_percent()
+        if [3] in vet_fkComponente:
+            discoUsado = round(psutil.disk_usage('/').used*(2**-30), 2)
+        if [4] in vet_fkComponente:
+            memoriaUsada = round(psutil.virtual_memory().used*(2**-30), 2)
+
+        dataHora = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+
+        cursorAzure.execute('''
+        INSERT INTO Dados (fkServidor, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (?, ?, ?, ?, ?, ?)
+        ''',escolha, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada)
+        print("Dados inseridos no banco!")
+        print("")
+        cursorAzure.commit()
 
 def PegarComponente():
-    # PEGAR fkCOMPONENTE
 
             try:
                 cursorAzure.execute('''
                 SELECT fkComponente FROM MaquinaComponente WHERE fkMaquina = ?
                 ''', escolha)
-                # Executing the SQL command
-                print("Pegando os componentes da torre...")
+
+                print("")
+                print("Pegando os componentes da máquina...")
 
             except pyodbc.Error as err:
                 print("Something went wrong: {}".format(err))
-                print('teste exept')
 
             fkComponente= cursorAzure.fetchall()
-            print(fkComponente)
+            global vet_fkComponente
             vet_fkComponente = numpy.asarray(fkComponente)
-            print("")
-            print("")
-
-            if [1] in vet_fkComponente:
-                print("tem primeiro da cpu")
-            if [2] in vet_fkComponente:
-                print("tem segundo da cpu")
-            if [3] in vet_fkComponente:
-                print("tem terceiro do disco")
-            if [4] in vet_fkComponente:
-                print("tem quarto da ram")    
-
-            print("")
-            print("")
-            print("Componentes da maquina:", vet_fkComponente)
             
             for x in vet_fkComponente:
-                print(x)
                 global y
                 y = int(x[0])
-                print(y)
-
-                # PEGAR CODIGO COMPONENTE
-                
-                try:
-                    cursorAzure.execute('''
-                    SELECT Comando FROM Componente WHERE idComponente = ?
-                    ''', [y])                    
-                    # Executing the SQL command
-                    print("Pegando codigo do componente ", y,'...')
-
-                except pyodbc.Error as err:
-                    print("Something went wrong: {}".format(err))
-
-                comando = cursorAzure.fetchone()
-                print("Comando do componente ",y,":", comando)
-
-                def convertTuple(tup):
-                    str = functools.reduce(operator.add, (tup))
-                    return str
-
-                global strComando
-                strComando = convertTuple(comando)            
-
-                # PREGAR NOME COMPONENTE
 
                 try:
                     cursorAzure.execute('''
                     SELECT Nome FROM Componente WHERE idComponente = ?
                     ''', [y])  
-                    # Executing the SQL command
-                    print("Pegando nome do componente", y)
 
                 except pyodbc.Error as err:
                     print("Something went wrong: {}".format(err))
 
                 nome = cursorAzure.fetchone()
+                def convertTuple(tup):
+                    str = functools.reduce(operator.add, (tup))
+                    return str
+
                 global strNome
                 strNome = convertTuple(nome)
-                if y > 4:
-                    print('Esse componente é em outra API!')
-                else:
-                    print("Nome componente ",y,":", strNome)
-                    print(strNome + " = " + strComando)
-                InserirBanco()
+            InserirBanco()
                     
 Login()
+
+while True:
+    InserirBanco()
+    time.sleep(5)
