@@ -138,8 +138,9 @@ def InserirBanco():
         cursorAzure.execute('''
         INSERT INTO Dados (fkServidor, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (?, ?, ?, ?, ?, ?)
         ''',escolha, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada)
-        print("Dados inseridos no banco!")
         print("")
+        print("Dados inseridos no banco!")
+        
         cursorAzure.commit()
 
 def PegarComponente():
