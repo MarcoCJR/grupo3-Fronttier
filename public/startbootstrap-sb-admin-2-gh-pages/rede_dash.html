@@ -929,35 +929,38 @@
                     dadosDownload.datasets[0].data.shift(); 
                     dadosDownload.datasets[0].data.push(novoRegistro[0].download); 
 
-                    // Criando o alerta do percentual da CPU 
-                    // if(novoRegistro[0].download >= 20 && novoRegistro[0].download < 90){
-                        
-                    //     alerta_div.style.display = "block"
-                    //     alerta_div.style.backgroundColor = "yellow"
-                    //     alerta_div.style.borderColor = "yellow"
-                    //     i_alerta.innerHTML = "CPU em estado de alerta! Cuidado!"
 
-                    //     setTimeout(() => sumirMensagem(idDado, dadosDownload), 2000);
-                    // }
 
-                    // if(novoRegistro[0].download >= 90  && novoRegistro[0].percentualCpu  < 100){
+                    // Criando o alerta do download 
+
+                    if(novoRegistro[0].download >= 100 && novoRegistro[0].download < 200){
                         
-                    //     alerta_div.style.display = "block"
-                    //     alerta_div.style.backgroundColor = "orange"
-                    //     alerta_div.style.borderColor = "orange"
-                    //     i_alerta.innerHTML = "CPU em estado de emergência! Cuidado!"
-                    //     setTimeout(() => sumirMensagem(idDado, dadosDownload), 2000);
-                    // }
+                        alerta_div.style.display = "block"
+                        alerta_div.style.backgroundColor = "yellow"
+                        alerta_div.style.borderColor = "yellow"
+                        i_alerta.innerHTML = "<b> Download em estado de alerta! </b>"
+
+                        setTimeout(() => sumirMensagem(idDado, dadosDownload), 2000);
+                    }
+
+                    if(novoRegistro[0].download >= 50  && novoRegistro[0].percentualCpu  < 100){
+                        
+                        alerta_div.style.display = "block"
+                        alerta_div.style.backgroundColor = "orange"
+                        alerta_div.style.borderColor = "orange"
+                        i_alerta.innerHTML = "<b> Download em estado de atenção. Performance prejudicada. </b>"
+                        setTimeout(() => sumirMensagem(idDado, dadosDownload), 2000);
+                    }
 
                     
-                    // if(novoRegistro[0].download < 50 && novoRegistro[0].download > 0){
+                    if(novoRegistro[0].download < 50 && novoRegistro[0].download > 0){
                         
-                    //     alerta_div.style.display = "block"
-                    //     alerta_div.style.backgroundColor = "red"
-                    //     alerta_div.style.borderColor = "red"
-                    //     i_alerta.innerHTML = "<b> Rede lenta! Alto nível de instabilidade. </b>"
-                    //     setTimeout(() => sumirMensagem(idDado, dadosDownload), 2000);
-                    // }
+                        alerta_div.style.display = "block"
+                        alerta_div.style.backgroundColor = "red"
+                        alerta_div.style.borderColor = "red"
+                        i_alerta.innerHTML = "<b> Download lento! Perfomance prejudicada. </b>"
+                        setTimeout(() => sumirMensagem(idDado, dadosDownload), 2000);
+                    }
 
                         
 
@@ -967,83 +970,84 @@
                     dadosUpload.datasets[0].data.shift();
                     dadosUpload.datasets[0].data.push(novoRegistro[0].upload); 
                     
-                    // Criando o alerta da frequencial atual da CPU    
+                    
                     
                     dadosPing.labels.shift();
                     dadosPing.labels.push(novoRegistro[0].horario); 
                 
                     dadosPing.datasets[0].data.shift();
                     dadosPing.datasets[0].data.push(novoRegistro[0].ping); 
-                    // Alertas do disco
+                    
 
-                    // if(novoRegistro[0].discoUsado >= 200 && novoRegistro[0].discoUsado < 220){
+                    // Alertas upload
 
-                    //     alerta_disco.style.display = "block"
-                    //     alerta_disco.style.backgroundColor = "yellow"
-                    //     alerta_disco.style.borderColor = "yellow"
-                    //     i_alertaDisco.innerHTML = "Disco está em estado de alerta! Cuidado!"
-                    //     setTimeout(() => sumirMensagem(idDado, dadosPing), 2000);
-                    // }
+                    if(novoRegistro[0].upload >= 100 && novoRegistro[0].upload < 200){
 
-                    //     if(novoRegistro[0].discoUsado >= 220  && novoRegistro[0].discoUsado  < 240){
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "yellow"
+                        alerta_disco.style.borderColor = "yellow"
+                        i_alertaDisco.innerHTML = "Upload em estado de alerta!"
+                        setTimeout(() => sumirMensagem(idDado, dadosPing), 2000);
+                    }
+
+                        if(novoRegistro[0].upload >= 50  && novoRegistro[0].upload  < 100){
                        
-                    //     alerta_disco.style.display = "block"
-                    //     alerta_disco.style.backgroundColor = "orange"
-                    //     alerta_disco.style.borderColor = "orange"
-                    //     i_alertaDisco.innerHTML = "Disco está em estado de emergência! Cuidado!"
-                    //     setTimeout(() => sumirMensagem(idDado, dadosPing), 2000);
-                    // }
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "orange"
+                        alerta_disco.style.borderColor = "orange"
+                        i_alertaDisco.innerHTML = "<b> Upload em estado de atenção. Performance prejudicada. </b>"
+                        setTimeout(() => sumirMensagem(idDado, dadosPing), 2000);
+                    }
    
-                    // if(novoRegistro[0].discoUsado > 240){
+                    if(novoRegistro[0].upload < 50 && novoRegistro[0].upload > 0){
    
-                    //     alerta_disco.style.display = "block"
-                    //     alerta_disco.style.backgroundColor = "red"
-                    //     alerta_disco.style.borderColor = "red"
-                    //     i_alertaDisco.innerHTML = "Disco está em estado crítico! Cuidado!"
-                    //     setTimeout(() => sumirMensagem(idDado, dadosPing), 2000);
-                    // }
+                        alerta_disco.style.display = "block"
+                        alerta_disco.style.backgroundColor = "red"
+                        alerta_disco.style.borderColor = "red"
+                        i_alertaDisco.innerHTML = "<b> Upload lento! Perfomance prejudicada. </b>"
+                        setTimeout(() => sumirMensagem(idDado, dadosPing), 2000);
+                    }
                  
-                    // finalizando alertas do disco
 
-
-                    // dadosMemoria.labels.shift();
-                    // dadosMemoria.labels.push(novoRegistro[0].horario); 
                     
-                    // dadosMemoria.datasets[0].data.shift();
-                    // dadosMemoria.datasets[0].data.push(novoRegistro[0].memoriaUsada); 
+                    //Alertas Ping
+
+                    dadosPing.labels.shift();
+                    dadosPing.labels.push(novoRegistro[0].horario); 
                     
-                //  if(novoRegistro[0].memoriaUsada >= 6 && novoRegistro[0].memoriaUsada < 12){
-
-                //      alerta_memoria.style.display = "block"
-                //      alerta_memoria.style.backgroundColor = "yellow"
-                //      alerta_memoria.style.borderColor = "yellow"
-                //      i_alertaMemoria.innerHTML = "Memória RAM em estado de alerta! Cuidado!"
-                //      setTimeout(() => sumirMensagem(idDado, dadosMemoria), 2000);
-                //  }
-                //      if(novoRegistro[0].memoriaUsada >= 12  && novoRegistro[0].memoriaUsada  < 14){
+                    dadosPing.datasets[0].data.shift();
+                    dadosPing.datasets[0].data.push(novoRegistro[0].ping); 
                     
-                //      alerta_memoria.style.display = "block"
-                //      alerta_memoria.style.backgroundColor = "orange"
-                //      alerta_memoria.style.borderColor = "orange"
-                //      i_alertaMemoria.innerHTML = "Memória RAM em estado de emergência! Cuidado!"
-                //      setTimeout(() => sumirMensagem(idDado, dadosMemoria), 2000);
-                //  }
+                 if(novoRegistro[0].ping >= 25 && novoRegistro[0].ping < 100){
 
-                //  if(novoRegistro[0].memoriaUsada > 14){
+                     alerta_memoria.style.display = "block"
+                     alerta_memoria.style.backgroundColor = "yellow"
+                     alerta_memoria.style.borderColor = "yellow"
+                     i_alertaMemoria.innerHTML = "<b> Ping em estado de alerta! </b>"
+                     setTimeout(() => sumirMensagem(idDado, dadosPing), 2000);
+                 }
+                     if(novoRegistro[0].ping >= 100 && novoRegistro[0].ping  < 150){
+                    
+                     alerta_memoria.style.display = "block"
+                     alerta_memoria.style.backgroundColor = "orange"
+                     alerta_memoria.style.borderColor = "orange"
+                     i_alertaMemoria.innerHTML = "<b> Ping em estado de atenção. Performance prejudicada. </b>"
+                     setTimeout(() => sumirMensagem(idDado, dadosPing), 2000);
+                 }
 
-                //      alerta_memoria.style.display = "block"
-                //      alerta_memoria.style.backgroundColor = "red"
-                //      alerta_memoria.style.borderColor = "red"
-                //      i_alertaMemoria.innerHTML = "Memória RAM em estado crítico! Cuidado!"
-                //      setTimeout(() => sumirMensagem(idDado, dadosMemoria), 2000);
-                //  }
+                 if(novoRegistro[0].ping >= 150){
+
+                     alerta_memoria.style.display = "block"
+                     alerta_memoria.style.backgroundColor = "red"
+                     alerta_memoria.style.borderColor = "red"
+                     i_alertaMemoria.innerHTML = "<b> Ping muito alto! Perfomance prejudicada.</b>"
+                     setTimeout(() => sumirMensagem(idDado, dadosPing), 2000);
+                 }
                     
 
                     window.grafico_linha.update();
                     window.grafico_linha2.update();
                     window.grafico_linha3.update();
-                
-
 
                     
                     function sumirMensagem() {
@@ -1065,8 +1069,6 @@
             });
 
     }
-    
 
-    // Final da criação do gráfico da CPU 
 
 </script>
