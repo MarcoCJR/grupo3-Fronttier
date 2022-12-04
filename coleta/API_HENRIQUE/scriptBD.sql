@@ -1,12 +1,12 @@
 use Fronttier;
 
-create table reclameAqui(
+create table Reclamacoes(
 idPalavra int primary key identity,
 palavra varchar(30)
 );
 
-select * from reclameAqui;
-truncate table reclameAqui;
+select * from Reclamacoes;
+truncate table Reclamacoes;
 
 
 -- select para trazer as palavras duplicadas e a quantidade de vezes que elas aparecem

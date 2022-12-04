@@ -69,12 +69,10 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="insightsDash.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-chart-line"></i>
                     <span>Insights<span id="nomeEmp"></span></span></a>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
 
             <!-- Nav Item - Tables -->
             <!-- <li class="nav-item">
@@ -310,10 +308,18 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">INSIGHTS</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Insights</h1>
+                        
                         <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-40"></i> Salvar </a>-->
                     </div>
+                    <div class="d-sm-flex align-items-center mb-4">
+                        <h6 class="m-0 text-primary50">Aqui está uma visão geral do seu sistema</h6>
+                        
+                        <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-40"></i> Salvar </a>-->
+                    </div>
+                    
 
                     <!-- Content Row CARDS
                     <div class="row">
@@ -436,6 +442,191 @@
                             </div>
 
                         </div>
+
+                        <!-- <div class="col-lg-62 mb-4">
+                             Bar Chart 
+                            <div class="card shadow mb-4">
+                                 <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">PIPEFY</h6>
+                                </div>
+                                <div class="card-body2">
+                                    <div class="chart-bar">
+                                        
+                                    </div>
+                                </div> 
+                            </div>
+                        </div> -->
+
+                    </div>
+
+                    <div class="col-lg-62 mb-4">
+                        <!-- Bar Chart -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">OVERVIEW</h6>
+
+                            </div>
+                            <div class="card-body2">
+                               
+                                    <div class="col mr-2">
+                                        <div id="freq_cpu" class="mb font-weight-bold text-gray-800">RELATÓRIO SEMANAL<br><br>
+
+                                            <table class="table tablesorter " id=""> 
+                                                <thead class="text-primary2">
+                                                  <tr>
+                                                    <th class="th48">
+                                                      Reclamações
+                                                    </th>
+                                                    <th class="th48">
+                                                      Componente Afetado
+                                                    </th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody class="text-center text-table">
+                                                   <tr>
+                                                    <td>
+                                                        SITE FORA DO AR  
+                                                    </td>
+                                                    <td>
+                                                        CPU
+                                                    </td>
+                                                </tr>
+                                                  <!-- Dados da segunda coluna -->
+                                                  <tr>
+                                                    <td>
+                                                        FALHA NA APROVAÇÃO DO PAGAMENTO
+                                                    </td>
+                                                    <td >
+                                                      CPU
+                                                    </td>
+                                                </tr>
+                                                  <!-- Dados da terceira coluna   -->
+                                                  <tr>
+                                                    <td>
+                                                      LENTIDÃO NO SITE
+                                                    </td>
+                                                    <td>
+                                                      CPU
+                                                    </td>
+                                                </tr>
+                                                  <!-- Dados da quarta coluna  -->
+                                                  <tr>
+                                                    <td>
+                                                      DADOS CADASTRAIS NÃO ENCONTRADOS 
+                                                    </td>
+                                                    <td >
+                                                      DISCO
+                                                  </tr>
+                                                  <!-- Dados da quinta coluna -->
+                                                  <tr>
+                                                    <td>
+                                                      FALHA NO CADASTRO CLIENTES
+                                                    </td>
+                                                    <td >
+                                                      DISCO
+                                                    </td>
+                                                  </tr>
+                                                  <!-- Dados da sexta e última coluna -->
+                                                  <tr>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                  </tr>
+
+                                                  
+
+                                        
+
+
+
+
+                                                  <!-- <tr>
+                                                    <td>
+                                                      Minerva Hooper
+                                                    </td>
+                                                    <td>
+                                                      Curaçao
+                                                    </td>
+                                                    <td>
+                                                      Sinaai-Waas
+                                                    </td>
+                                                    <td class="text-center">
+                                                      $23,789
+                                                    </td>
+                                                  </tr> -->
+                                                  <!-- <tr>
+                                                    <td>
+                                                      Sage Rodriguez
+                                                    </td>
+                                                    <td>
+                                                      Netherlands
+                                                    </td>
+                                                    <td>
+                                                      Baileux
+                                                    </td>
+                                                    <td class="text-center">
+                                                      $56,142
+                                                    </td>
+                                                  </tr> -->
+                                                  <!-- <tr>
+                                                    <td>
+                                                      Philip Chaney
+                                                    </td>
+                                                    <td>
+                                                      Korea, South
+                                                    </td>
+                                                    <td>
+                                                      Overland Park
+                                                    </td>
+                                                    <td class="text-center">
+                                                      $38,735
+                                                    </td>
+                                                  </tr> -->
+                                                  <!-- <tr>
+                                                    <td>
+                                                      Doris Greene
+                                                    </td>
+                                                    <td>
+                                                      Malawi
+                                                    </td>
+                                                    <td>
+                                                      Feldkirchen in Kärnten
+                                                    </td>
+                                                    <td class="text-center">
+                                                      $63,542
+                                                    </td>
+                                                  </tr> -->
+                                                  <!-- <tr>
+                                                    <td>
+                                                      Mason Porter
+                                                    </td>
+                                                    <td>
+                                                      Chile
+                                                    </td>
+                                                    <td>
+                                                      Gloucester
+                                                    </td>
+                                                    <td class="text-center">
+                                                      $78,615
+                                                    </td> 
+                                                </tr>--> 
+                                                
+                                               </tbody> 
+                                              </table>
+                                            
+                                        
+                                            <br>
+                                        </div>
+                                </div>
+
+                               
+                            </div> 
+
+                            
+                        </div>
+
+                       
                     </div>
 
                 </div>

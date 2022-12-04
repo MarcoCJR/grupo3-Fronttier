@@ -273,6 +273,7 @@ th {
     text-align: -webkit-match-parent
 }
 
+
 label {
     display: inline-block;
     margin-bottom: .5rem
@@ -1329,7 +1330,17 @@ pre code {
 
     .col-lg-6 {
         flex: 0 0 50%;
-        max-width: 50%
+        max-width: 50%;
+        
+    }
+
+    .col-lg-62 {
+        flex: 0 0 50%;
+        max-width: 100%;
+        padding-right: 0rem;
+        padding-left: 0rem;
+        justify-content:space-between;
+        align-items: center;
     }
 
     .col-lg-7 {
@@ -1690,15 +1701,21 @@ pre code {
 }
 
 .table td{
-    
     padding: .75rem;
     vertical-align: top;
-    border-top: 3px solid #e3e6f0
+    border-top: 3px solid #e3e6f0;
 }
 
 .table thead th {
     vertical-align: bottom;
-    border-bottom: 3px solid #e3e6f0
+    border-bottom: 3px solid #e3e6f0;
+}
+
+.th48{
+    vertical-align: bottom;
+    border-bottom: 3px solid #e3e6f0;
+    align-items: center;
+    text-align: center; 
 }
 
 .table tbody+tbody {
@@ -4554,6 +4571,14 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
     flex: 1 1 auto;
     min-height: 1px;
     padding: 1.25rem
+}
+
+.card-body2 {
+    flex: 1 1 auto;
+    min-height: 1px;
+    height: 24rem;
+    padding: 1.25rem;
+    
 }
 
 .card-title {
@@ -7946,7 +7971,7 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 }
 
 .mb-4, .my-4 {
-    margin-bottom: 1.5rem !important
+    margin-bottom: 1.05rem !important
 }
 
 .ml-4, .mx-4 {
@@ -9809,6 +9834,23 @@ height: 50px;
 
 .text-primary {
     color: #4e73df !important
+}
+
+.text-primary50 {
+    color: #999999 !important
+}
+
+.text-primary48 {
+    color: white;
+    background-color: #e74a3b;
+    border-radius: 6px;
+    width: 37%;
+    height: 30px;
+    font-size: 19px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    box-shadow: 4px 5px 6px #c2c2c2;
 }
 
 a.text-primary:focus, a.text-primary:hover {
