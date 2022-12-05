@@ -143,6 +143,15 @@ function obterDadosComponentes(nomeEmpresa) {
     return database.executar(instrucao);
 }
 
+function FiltroComponentes(idServidor) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function FiltroComponentes():", idServidor);
+
+    var instrucao = `SELECT fkComponente FROM MaquinaComponente WHERE fkMaquina = ${idServidor};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     entrar,
     cadastrar,
@@ -155,5 +164,6 @@ module.exports = {
     cadastrarUserDash,
     nomeEmpresa,
     alertas,
-    obterDadosComponentes
+    obterDadosComponentes,
+    FiltroComponentes
 };

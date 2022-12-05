@@ -58,4 +58,8 @@ router.post("/obterDadosComponentes", function (req, res) {
     usuarioController.obterDadosComponentes(req, res);
 });
 
+router.post("/FiltroComponentes", function (req, res) {
+    usuarioController.FiltroComponentes(req, res);
+});
+
 module.exports = router;

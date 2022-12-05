@@ -444,6 +444,36 @@ function obterDadosComponentes(req, res) {
     }
 }
 
+function FiltroComponentes(req, res) {
+    // Crie uma variável que vá recuperar os valores do Card do Pipefy
+    var idServidor = req.body.idServidorServer
+    
+
+    // Faça as validações dos valores
+    if (idServidor == undefined) {
+        res.status(400).send("Seu idServidor está undefined!");
+    } else {
+
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.FiltroComponentes(idServidor)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nErro ao selecionar os componentes!!! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+
 module.exports = {
     entrar,
     cadastrar,
@@ -457,5 +487,6 @@ module.exports = {
     cadastrarTecnico,
     nomeEmpresa,
     alertas,
-    obterDadosComponentes
+    obterDadosComponentes,
+    FiltroComponentes
 }

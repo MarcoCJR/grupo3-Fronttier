@@ -50,7 +50,8 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="javascript:IrAnalise(sessionStorage.nomeEmp,sessionStorage.COD_EMPRESA,sessionStorage.permissaoUser)">
+                <a class="nav-link"
+                    href="javascript:IrAnalise(sessionStorage.nomeEmp,sessionStorage.COD_EMPRESA,sessionStorage.permissaoUser)">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Análise de Notificações</span></a>
             </li>
@@ -337,148 +338,7 @@
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Monitoramento - Percentual CPU</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Opções:</div>
-                                            <a class="dropdown-item" href="#">Atualizar</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Esconder</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <section class="graficoPercent">
-                                            <canvas id="myChartPercent"></canvas>
-                                        </section>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Final Monitoramento CPU -->
-
-
-
-                        <!-- Monitoramento FreqCpu 1  -->
-
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Frequência atual da CPU</h6>
-                                    <div class="dropdown no-arrow">
-                                        <!-- <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Opções:</div>
-                                            <a class="dropdown-item" href="#">Atualizar</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Esconder</a>
-                                        </div> -->
-                                    </div>
-                                </div>
-                                <!-- Grafico FreqCpu -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <section class="graficoFreq">
-                                            <canvas id="myChartFreq"></canvas>
-                                        </section>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Final monitoramento CPU -->
-
-
-
-                        <!-- Monitoramento da memória -->
-
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary"> Disco utilizada</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Opções:</div>
-                                            <a class="dropdown-item" href="#">Atualizar</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Esconder</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Gráfico Memória-->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <section class="graficoDisco">
-                                            <canvas id="myChartDisco"></canvas>
-                                        </section>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!-- Final do teste 1 -->
-
-
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Memória utilizada</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Opções:</div>
-                                            <a class="dropdown-item" href="#">Atualizar</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Esconder</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Gráfico Disco -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <section class="graficoMemoria">
-                                            <canvas id="myChartMemoria"></canvas>
-                                        </section>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div class="row" id="row">
 
                     </div>
 
@@ -636,16 +496,19 @@
 
     usuario.innerHTML = sessionStorage.NOME_USUARIO;
     nomeEmp.innerHTML = sessionStorage.nomeEmp;
-
     let nomeEmpresa = sessionStorage.nomeEmp;
 
     // Criação gráfico Percentual CPU
 
     let proximaAtualizacao;
 
-    window.onload = obterDadosGrafico(8);
+
+    window.onload = obterDadosGrafico(12);
+
+    var vetor_Componentes = []
 
 
+    // ObterDadosGrafico também pega os dados dos componentes agora
     function obterDadosGrafico(idServidor) {
         //        alterarTitulo(idServidor)
 
@@ -660,7 +523,7 @@
                     resposta.reverse();
 
 
-                    plotarGrafico(resposta, idServidor);
+                    
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -669,7 +532,177 @@
             .catch(function (error) {
                 console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
+
+
+        // Pegando os componentes
+        fetch("/usuarios/FiltroComponentes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idServidorServer: idServidor,
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+
+                    json.forEach(element => {
+                        vetor_Componentes.push(element.fkComponente)
+                    });
+                    vetor_Componentes.forEach(element => {
+            if (element == 1) {
+                row.innerHTML += `<!-- Monitoramento FreqCpu 1  -->
+
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Frequência atual da CPU</h6>
+                                    <div class="dropdown no-arrow">
+                                        <!-- <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Opções:</div>
+                                            <a class="dropdown-item" href="#">Atualizar</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Esconder</a>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <!-- Grafico FreqCpu -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <section class="graficoFreq">
+                                            <canvas id="myChartFreq"></canvas>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Final monitoramento CPU -->`
+
+            } else if (element == 2) {
+                row.innerHTML += `<!-- Area Chart -->
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Percentual de Uso da CPU</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Opções:</div>
+                                            <a class="dropdown-item" href="#">Atualizar</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Esconder</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <section class="graficoPercent">
+                                            <canvas id="myChartPercent"></canvas>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Final Monitoramento CPU -->`
+
+            } else if (element == 3) {
+                row.innerHTML += `<!-- Monitoramento da memória -->
+
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary"> Disco utilizada</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Opções:</div>
+                                            <a class="dropdown-item" href="#">Atualizar</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Esconder</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Gráfico Memória-->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <section class="graficoDisco">
+                                            <canvas id="myChartDisco"></canvas>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+
+            } else if (element == 4) {
+                row.innerHTML += `<div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Memória utilizada</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Opções:</div>
+                                            <a class="dropdown-item" href="#">Atualizar</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Esconder</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Gráfico Disco -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <section class="graficoMemoria">
+                                            <canvas id="myChartMemoria"></canvas>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+                
+            }
+        });
+        plotarGrafico(resposta, idServidor);
+                });
+            }
+        }).catch(function (erro) {
+            console.log("ERRO: " + erro);
+        })
     }
+
 
     // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
     // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
@@ -1260,7 +1293,7 @@
     }
 
 
-    function IrAnalise(nomeEmp, COD_EMPRESA, permissaoUser){
+    function IrAnalise(nomeEmp, COD_EMPRESA, permissaoUser) {
         sessionStorage.nomeEmp = nomeEmp
         sessionStorage.COD_EMPRESA = COD_EMPRESA
         sessionStorage.permissaoUser = permissaoUser
