@@ -65,6 +65,73 @@
     display: block;
 }
 
+.div_alerta{
+    /* display: none; */
+    /* position: absolute; */
+    height: 80px;
+    width: 200px;
+    /* background-color: rgb(167, 4, 4); */
+    border-radius: 20px;
+    display: block;
+    /* border: 2px solid red; */
+    margin-left: 10px;
+    margin-top: 120px;
+}
+
+.texto_alerta{
+    color: black;
+    margin-top: 15px;
+    font-size: 15px;
+    margin-left: 10px;
+
+}
+
+/* alertas  */
+
+.div_alertaDisco{
+    /* display: none; */
+    /* position: absolute; */
+    height: 75px;
+    width: 200px;
+    /* background-color: rgb(167, 4, 4); */
+    border-radius: 20px;
+    display: block;
+    /* border: 2px solid red; */
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+.texto_alertaDisco{
+    color: black;
+    font-size: 15px;
+    margin-top: 15px;
+    margin-left: 10px;
+
+}
+
+/* Alertas  */
+
+.div_alertaMemoria{
+    /* display: none; */
+    /* position: absolute; */
+    height: 75px;
+    width: 200px;
+    /* background-color: rgb(167, 4, 4); */
+    border-radius: 20px;
+    display: block;
+    /* border: 2px solid red; */
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+.texto_alertaMemoria{
+    color: black;
+    font-size: 15px;
+    margin-top: 15px;
+    margin-left: 10px;
+
+}
+
 
  input input:invalid + .teste1{
     display: inline;

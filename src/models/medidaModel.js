@@ -404,7 +404,7 @@ function buscarTempoRealTemp(idServidor) {
     instrucaoSql = ''
 
     if (process.env.AMBIENTE_PROCESSO == "producao") {
-        instrucaoSql = `select top 1
+        instrucaoSql = `select top 6
                         percentualCpu,
                         tempAtual,
                         dataHora, 
@@ -423,7 +423,7 @@ function buscarTempoRealTemp(idServidor) {
                         fkServidor 
                         from dadosTemp
                         where fkServidor = ${idServidor}
-                    order by idDadosTemp desc limit 1`;
+                    order by idDadosTemp desc limit 6`;
 
     }
     else {
