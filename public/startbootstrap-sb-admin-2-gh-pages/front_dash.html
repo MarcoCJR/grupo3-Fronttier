@@ -517,7 +517,7 @@
     var vetor_Componentes = []
 
 
-    window.onload = obterDadosGrafico(14);
+    window.onload = obterDadosGrafico(sessionStorage.IDSERVIDOR);
 
 
 
@@ -584,7 +584,7 @@
 
                         <!-- Final monitoramento CPU -->`
 
-                            setTimeout(() => plotarGraficoFreq(resposta, idServidor));
+                            
 
                         } else if (element == 2) {
                             row.innerHTML += `<!-- Area Chart -->
@@ -620,7 +620,7 @@
                         </div>
                         <!-- Final Monitoramento CPU -->`
 
-                            setTimeout(() => plotarGraficoPercent(resposta, idServidor));
+                            
 
                         } else if (element == 3) {
                             row.innerHTML += `<!-- Monitoramento da memória -->
@@ -656,7 +656,7 @@
                             </div>
                         </div>`
 
-                            setTimeout(() => plotarGraficoDisco(resposta, idServidor));
+                            
 
                         } else if (element == 4) {
                             row.innerHTML += `<div class="col-xl-8 col-lg-7">
@@ -690,7 +690,7 @@
                             </div>
                         </div>`
 
-                            setTimeout(() => plotarGraficoRam(resposta, idServidor));
+                            
 
                         }
                     });
@@ -712,6 +712,11 @@
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     resposta.reverse();
+
+                    setTimeout(() => plotarGraficoFreq(resposta, idServidor));
+                    setTimeout(() => plotarGraficoPercent(resposta, idServidor));
+                    setTimeout(() => plotarGraficoDisco(resposta, idServidor));
+                    setTimeout(() => plotarGraficoRam(resposta, idServidor));
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -732,7 +737,7 @@
     function plotarGraficoFreq(resposta, idServidor) {
         console.log('iniciando plotagem do gráfico FreqCPU...');
 
-        var dadosFreq = {
+        window.dadosFreq = {
             labels: [],
             datasets: [
                 {
@@ -751,8 +756,8 @@
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
 
-            dadosFreq.labels.push(registro.horario);
-            dadosFreq.datasets[0].data.push(registro.freqAtual);
+            window.dadosFreq.labels.push(registro.horario);
+            window.dadosFreq.datasets[0].data.push(registro.freqAtual);
         }
 
         //   Criação gráfico freq
@@ -839,7 +844,7 @@
         // Criação gráfico da freq da CPU
         window.grafico_linha2 = new Chart(myChartFreq, {
             type: "line",
-            data: dadosFreq,
+            data: window.dadosFreq,
             options: freqAtual
         });
 
@@ -850,7 +855,7 @@
     function plotarGraficoPercent(resposta, idServidor) {
         console.log('iniciando plotagem do gráfico PercentCPU...');
 
-        var dadosCpu = {
+        window.dadosCpu = {
             labels: [],
             datasets: [
                 {
@@ -869,11 +874,11 @@
 
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
-            dadosCpu.labels.push(registro.horario);
-            dadosCpu.datasets[0].data.push(registro.percentualCpu);
+            window.dadosCpu.labels.push(registro.horario);
+            window.dadosCpu.datasets[0].data.push(registro.percentualCpu);
         }
 
-        console.log(JSON.stringify(dadosCpu));
+        console.log(JSON.stringify(window.dadosCpu));
 
         var cpuAtual = {
 
@@ -917,7 +922,7 @@
         // Criação gráfico percentual da CPU
         window.grafico_linha = new Chart(myChartPercent, {
             type: "line",
-            data: dadosCpu,
+            data: window.dadosCpu,
             options: cpuAtual
         });
         // Finalização do gráfico percentual da CPU
@@ -929,7 +934,7 @@
 
     function plotarGraficoDisco(resposta, idServidor) {
         console.log('iniciando plotagem do gráfico Disco...');
-        var dadosDisco = {
+        window.dadosDisco = {
             labels: [],
             datasets: [
                 {
@@ -948,8 +953,8 @@
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
 
-            dadosDisco.labels.push(registro.horario);
-            dadosDisco.datasets[0].data.push(registro.discoUsado);
+            window.dadosDisco.labels.push(registro.horario);
+            window.dadosDisco.datasets[0].data.push(registro.discoUsado);
         }
 
         // Criação gráfico disco
@@ -994,7 +999,7 @@
         // Criação do gráfico disco
         window.grafico_linha3 = new Chart(myChartDisco, {
             type: "line",
-            data: dadosDisco,
+            data: window.dadosDisco,
             options: discoAtual
         });
         // Finalização do gráfico disco  
@@ -1002,7 +1007,7 @@
 
     function plotarGraficoRam(resposta, idServidor) {
         console.log('iniciando plotagem do gráfico Ram...');
-        var dadosMemoria = {
+        window.dadosMemoria = {
             labels: [],
             datasets: [
                 {
@@ -1021,8 +1026,8 @@
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
 
-            dadosMemoria.labels.push(registro.horario);
-            dadosMemoria.datasets[0].data.push(registro.discoUsado);
+            window.dadosMemoria.labels.push(registro.horario);
+            window.dadosMemoria.datasets[0].data.push(registro.discoUsado);
         }
 
         var memoriaAtual = {
@@ -1066,16 +1071,13 @@
         // Criação gráfico memória
         window.grafico_linha4 = new Chart(myChartMemoria, {
             type: "line",
-            data: dadosMemoria,
+            data: window.dadosMemoria,
             options: memoriaAtual
         });
         // Finalização gráfico memória
     }
 
-    setTimeout(() => atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria), 2000);
-
-
-    window.onload = atualizarGrafico(14, 2);
+    setTimeout(() => atualizarGrafico(sessionStorage.IDSERVIDOR), 2000);
 
     function atualizarGrafico(idServidor) {
         let componente = ""
@@ -1089,206 +1091,213 @@
                     console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
                     console.log(`Dados atuais do gráfico: ${novoRegistro[0].percentualCpu} e ${novoRegistro[0].freqAtual} e ${novoRegistro[0].discoUsado} e ${novoRegistro[0].memoriaUsada}`);
 
-                    dadosCpu.labels.shift();
-                    dadosCpu.labels.push(novoRegistro[0].horario);
 
-                    dadosCpu.datasets[0].data.shift();
-                    dadosCpu.datasets[0].data.push(novoRegistro[0].percentualCpu);
+                    if (novoRegistro[0].percentualCpu != null) {
+                        window.dadosCpu.labels.shift();
+                        window.dadosCpu.labels.push(novoRegistro[0].horario);
 
-                    // Criando o alerta do percentual da CPU 
-                    if (novoRegistro[0].percentualCpu >= 60 && novoRegistro[0].percentualCpu < 80) {
-                        componente = "CPU"
-                        maquina = "1"
-                        frase = "Alerta"
-                        metrica = `${novoRegistro[0].percentualCpu} %`
+                        window.dadosCpu.datasets[0].data.shift();
+                        window.dadosCpu.datasets[0].data.push(novoRegistro[0].percentualCpu);
 
-                        alerta_div.style.display = "block"
-                        alerta_div.style.backgroundColor = "yellow"
-                        alerta_div.style.borderColor = "yellow"
-                        i_alerta.innerHTML = "CPU em estado de alerta! Cuidado!"
+                        // Criando o alerta do percentual da CPU 
+                        if (novoRegistro[0].percentualCpu >= 60 && novoRegistro[0].percentualCpu < 80) {
+                            componente = "CPU"
+                            maquina = "1"
+                            frase = "Alerta"
+                            metrica = `${novoRegistro[0].percentualCpu} %`
 
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+                            alerta_div.style.display = "block"
+                            alerta_div.style.backgroundColor = "yellow"
+                            alerta_div.style.borderColor = "yellow"
+                            i_alerta.innerHTML = "CPU em estado de alerta! Cuidado!"
 
-                        setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
+                            alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                            setTimeout(() => sumirMensagem(idServidor, window.dadosCpu), 2000);
+                        }
+
+                        if (novoRegistro[0].percentualCpu >= 80 && novoRegistro[0].percentualCpu < 90) {
+                            componente = "CPU"
+                            maquina = "1"
+                            frase = "Emergência"
+                            metrica = `${novoRegistro[0].percentualCpu} %`
+
+                            alerta_div.style.display = "block"
+                            alerta_div.style.backgroundColor = "orange"
+                            alerta_div.style.borderColor = "orange"
+                            i_alerta.innerHTML = "CPU em estado de emergência! Cuidado!"
+
+                            alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                            setTimeout(() => sumirMensagem(idServidor, window.dadosCpu), 2000);
+                        }
+
+
+                        if (novoRegistro[0].percentualCpu > 90) {
+                            componente = "CPU"
+                            maquina = "1"
+                            frase = "Crítico"
+                            metrica = `${novoRegistro[0].percentualCpu} %`
+
+                            alerta_div.style.display = "block"
+                            alerta_div.style.backgroundColor = "red"
+                            alerta_div.style.borderColor = "red"
+                            i_alerta.innerHTML = "CPU em estado crítico! Cuidado!"
+
+                            alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                            setTimeout(() => sumirMensagem(idServidor, window.dadosCpu), 2000);
+                        }
+                        window.grafico_linha.update();
+                        
                     }
 
-                    if (novoRegistro[0].percentualCpu >= 80 && novoRegistro[0].percentualCpu < 90) {
-                        componente = "CPU"
-                        maquina = "1"
-                        frase = "Emergência"
-                        metrica = `${novoRegistro[0].percentualCpu} %`
+                    if (novoRegistro[0].freqAtual != null) {
+                        window.dadosFreq.labels.shift();
+                        window.dadosFreq.labels.push(novoRegistro[0].horario);
 
-                        alerta_div.style.display = "block"
-                        alerta_div.style.backgroundColor = "orange"
-                        alerta_div.style.borderColor = "orange"
-                        i_alerta.innerHTML = "CPU em estado de emergência! Cuidado!"
+                        window.dadosFreq.datasets[0].data.shift();
+                        window.dadosFreq.datasets[0].data.push(novoRegistro[0].freqAtual);
 
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+                        window.grafico_linha2.update();
 
-                        setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
                     }
 
+                    if (novoRegistro[0].discoUsado != null) {
+                        window.dadosDisco.labels.shift();
+                        window.dadosDisco.labels.push(novoRegistro[0].horario);
 
-                    if (novoRegistro[0].percentualCpu > 90) {
-                        componente = "CPU"
-                        maquina = "1"
-                        frase = "Crítico"
-                        metrica = `${novoRegistro[0].percentualCpu} %`
+                        window.dadosDisco.datasets[0].data.shift();
+                        window.dadosDisco.datasets[0].data.push(novoRegistro[0].discoUsado);
 
-                        alerta_div.style.display = "block"
-                        alerta_div.style.backgroundColor = "red"
-                        alerta_div.style.borderColor = "red"
-                        i_alerta.innerHTML = "CPU em estado crítico! Cuidado!"
+                        if (novoRegistro[0].discoUsado >= 70 && novoRegistro[0].discoUsado < 80) {
+                            componente = "Disco"
+                            maquina = "1"
+                            frase = "Alerta"
+                            metrica = novoRegistro[0].discoUsado
 
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
+                            alerta_disco.style.display = "block"
+                            alerta_disco.style.backgroundColor = "yellow"
+                            alerta_disco.style.borderColor = "yellow"
+                            i_alertaDisco.innerHTML = "Disco está em estado de alerta! Cuidado!"
 
-                        setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
+                            alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                            setTimeout(() => sumirMensagem(idServidor, window.dadosDisco), 2000);
+                        }
+
+                        if (novoRegistro[0].discoUsado >= 80 && novoRegistro[0].discoUsado < 90) {
+                            componente = "Disco"
+                            maquina = "1"
+                            frase = "Emergência"
+                            metrica = novoRegistro[0].discoUsado
+
+                            alerta_disco.style.display = "block"
+                            alerta_disco.style.backgroundColor = "orange"
+                            alerta_disco.style.borderColor = "orange"
+                            i_alertaDisco.innerHTML = "Disco está em estado de emergência! Cuidado!"
+
+                            alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                            setTimeout(() => sumirMensagem(idServidor, window.dadosDisco), 2000);
+                        }
+
+                        if (novoRegistro[0].discoUsado > 90) {
+                            componente = "Disco"
+                            maquina = "1"
+                            frase = "Crítico"
+                            metrica = novoRegistro[0].discoUsado
+
+                            alerta_disco.style.display = "block"
+                            alerta_disco.style.backgroundColor = "red"
+                            alerta_disco.style.borderColor = "red"
+                            i_alertaDisco.innerHTML = "Disco está em estado crítico! Cuidado!"
+
+                            alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                            setTimeout(() => sumirMensagem(idServidor, window.dadosDisco), 2000);
+                        }
+                        window.grafico_linha3.update();
+
                     }
-
-
-
-                    dadosFreq.labels.shift();
-                    dadosFreq.labels.push(novoRegistro[0].horario);
-
-                    dadosFreq.datasets[0].data.shift();
-                    dadosFreq.datasets[0].data.push(novoRegistro[0].freqAtual);
-
-                    // Criando o alerta da frequencial atual da CPU    
-
-                    dadosDisco.labels.shift();
-                    dadosDisco.labels.push(novoRegistro[0].horario);
-
-                    dadosDisco.datasets[0].data.shift();
-                    dadosDisco.datasets[0].data.push(novoRegistro[0].discoUsado);
-                    // Alertas do disco
-
-                    if (novoRegistro[0].discoUsado >= 70 && novoRegistro[0].discoUsado < 80) {
-                        componente = "Disco"
-                        maquina = "1"
-                        frase = "Alerta"
-                        metrica = novoRegistro[0].discoUsado
-
-                        alerta_disco.style.display = "block"
-                        alerta_disco.style.backgroundColor = "yellow"
-                        alerta_disco.style.borderColor = "yellow"
-                        i_alertaDisco.innerHTML = "Disco está em estado de alerta! Cuidado!"
-
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-                        setTimeout(() => sumirMensagem(idServidor, dadosDisco), 2000);
-                    }
-
-                    if (novoRegistro[0].discoUsado >= 80 && novoRegistro[0].discoUsado < 90) {
-                        componente = "Disco"
-                        maquina = "1"
-                        frase = "Emergência"
-                        metrica = novoRegistro[0].discoUsado
-
-                        alerta_disco.style.display = "block"
-                        alerta_disco.style.backgroundColor = "orange"
-                        alerta_disco.style.borderColor = "orange"
-                        i_alertaDisco.innerHTML = "Disco está em estado de emergência! Cuidado!"
-
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-                        setTimeout(() => sumirMensagem(idServidor, dadosDisco), 2000);
-                    }
-
-                    if (novoRegistro[0].discoUsado > 90) {
-                        componente = "Disco"
-                        maquina = "1"
-                        frase = "Crítico"
-                        metrica = novoRegistro[0].discoUsado
-
-                        alerta_disco.style.display = "block"
-                        alerta_disco.style.backgroundColor = "red"
-                        alerta_disco.style.borderColor = "red"
-                        i_alertaDisco.innerHTML = "Disco está em estado crítico! Cuidado!"
-
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-                        setTimeout(() => sumirMensagem(idServidor, dadosDisco), 2000);
-                    }
-
                     // finalizando alertas do disco
 
+                    if (novoRegistro[0].memoriaUsada != null) {
+                        window.dadosMemoria.labels.shift();
+                        window.dadosMemoria.labels.push(novoRegistro[0].horario);
 
-                    dadosMemoria.labels.shift();
-                    dadosMemoria.labels.push(novoRegistro[0].horario);
+                        window.dadosMemoria.datasets[0].data.shift();
+                        window.dadosMemoria.datasets[0].data.push(novoRegistro[0].memoriaUsada);
 
-                    dadosMemoria.datasets[0].data.shift();
-                    dadosMemoria.datasets[0].data.push(novoRegistro[0].memoriaUsada);
+                        if (novoRegistro[0].memoriaUsada >= 4.0 && novoRegistro[0].memoriaUsada < 6.0) {
+                            componente = "RAM"
+                            maquina = "1"
+                            frase = "Alerta"
+                            metrica = novoRegistro[0].memoriaUsada
 
-                    if (novoRegistro[0].memoriaUsada >= 4.0 && novoRegistro[0].memoriaUsada < 6.0) {
-                        componente = "RAM"
-                        maquina = "1"
-                        frase = "Alerta"
-                        metrica = novoRegistro[0].memoriaUsada
-
-                        alerta_memoria.style.display = "block"
-                        alerta_memoria.style.backgroundColor = "yellow"
-                        alerta_memoria.style.borderColor = "yellow"
-                        i_alertaMemoria.innerHTML = "Memória RAM em estado de alerta! Cuidado!"
-
-
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-                        setTimeout(() => sumirMensagem(idServidor, dadosMemoria), 2000);
-                    }
-                    if (novoRegistro[0].memoriaUsada >= 6.0 && novoRegistro[0].memoriaUsada < 7.5) {
-                        componente = "RAM"
-                        maquina = "1"
-                        frase = "Emergência"
-                        metrica = novoRegistro[0].memoriaUsada
-
-                        alerta_memoria.style.display = "block"
-                        alerta_memoria.style.backgroundColor = "orange"
-                        alerta_memoria.style.borderColor = "orange"
-                        i_alertaMemoria.innerHTML = "Memória RAM em estado de emergência! Cuidado!"
-
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-                        setTimeout(() => sumirMensagem(idServidor, dadosMemoria), 2000);
-                    }
-
-                    if (novoRegistro[0].memoriaUsada > 7.5) {
-                        componente = "RAM"
-                        maquina = "1"
-                        frase = "Crítico"
-                        metrica = novoRegistro[0].memoriaUsada
-
-                        alerta_memoria.style.display = "block"
-                        alerta_memoria.style.backgroundColor = "red"
-                        alerta_memoria.style.borderColor = "red"
-                        i_alertaMemoria.innerHTML = "Memória RAM em estado crítico! Cuidado!"
-
-                        alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-                        setTimeout(() => sumirMensagem(idServidor, dadosMemoria), 2000);
-                    }
+                            alerta_memoria.style.display = "block"
+                            alerta_memoria.style.backgroundColor = "yellow"
+                            alerta_memoria.style.borderColor = "yellow"
+                            i_alertaMemoria.innerHTML = "Memória RAM em estado de alerta! Cuidado!"
 
 
+                            alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
-                    window.grafico_linha.update();
-                    window.grafico_linha2.update();
-                    window.grafico_linha3.update();
-                    window.grafico_linha4.update();
+                            setTimeout(() => sumirMensagem(idServidor, window.dadosMemoria), 2000);
+                        }
+                        if (novoRegistro[0].memoriaUsada >= 6.0 && novoRegistro[0].memoriaUsada < 7.5) {
+                            componente = "RAM"
+                            maquina = "1"
+                            frase = "Emergência"
+                            metrica = novoRegistro[0].memoriaUsada
 
+                            alerta_memoria.style.display = "block"
+                            alerta_memoria.style.backgroundColor = "orange"
+                            alerta_memoria.style.borderColor = "orange"
+                            i_alertaMemoria.innerHTML = "Memória RAM em estado de emergência! Cuidado!"
 
+                            alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
+                            setTimeout(() => sumirMensagem(idServidor, window.dadosMemoria), 2000);
+                        }
 
-                    function sumirMensagem() {
-                        alerta_div.style.display = "none"
-                        // i_alerta.style.display = "none"
-                        alerta_memoria.style.display = "none"
-                        // i_alertaMemoria.style.display = "none"
+                        if (novoRegistro[0].memoriaUsada > 7.5) {
+                            componente = "RAM"
+                            maquina = "1"
+                            frase = "Crítico"
+                            metrica = novoRegistro[0].memoriaUsada
+
+                            alerta_memoria.style.display = "block"
+                            alerta_memoria.style.backgroundColor = "red"
+                            alerta_memoria.style.borderColor = "red"
+                            i_alertaMemoria.innerHTML = "Memória RAM em estado crítico! Cuidado!"
+
+                            alertas(nomeEmpresa, maquina, componente, metrica, frase)
+
+                            setTimeout(() => sumirMensagem(idServidor, window.dadosMemoria), 2000);
+                        }
+
+                        window.grafico_linha4.update();
                     }
 
-                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria), 2000);
-                });
+
+                       
+
+
+
+
+                        function sumirMensagem() {
+                            alerta_div.style.display = "none"
+                            // i_alerta.style.display = "none"
+                            alerta_memoria.style.display = "none"
+                            // i_alertaMemoria.style.display = "none"
+                        }
+
+                        proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, window.dadosCpu, window.dadosFreq, window.dadosDisco, window.dadosMemoria), 2000);
+                    });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
-                proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria), 2000);
+                proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, window.dadosCpu, window.dadosFreq, window.dadosDisco, window.dadosMemoria), 2000);
             }
         })
             .catch(function (error) {
