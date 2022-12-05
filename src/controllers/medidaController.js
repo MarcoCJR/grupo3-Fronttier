@@ -33,7 +33,7 @@ function buscarMedidasEmTempoReal(req, res) {
 
     medidaModel.buscarMedidasEmTempoReal(idServidor).then(function (resultado) {
         if (resultado.length > 0) {
-            res.status(200).json(resultado);
+            res.json(resultado);
         } else {
             res.status(204).send("Nenhum resultado encontrado!")
         }
