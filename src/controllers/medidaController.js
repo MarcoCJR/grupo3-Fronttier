@@ -94,6 +94,26 @@ function buscarMedidasChamados(req, res) {
     });
 }
 
+function buscarMedidasPalavras(req, res) {
+
+    var palavra = req.params.palavra;
+
+    console.log(`aaaaaaaaaaaaa`);
+
+    medidaModel.buscarMedidasPalavras(palavra).then(function (resultado) {
+        console.log("abacaxi" + resultado[0])
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 function ultimasMedidasDisco(req, res) {
 
     const limite_linhas = 7;
@@ -294,6 +314,7 @@ module.exports = {
     buscarMedidasEmTempoReal,
     buscarMedidas,
     buscarMedidasChamados,
+    buscarMedidasPalavras,
     ultimasMedidasDisco,
     buscarMedidasDisco,
     buscarMedidasEmTempoRealRede,

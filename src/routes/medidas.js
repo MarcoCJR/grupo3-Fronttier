@@ -27,6 +27,10 @@ router.get("/ultimasTeste/:idChamado", function (req, res) {
     medidaController.buscarMedidasChamados(req, res);
 });
 
+router.get("/buscarMedidasPalavras/:palavra", function (req, res) {
+    medidaController.buscarMedidasPalavras(req, res);
+});
+
 router.get("/ultimasDisco/:idServidor", function (req, res) {
     medidaController.buscarMedidasDisco(req, res);
 });
