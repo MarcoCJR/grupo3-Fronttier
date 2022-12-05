@@ -514,37 +514,16 @@
 
     let proximaAtualizacao;
 
-
-    window.onload = obterDadosGrafico(12);
-
     var vetor_Componentes = []
+
+
+    window.onload = obterDadosGrafico(14);
+
 
 
     // ObterDadosGrafico também pega os dados dos componentes agora
     function obterDadosGrafico(idServidor) {
         //        alterarTitulo(idServidor)
-
-        if (proximaAtualizacao != undefined) {
-            clearTimeout(proximaAtualizacao);
-        }
-
-        fetch(`/medidas/ultimas/${idServidor}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
-
-
-                    
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-
 
         // Pegando os componentes
         fetch("/usuarios/FiltroComponentes", {
@@ -565,12 +544,12 @@
                     console.log(json);
                     console.log(JSON.stringify(json));
 
-                    json.forEach(element => {
-                        vetor_Componentes.push(element.fkComponente)
+                    json.forEach(it => {
+                        vetor_Componentes.push(it.fkComponente)
                     });
                     vetor_Componentes.forEach(element => {
-            if (element == 1) {
-                row.innerHTML += `<!-- Monitoramento FreqCpu 1  -->
+                        if (element == 1) {
+                            row.innerHTML += `<!-- Monitoramento FreqCpu 1  -->
 
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
@@ -605,8 +584,10 @@
 
                         <!-- Final monitoramento CPU -->`
 
-            } else if (element == 2) {
-                row.innerHTML += `<!-- Area Chart -->
+                            setTimeout(() => plotarGraficoFreq(resposta, idServidor));
+
+                        } else if (element == 2) {
+                            row.innerHTML += `<!-- Area Chart -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
@@ -639,8 +620,10 @@
                         </div>
                         <!-- Final Monitoramento CPU -->`
 
-            } else if (element == 3) {
-                row.innerHTML += `<!-- Monitoramento da memória -->
+                            setTimeout(() => plotarGraficoPercent(resposta, idServidor));
+
+                        } else if (element == 3) {
+                            row.innerHTML += `<!-- Monitoramento da memória -->
 
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
@@ -673,8 +656,10 @@
                             </div>
                         </div>`
 
-            } else if (element == 4) {
-                row.innerHTML += `<div class="col-xl-8 col-lg-7">
+                            setTimeout(() => plotarGraficoDisco(resposta, idServidor));
+
+                        } else if (element == 4) {
+                            row.innerHTML += `<div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
@@ -704,42 +689,48 @@
                                 </div>
                             </div>
                         </div>`
-                
-            }
-        });
-        plotarGrafico(resposta, idServidor);
+
+                            setTimeout(() => plotarGraficoRam(resposta, idServidor));
+
+                        }
+                    });
+
                 });
             }
         }).catch(function (erro) {
             console.log("ERRO: " + erro);
         })
+
+
+
+        if (proximaAtualizacao != undefined) {
+            clearTimeout(proximaAtualizacao);
+        }
+
+        fetch(`/medidas/ultimas/${idServidor}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
     }
 
 
     // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
     // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
     // A função *plotarGrafico* também invoca a função *atualizarGrafico*
-    function plotarGrafico(resposta, idServidor) {
-        console.log('iniciando plotagem do gráfico...');
 
-        var dadosCpu = {
-            labels: [],
-            datasets: [
-                {
-                    yAxisID: 'y-Percentual',
-                    label: 'Percentual-Cpu',
-                    borderColor: '#4e73df',
-                    backgroundColor: '#858796',
-                    fill: true,
-                    data: []
-                },
+    // Criação criação gráfico
 
-
-            ]
-
-        };
-
-        // Criação criação gráfico
+    function plotarGraficoFreq(resposta, idServidor) {
+        console.log('iniciando plotagem do gráfico FreqCPU...');
 
         var dadosFreq = {
             labels: [],
@@ -757,109 +748,11 @@
 
         };
 
-        // Final criação frequêcia CPU
-
-
-        // Criação dos dados disco
-
-        var dadosDisco = {
-            labels: [],
-            datasets: [
-                {
-                    yAxisID: 'y-Disco',
-                    label: 'Disco usado',
-                    borderColor: '#4e73df',
-                    backgroundColor: '#858796',
-                    fill: true,
-                    data: []
-                }
-
-            ]
-
-        };
-
-        var dadosMemoria = {
-            labels: [],
-            datasets: [
-                {
-                    yAxisID: 'y-Memória',
-                    label: 'Memória usada',
-                    borderColor: '#4e73df',
-                    backgroundColor: '#858796',
-                    fill: true,
-                    data: []
-                }
-
-            ]
-
-        };
-
-
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
-            dadosCpu.labels.push(registro.horario);
-            dadosCpu.datasets[0].data.push(registro.percentualCpu);
 
             dadosFreq.labels.push(registro.horario);
             dadosFreq.datasets[0].data.push(registro.freqAtual);
-
-            dadosDisco.labels.push(registro.horario);
-            dadosDisco.datasets[0].data.push(registro.discoUsado);
-
-            dadosMemoria.labels.push(registro.horario);
-            dadosMemoria.datasets[0].data.push(registro.discoUsado);
-
-
-
-
-            //function sumirMensagem() {
-            //alerta_div.style.display = "none"
-            //   i_alerta.style.display = "none"
-            //alerta_memoria.style.display = "none"
-            // i_alertaMemoria.style.display = "none"
-        }
-
-        //}
-
-        console.log(JSON.stringify(dadosCpu));
-
-        var cpuAtual = {
-
-            responsive: true,
-            animation: { duration: 500 },
-            hoverMode: 'index',
-            stacked: false,
-            title: {
-                display: false,
-                text: 'Dados capturados'
-            },
-            scales: {
-                yAxes: [{
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-                    id: 'Frequência',
-                    ticks: {
-                        beginAtZero: true,
-                        max: 100,
-                        min: 0
-                    }
-                }, {
-                    type: 'linear',
-                    display: false,
-                    position: 'right',
-                    id: 'Frequência',
-                    ticks: {
-                        beginAtZero: true,
-                        max: 100,
-                        min: 0
-                    },
-
-                    gridLines: {
-                        drawOnChartArea: false,
-                    },
-                }],
-            }
         }
 
         //   Criação gráfico freq
@@ -902,8 +795,162 @@
                 }],
             }
         }
-        // Final da criação da frequência 
+        // Final da criação da frequência//   Criação gráfico freq
 
+        var freqAtual = {
+
+            responsive: true,
+            animation: { duration: 500 },
+            hoverMode: 'index',
+            stacked: false,
+            title: {
+                display: false,
+                text: 'Dados capturados'
+            },
+            scales: {
+                yAxes: [{
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    id: 'Frequência',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    }
+                }, {
+                    type: 'linear',
+                    display: false,
+                    position: 'right',
+                    id: 'Frequência',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    },
+
+                    gridLines: {
+                        drawOnChartArea: false,
+                    },
+                }],
+            }
+        }
+
+        // Criação gráfico da freq da CPU
+        window.grafico_linha2 = new Chart(myChartFreq, {
+            type: "line",
+            data: dadosFreq,
+            options: freqAtual
+        });
+
+        // Finalização gráfico freq da cpu
+    }
+
+
+    function plotarGraficoPercent(resposta, idServidor) {
+        console.log('iniciando plotagem do gráfico PercentCPU...');
+
+        var dadosCpu = {
+            labels: [],
+            datasets: [
+                {
+                    yAxisID: 'y-Percentual',
+                    label: 'Percentual-Cpu',
+                    borderColor: '#4e73df',
+                    backgroundColor: '#858796',
+                    fill: true,
+                    data: []
+                },
+
+
+            ]
+
+        };
+
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+            dadosCpu.labels.push(registro.horario);
+            dadosCpu.datasets[0].data.push(registro.percentualCpu);
+        }
+
+        console.log(JSON.stringify(dadosCpu));
+
+        var cpuAtual = {
+
+            responsive: true,
+            animation: { duration: 500 },
+            hoverMode: 'index',
+            stacked: false,
+            title: {
+                display: false,
+                text: 'Dados capturados'
+            },
+            scales: {
+                yAxes: [{
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    id: 'Frequência',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    }
+                }, {
+                    type: 'linear',
+                    display: false,
+                    position: 'right',
+                    id: 'Frequência',
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100,
+                        min: 0
+                    },
+
+                    gridLines: {
+                        drawOnChartArea: false,
+                    },
+                }],
+            }
+        }
+
+        // Criação gráfico percentual da CPU
+        window.grafico_linha = new Chart(myChartPercent, {
+            type: "line",
+            data: dadosCpu,
+            options: cpuAtual
+        });
+        // Finalização do gráfico percentual da CPU
+
+    }
+
+
+    // Criação dos dados disco
+
+    function plotarGraficoDisco(resposta, idServidor) {
+        console.log('iniciando plotagem do gráfico Disco...');
+        var dadosDisco = {
+            labels: [],
+            datasets: [
+                {
+                    yAxisID: 'y-Disco',
+                    label: 'Disco usado',
+                    borderColor: '#4e73df',
+                    backgroundColor: '#858796',
+                    fill: true,
+                    data: []
+                }
+
+            ]
+
+        };
+
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+
+            dadosDisco.labels.push(registro.horario);
+            dadosDisco.datasets[0].data.push(registro.discoUsado);
+        }
 
         // Criação gráfico disco
         var discoAtual = {
@@ -944,7 +991,39 @@
                 }],
             }
         }
+        // Criação do gráfico disco
+        window.grafico_linha3 = new Chart(myChartDisco, {
+            type: "line",
+            data: dadosDisco,
+            options: discoAtual
+        });
+        // Finalização do gráfico disco  
+    }
 
+    function plotarGraficoRam(resposta, idServidor) {
+        console.log('iniciando plotagem do gráfico Ram...');
+        var dadosMemoria = {
+            labels: [],
+            datasets: [
+                {
+                    yAxisID: 'y-Memória',
+                    label: 'Memória usada',
+                    borderColor: '#4e73df',
+                    backgroundColor: '#858796',
+                    fill: true,
+                    data: []
+                }
+
+            ]
+
+        };
+
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+
+            dadosMemoria.labels.push(registro.horario);
+            dadosMemoria.datasets[0].data.push(registro.discoUsado);
+        }
 
         var memoriaAtual = {
 
@@ -984,55 +1063,21 @@
                 }],
             }
         }
-        // Finalização gráfico disco
-
-
-        // Criação gráfico percentual da CPU
-        window.grafico_linha = new Chart(myChartPercent, {
-            type: "line",
-            data: dadosCpu,
-            options: cpuAtual
-        });
-        // Finalização do gráfico percentual da CPU
-
-
-        // Criação gráfico da freq da CPU
-        window.grafico_linha2 = new Chart(myChartFreq, {
-            type: "line",
-            data: dadosFreq,
-            options: freqAtual
-        });
-
-        // Finalização gráfico freq da cpu
-
         // Criação gráfico memória
-        window.grafico_linha3 = new Chart(myChartDisco, {
-            type: "line",
-            data: dadosDisco,
-            options: discoAtual
-        });
-        // Finalização gráfico memória
-
-        // Criação do gráfico disco
-
-        // Finalização do gráfico disco
-
-        // Criação do gráfico disco
         window.grafico_linha4 = new Chart(myChartMemoria, {
             type: "line",
             data: dadosMemoria,
             options: memoriaAtual
         });
-        // Finalização do gráfico disco  
-
-
-        setTimeout(() => atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria), 2000);
+        // Finalização gráfico memória
     }
 
+    setTimeout(() => atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria), 2000);
 
-    window.onload = atualizarGrafico(8);
 
-    function atualizarGrafico(idServidor, dadosCpu, dadosFreq, dadosDisco, dadosMemoria) {
+    window.onload = atualizarGrafico(14, 2);
+
+    function atualizarGrafico(idServidor) {
         let componente = ""
         let maquina = ""
         let frase = ""
@@ -1042,7 +1087,7 @@
                 response.json().then(function (novoRegistro) {
 
                     console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-                    console.log(`Dados atuais do gráfico: ${dadosCpu} e ${dadosFreq} e ${dadosDisco} e ${dadosMemoria}`);
+                    console.log(`Dados atuais do gráfico: ${novoRegistro[0].percentualCpu} e ${novoRegistro[0].freqAtual} e ${novoRegistro[0].discoUsado} e ${novoRegistro[0].memoriaUsada}`);
 
                     dadosCpu.labels.shift();
                     dadosCpu.labels.push(novoRegistro[0].horario);
