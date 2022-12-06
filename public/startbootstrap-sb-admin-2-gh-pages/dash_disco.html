@@ -751,7 +751,7 @@
     function plotarGrafico(resposta, idServidor) {
         console.log('iniciando plotagem do gráfico...');
 
-        var discoTotal = {
+        window.discoTotal = {
             labels: [],
             datasets: [
                 {
@@ -770,7 +770,7 @@
 
         // Criação criação gráfico
 
-        var discoUsado = {
+        window.discoUsado = {
             labels: [],
             datasets: [
                 {
@@ -791,7 +791,7 @@
 
         // Criação dos dados disco
 
-        var discoLivre = {
+        window.discoLivre = {
             labels: [],
             datasets: [
                 {
@@ -807,7 +807,7 @@
 
         };
 
-        var porcentagem = {
+        window.porcentagem = {
             labels: [],
             datasets: [
                 {
@@ -825,7 +825,7 @@
 
 
 
-        var discoLer = {
+        window.discoLer = {
             labels: [],
             datasets: [
                 {
@@ -843,7 +843,7 @@
 
 
 
-        var discoEscrito = {
+        window.discoEscrito = {
             labels: [],
             datasets: [
                 {
@@ -862,23 +862,23 @@
 
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
-            discoTotal.labels.push(registro.horario);
-            discoTotal.datasets[0].data.push(registro.discoTotal);
+            window.discoTotal.labels.push(registro.horario);
+            window.discoTotal.datasets[0].data.push(registro.discoTotal);
 
-            discoUsado.labels.push(registro.horario);
-            discoUsado.datasets[0].data.push(registro.discoUso);
+            window.discoUsado.labels.push(registro.horario);
+            window.discoUsado.datasets[0].data.push(registro.discoUso);
 
-            discoLivre.labels.push(registro.horario);
-            discoLivre.datasets[0].data.push(registro.discoLivre);
+            window.discoLivre.labels.push(registro.horario);
+            window.discoLivre.datasets[0].data.push(registro.discoLivre);
 
-            porcentagem.labels.push(registro.horario);
-            porcentagem.datasets[0].data.push(registro.porcentagem);
+            window.porcentagem.labels.push(registro.horario);
+            window.porcentagem.datasets[0].data.push(registro.porcentagem);
 
-            discoLer.labels.push(registro.horario);
-            discoLer.datasets[0].data.push(registro.discoLido);
+            window.discoLer.labels.push(registro.horario);
+            window.discoLer.datasets[0].data.push(registro.discoLido);
 
-            discoEscrito.labels.push(registro.horario);
-            discoEscrito.datasets[0].data.push(registro.discoEscrito);
+            window.discoEscrito.labels.push(registro.horario);
+            window.discoEscrito.datasets[0].data.push(registro.discoEscrito);
 
 
             //function sumirMensagem() {
@@ -893,7 +893,7 @@
         console.log(JSON.stringify(discoTotal));
 
         var discoTotalAtual = {
-
+            labels: [],
             responsive: true,
             animation: { duration: 500 },
             hoverMode: 'index',
@@ -934,7 +934,7 @@
         //   Criação gráfico freq
 
         var discoUsadoAtual = {
-
+            labels: [],
             responsive: true,
             animation: { duration: 500 },
             hoverMode: 'index',
@@ -976,7 +976,7 @@
 
         // Criação gráfico disco
         var discoLivreAtual = {
-
+            labels: [],
             responsive: true,
             animation: { duration: 500 },
             hoverMode: 'index',
@@ -1016,7 +1016,7 @@
 
 
         var porcentagemAtual = {
-
+            labels: [],
             responsive: true,
             animation: { duration: 500 },
             hoverMode: 'index',
@@ -1058,7 +1058,7 @@
         // Criação gráfico discoLerAtual
 
         var discoLidoAtual = {
-
+            labels: [],
             responsive: true,
             animation: { duration: 500 },
             hoverMode: 'index',
@@ -1101,7 +1101,7 @@
         // Criação gráfico discoEscritoAtual
 
         var discoEscritoAtual = {
-
+            labels: [],
             responsive: true,
             animation: { duration: 500 },
             hoverMode: 'index',
@@ -1143,7 +1143,7 @@
         // Criação gráfico percentual da CPU
         window.grafico_linha = new Chart(myChartDiscoTotal, {
             type: "line",
-            data: discoTotal,
+            data: window.discoTotal,
             options: discoTotalAtual
         });
         // Finalização do gráfico percentual da CPU
@@ -1152,7 +1152,7 @@
         // Criação gráfico da freq da CPU
         window.grafico_linha2 = new Chart(myChartDiscoUsado, {
             type: "line",
-            data: discoUsado,
+            data: window.discoUsado,
             options: discoUsadoAtual
         });
 
@@ -1161,7 +1161,7 @@
         // Criação gráfico memória
         window.grafico_linha3 = new Chart(myChartDiscoLivre, {
             type: "line",
-            data: discoLivre,
+            data: window.discoLivre,
             options: discoLivreAtual
         });
         // Finalização gráfico memória
@@ -1169,7 +1169,7 @@
         // Criação do gráfico disco
         window.grafico_linha4 = new Chart(myChartPorcentagem, {
             type: "line",
-            data: porcentagem,
+            data: window.porcentagem,
             options: porcentagemAtual
         });
         // Finalização do gráfico disco 
@@ -1177,7 +1177,7 @@
         // Criação do gráfico disco
         window.grafico_linha5 = new Chart(myChartDiscoLer, {
             type: "line",
-            data: discoLer,
+            data: window.discoLer,
             options: discoLidoAtual
         });
         // Finalização do gráfico disco 
@@ -1185,17 +1185,17 @@
         // Criação do gráfico disco
         window.grafico_linha6 = new Chart(myChartDiscoEscrito, {
             type: "line",
-            data: discoEscrito,
+            data: window.discoEscrito,
             options: discoEscritoAtual
         });
         // Finalização do gráfico disco 
 
 
-        setTimeout(() => atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre, porcentagem, discoLer, discoEscrito), 2000);
+setTimeout(() => atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre, porcentagem, discoLer, discoEscrito), 2000);
     }
 
 
-    window.onload = atualizarGrafico(8);
+    //window.onload = atualizarGrafico(8);
 
     function atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre, porcentagem, discoLer, discoEscrito) {
         let componente = ""
@@ -1203,17 +1203,22 @@
         let frase = ""
         let metrica = ""
         fetch(`/medidas/tempo-real-Disco/${idServidor}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
+            if (response.ok && response.status == 200) {
                 response.json().then(function (novoRegistro) {
 
                     console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-                    console.log(`Dados atuais do gráfico: ${discoTotal} e ${discoUsado} e ${discoLivre} e ${porcentagem} e ${discoLer} e ${discoEscrito}`);
+                    console.log(`Dados atuais do gráfico: ${novoRegistro[0].discoTotal} e ${novoRegistro[0].discoUso} e ${novoRegistro[0].discoLivre} e ${novoRegistro[0].porcentagem} e ${novoRegistro[0].discoLido} e ${novoRegistro[0].discoEscrito}`);
 
-                    discoTotal.labels.shift();
-                    discoTotal.labels.push(novoRegistro[0].horario);
+                    
+                    if (window.discoTotal.labels.length > 5) {
+                        window.discoTotal.labels.shift();
+                        window.discoTotal.datasets[0].data.shift();
+                    }
+                    
+                    window.discoTotal.labels.push(novoRegistro[0].horario);
 
-                    discoTotal.datasets[0].data.shift();
-                    discoTotal.datasets[0].data.push(novoRegistro[0].discoTotal);
+                
+                    window.discoTotal.datasets[0].data.push(novoRegistro[0].discoTotal);
 
                     // Criando o alerta do percentual da CPU 
                     if (novoRegistro[0].discoTotal >= 60 && novoRegistro[0].discoTotal < 80) {
@@ -1229,7 +1234,7 @@
 
                         alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
-                        setTimeout(() => sumirMensagem(idServidor, discoTotal), 2000);
+                        setTimeout(() => sumirMensagem(idServidor, window.discoTotal), 2000);
                     }
 
                     if (novoRegistro[0].discoTotal >= 80 && novoRegistro[0].discoTotal < 90) {
@@ -1245,7 +1250,7 @@
 
                         alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
-                        setTimeout(() => sumirMensagem(idServidor, discoTotal), 2000);
+                        setTimeout(() => sumirMensagem(idServidor, window.discoTotal), 2000);
                     }
 
 
@@ -1262,17 +1267,21 @@
 
                         alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
-                        setTimeout(() => sumirMensagem(idServidor, discoTotal), 2000);
+                        setTimeout(() => sumirMensagem(idServidor, window.discoTotal), 2000);
                     }
 
 
                     // Cuidado
 
-                    discoUsado.labels.shift();
-                    discoUsado.labels.push(novoRegistro[0].horario);
+                    if (window.discoUsado.labels.length > 5) {
+                        window.discoUsado.labels.shift();
+                        window.discoUsado.datasets[0].data.shift();
+                    }
+                   
+                    window.discoUsado.labels.push(novoRegistro[0].horario);
 
-                    discoUsado.datasets[0].data.shift();
-                    discoUsado.datasets[0].data.push(novoRegistro[0].discoUso);
+                
+                    window.discoUsado.datasets[0].data.push(novoRegistro[0].discoUso);
 
 
                     if (novoRegistro[0].discoUsado >= 60 && novoRegistro[0].discoUsado < 80) {
@@ -1288,7 +1297,7 @@
 
                         alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
-                        setTimeout(() => sumirMensagem(idServidor, discoUsado), 2000);
+                        setTimeout(() => sumirMensagem(idServidor, window.discoUsado), 2000);
                     }
 
                     if (novoRegistro[0].discoUsado >= 80 && novoRegistro[0].discoUsado < 90) {
@@ -1304,7 +1313,7 @@
 
                         alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
-                        setTimeout(() => sumirMensagem(idServidor, discoUsado), 2000);
+                        setTimeout(() => sumirMensagem(idServidor, window.discoUsado), 2000);
                     }
 
 
@@ -1321,7 +1330,7 @@
 
                         alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
-                        setTimeout(() => sumirMensagem(idServidor, discoUsado), 2000);
+                        setTimeout(() => sumirMensagem(idServidor, window.discoUsado), 2000);
                     }
 
 
@@ -1330,11 +1339,15 @@
 
                     // Criando o alerta da frequencial atual da CPU    
 
-                    discoLivre.labels.shift();
-                    discoLivre.labels.push(novoRegistro[0].horario);
+                    if (window.discoLivre.labels.length > 5) {
+                        window.discoLIvre.labels.shift();
+                        window.discoLivre.datasets[0].data.shift();
+                    }
+                    
+                    window.discoLivre.labels.push(novoRegistro[0].horario);
 
-                    discoLivre.datasets[0].data.shift();
-                    discoLivre.datasets[0].data.push(novoRegistro[0].discoLivre);
+                
+                    window.discoLivre.datasets[0].data.push(novoRegistro[0].discoLivre);
                     // Alertas do disco
 
                     if (novoRegistro[0].discoLivre >= 200 && novoRegistro[0].discoLivre < 220) {
@@ -1350,7 +1363,7 @@
 
                         alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
-                        setTimeout(() => sumirMensagem(idServidor, discoLivre), 2000);
+                        setTimeout(() => sumirMensagem(idServidor, window.discoLivre), 2000);
                     }
 
                     if (novoRegistro[0].discoLivre >= 220 && novoRegistro[0].discoLivre < 240) {
@@ -1366,7 +1379,7 @@
 
                         alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
-                        setTimeout(() => sumirMensagem(idServidor, discoLivre), 2000);
+                        setTimeout(() => sumirMensagem(idServidor, window.discoLivre), 2000);
                     }
 
                     if (novoRegistro[0].discoLivre > 240) {
@@ -1382,17 +1395,21 @@
 
                         alertas(nomeEmpresa, maquina, componente, metrica, frase)
 
-                        setTimeout(() => sumirMensagem(idServidor, discoLivre), 2000);
+                        setTimeout(() => sumirMensagem(idServidor, window.discoLivre), 2000);
                     }
 
                     // finalizando alertas do disco
 
 
-                    porcentagem.labels.shift();
-                    porcentagem.labels.push(novoRegistro[0].horario);
+                    if (window.porcentagem.labels.length > 5) {
+                        window.porcentagem.labels.shift();
+                        window.porcentagem.datasets[0].data.shift();
+                    }
+                    
+                    window.porcentagem.labels.push(novoRegistro[0].horario);
 
-                    porcentagem.datasets[0].data.shift();
-                    porcentagem.datasets[0].data.push(novoRegistro[0].porcentagem);
+                
+                    window.porcentagem.datasets[0].data.push(novoRegistro[0].porcentagem);
 
                     if (novoRegistro[0].porcentagem >= 6 && novoRegistro[0].porcentagem < 12) {
                         componente = "Porcentagem Disco"
@@ -1447,11 +1464,15 @@
 
                     // Alertas de Disco Lido
 
-                    discoLer.labels.shift();
-                    discoLer.labels.push(novoRegistro[0].horario);
+                    if (window.discoLer.labels.length > 5) {
+                        window.discoLer.labels.shift();
+                        window.discoLer.datasets[0].data.shift();
+                    }
+                    
+                    window.discoLer.labels.push(novoRegistro[0].horario);
 
-                    discoLer.datasets[0].data.shift();
-                    discoLer.datasets[0].data.push(novoRegistro[0].discoLido);
+                
+                    window.discoLer.datasets[0].data.push(novoRegistro[0].discoLido);
                     // Alertas do disco
 
                     if (novoRegistro[0].discoLer >= 200 && novoRegistro[0].discoLer < 220) {
@@ -1508,11 +1529,15 @@
 
                     // Alertas de Disco Escrito --AQUI 
 
-                    discoEscrito.labels.shift();
-                    discoEscrito.labels.push(novoRegistro[0].horario);
+                    if (window.discoEscrito.labels.length > 5) {
+                        window.discoEscrito.labels.shift();
+                        window.discoEscrito.datasets[0].data.shift();
+                    }
+                  
+                    window.discoEscrito.labels.push(novoRegistro[0].horario);
 
-                    discoEscrito.datasets[0].data.shift();
-                    discoEscrito.datasets[0].data.push(novoRegistro[0].discoEscrito);
+                
+                    window.discoEscrito.datasets[0].data.push(novoRegistro[0].discoEscrito);
 
                     if (novoRegistro[0].discoEscrito >= 200 && novoRegistro[0].discoEscrito < 220) {
                         componente = "Disco Escrito"
@@ -1582,11 +1607,11 @@
                         // i_alertaMemoria.style.display = "none"
                     }
 
-                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre, porcentagem, discoLer, discoEscrito), 2000);
+                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, window.discoTotal, window.discoUsado, window.discoLivre, window.porcentagem, window.discoLer, window.discoEscrito), 2000);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
-                proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre, porcentagem, discoLer, discoEscrito), 2000);
+                proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, window.discoTotal, window.discoUsado, window.discoLivre, window.porcentagem, window.discoLer, window.discoEscrito), 2000);
             }
         })
             .catch(function (error) {
