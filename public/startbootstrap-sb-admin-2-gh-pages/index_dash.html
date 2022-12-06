@@ -523,11 +523,11 @@
 
     let proximaAtualizacao;
 
-    window.onload = obterFrequencia(8);
+    window.onload = obterFrequencia(12);
 
-    function obterFrequencia(idDados) {
+    function obterFrequencia(idServidor) {
 
-        fetch(`/medidas/ultimasFreq/${idDados}`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidas/ultimasFreq/${idServidor}`, { cache: 'no-store' }).then(function (response) {
 
 
             if (response.ok) {

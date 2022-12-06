@@ -390,9 +390,10 @@ function buscarUltimasTemp(idServidor, limite_linhas) {
     if (process.env.AMBIENTE_PROCESSO == "producao") {
         instrucaoSql = `select top ${limite_linhas}
                         percentualCpu, 
-                        tempCpu 
+                        tempAtual, 
                         dataHora,
-                        CONVERT(varchar, dataHora, 108) as horario
+                        CONVERT(varchar, dataHora, 108) as horario,
+                        fkServidor
                         from dadosTemp 
                         where fkServidor = ${idServidor}
                     order by idDadosTemp desc`;
