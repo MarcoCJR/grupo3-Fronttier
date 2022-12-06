@@ -139,12 +139,14 @@
   var vetor_componenteSel1 = []
   var vetor_componenteSel2 = []
   var vetor_componenteSel3 = []
+  var vetor_componenteSel4 = []
 
 
   function cadastrarM() {
     var comp1 = componente1.value
     var comp2 = componente2.value
     var comp3 = componente3.value
+    var comp4 = componente4.value
 
     const open = document.getElementById("open");
     const modal_container = document.getElementById("modal_container");
@@ -167,6 +169,8 @@
       vetor_componenteSel1.push(3)
     } else if (comp1 == 3) {
       vetor_componenteSel1.push(4)
+    } else if (comp1 == 4) {
+      vetor_componenteSel1.push(5, 6, 7)
     }
 
     // Segundo Select
@@ -176,6 +180,8 @@
       vetor_componenteSel2.push(3)
     } else if (comp2 == 3) {
       vetor_componenteSel2.push(4)
+    } else if (comp2 == 4) {
+      vetor_componenteSel1.push(5, 6, 7)
     }
 
     // Terceiro Select
@@ -185,6 +191,19 @@
       vetor_componenteSel3.push(3)
     } else if (comp3 == 3) {
       vetor_componenteSel3.push(4)
+    } else if (comp3 == 4) {
+      vetor_componenteSel1.push(5, 6, 7)
+    }
+
+    // Quarto Select
+    if (comp4 == 1) {
+      vetor_componenteSel4.push(1, 2)
+    } else if (comp4 == 2) {
+      vetor_componenteSel4.push(3)
+    } else if (comp4 == 3) {
+      vetor_componenteSel4.push(4)
+    } else if (comp4 == 4) {
+      vetor_componenteSel4.push(5, 6, 7)
     }
 
 
@@ -372,9 +391,37 @@
 
     });
 
+
+    // COMPONENTES 4
+    vetor_componenteSel4.forEach(element => {
+      fetch("/usuarios/CadastrarComponente", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          idServidorServer: idServidorVar,
+          fkComponenteServer: element,
+        })
+      }).then(function (resposta) {
+
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          console.log("Inseriu um componente do 3 select");
+        } else {
+          throw ("Houve um erro ao tentar realizar o cadastro da torre!");
+        }
+      }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    });
+
     vetor_componenteSel1 = []
     vetor_componenteSel2 = []
     vetor_componenteSel3 = []
+    vetor_componenteSel4 = []
 
   }
 

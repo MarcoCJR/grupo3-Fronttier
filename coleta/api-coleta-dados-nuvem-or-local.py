@@ -1,9 +1,9 @@
 # from operator import truediv
 # import turtle
-# import speedtest
+import speedtest
 from statistics import mean
-# from app import *
-# from lost import *
+from app import *
+from lost import *
 from statistics import mean
 import textwrap
 from datetime import datetime
@@ -27,32 +27,34 @@ from mysql.connector import errorcode
 # username='Fronttier3'
 # password='#Gfgrupo3'
 
-# c=1
-# while True:
-#     enviar_email()
+c=1
+while True:
+    enviar_email()
 
-#     while c < 4:
+    while c < 4:
 
-#         token_resposta = input("Token: ")
-#         resposta = int(token_resposta)
+        token_resposta = input("Token: ")
+        resposta = int(token_resposta)
 
-#         if c == 3:
-#             print("Tente novamente mais tarde")
-#             exit()
+        if c == 3:
+            print("Tente novamente mais tarde")
+            exit()
 
-#         if token != resposta:
-#             print("Token errado!")
-#             c += 1
-#             print(c)
+        if token != resposta:
+            print("Token errado!")
+            c += 1
+            print(c)
 
-#         else:
-#             print("Token Correto")
-#             break
-#     break
+        else:
+            print("Token Correto")
+            break
+    break
 
-#st = speedtest.Speedtest(secure=1)
 
-#st.get_best_server()
+st = speedtest.Speedtest(secure=1)
+
+st.get_best_server()
+
 
 try:
     conn = pyodbc.connect(driver='{SQL Server}', host='grupo-fronttier3.database.windows.net',
@@ -123,6 +125,9 @@ def InserirBanco():
         percentualCpu = None
         discoUsado = None
         memoriaUsada = None
+        download = None
+        upload = None
+        ping = None 
 
         if [1] in vet_fkComponente:
             freqAtual = psutil.cpu_freq().current
@@ -132,12 +137,19 @@ def InserirBanco():
             discoUsado = round(psutil.disk_usage('/').used*(2**-30), 2)
         if [4] in vet_fkComponente:
             memoriaUsada = round(psutil.virtual_memory().used*(2**-30), 2)
+        if [5] in vet_fkComponente:
+            download = round(st.download() / 1000 / 1000, 1)
+        if [6] in vet_fkComponente:
+            upload = round(st.upload() / 1000 / 1000, 1)  
+        if [7] in vet_fkComponente:
+            ping = st.results.ping
+        
 
         dataHora = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
 
         cursorAzure.execute('''
-        INSERT INTO Dados (fkServidor, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada) VALUES (?, ?, ?, ?, ?, ?)
-        ''',escolha, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada)
+        INSERT INTO Dados (fkServidor, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada, download, upload, ping) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''',escolha, dataHora, freqAtual, percentualCpu, discoUsado, memoriaUsada, download, upload, ping)
         print("")
         print("Dados inseridos no banco!")
         
