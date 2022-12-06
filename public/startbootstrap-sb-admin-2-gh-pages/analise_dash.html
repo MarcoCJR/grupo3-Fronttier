@@ -63,7 +63,7 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="dash.html">
+                <a class="nav-link" href="dash_disco.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Disco da Máquina</span></a>
             </li>
@@ -673,7 +673,8 @@
                     })
 
 
-                    plotarGrafico(vetor_empresas, 'myChartGeral', vetor_qtd);
+                    // plotarGrafico(vetor_empresas, 'myChartGeral', vetor_qtd);
+                    setTimeout(() => plotarGrafico(vetor_empresas,'myChartGeral',vetor_qtd), 1000);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -1004,7 +1005,7 @@
         
 
         
-        setTimeout(() => atualizarGraficoAnalise(data,myChart,idCanva), 5000);
+        setTimeout(() => atualizarGraficosComponentes(data,myChart,idCanva), 20000);
 
     }
 
@@ -1456,14 +1457,14 @@
         
         if(idCanva == 'myChartGeral'){
         
-
+        console.log("ESTOU NO DESTRUIR GERAL")
         myChart.destroy()
         
         
         vetor_empresas = []
         vetor_qtd = []
 
-        setTimeout (() => obterDadosGraficoAnalise(), 1000)
+        setTimeout (() => obterDadosGraficoAnalise(1), 1000)
        
 
         } else if (idCanva == 'myChartDISCO' || idCanva == 'myChartAnaliseCPU' || idCanva == 'myChartAnaliseRAM') {
