@@ -1,7 +1,7 @@
 from crawlerpythonRA import ReclameAqui
 
 arquivo1 = ReclameAqui()
-n_paginas2 = 6
+n_paginas2 = 35
 arquivo1.__init__()
 
 i = 1 

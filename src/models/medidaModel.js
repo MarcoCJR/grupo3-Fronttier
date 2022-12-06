@@ -143,7 +143,7 @@ function buscarMedidasPalavras(palavra) {
 
     if (process.env.AMBIENTE_PROCESSO == "producao") {
         instrucaoSql = `
-        SELECT top 20 count(${palavra}) as 'qtd50', palavra FROM Reclamacoes GROUP BY palavra HAVING COUNT(${palavra}) > 1 ORDER BY count(${palavra}) DESC;
+        SELECT top 20 count(${palavra}) as 'value', palavra as 'x' FROM Reclamacoes GROUP BY palavra HAVING COUNT(${palavra}) > 1 ORDER BY count(${palavra}) DESC;
         `;
         console.log("eu fui")
     } 

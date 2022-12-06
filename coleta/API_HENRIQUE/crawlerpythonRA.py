@@ -9,12 +9,10 @@ from mysql.connector import errorcode
 
 class ReclameAqui:
 
-    
-
     base_url = "https://www.reclameaqui.com.br/"
     
 
-    def __init__(self, empresa="empresa/americanas-com-loja-online"):
+    def __init__(self, empresa="empresa/mercado-livre/"):
         
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -47,8 +45,8 @@ class ReclameAqui:
         self.reclamacoes, self.titulos = [], []
 
         
-        self.driver.get(url + str(n_paginas) + "&categoria=0000000000000259&produto=0000000000001194&problema=0000000000001320")
-        sleep(3)
+        self.driver.get(url + str(n_paginas) + "&problema=0000000000001498")
+        sleep(2)
         html = bs(self.driver.page_source, "html.parser")
 
             # reclamacoes_html = html.find_all("div", {"class": "sc-1pe7b5t-0 bJdtis"})
