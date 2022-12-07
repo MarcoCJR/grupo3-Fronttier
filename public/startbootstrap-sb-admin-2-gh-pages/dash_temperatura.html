@@ -427,13 +427,13 @@
                                                       Id
                                                     </th>
                                                     <th>
-                                                      fkServidor
+                                                      Máquina
                                                     </th>
                                                     <th>
-                                                      PercentualCpu
+                                                      Percentual Cpu
                                                     </th>
-                                                    <th class="text-center">
-                                                      TemperaturaAtual
+                                                    <th>
+                                                      Temperatura
                                                     </th>
                                                   </tr>
                                                 </thead>
@@ -849,7 +849,7 @@
 
     let proximaAtualizacao;
 
-    window.onload = obterDadosGrafico(8);
+    window.onload = obterDadosGrafico(1);
     
 
     function obterDadosGrafico(idServidor) {
@@ -1088,7 +1088,7 @@
       // Finalização do gráfico disco  
 
 
-        setTimeout(() => atualizarGrafico(idServidor, dadosCpu), 2000);
+        setTimeout(() => atualizarGrafico(idServidor, dadosCpu), 4000);
     }
       
 
@@ -1112,61 +1112,60 @@
                     dadosCpu.datasets[0].data.shift();
                     dadosCpu.datasets[0].data.push(novoRegistro[0].percentualCpu);
                    
-                    var attPercent1 = `${novoRegistro[0].percentualCpu}`
+                    var attPercent1 = `${novoRegistro[5].percentualCpu}`
                     percent1.innerHTML = `${attPercent1}%`
                    
                
-                    var attTemp1 = `${novoRegistro[0].tempAtual}`
+                    var attTemp1 = `${novoRegistro[5].tempAtual}`
                     temp1.innerHTML = `${attTemp1} C°`
                    
 
 
 
-                    var attPercent2 = `${novoRegistro[1].percentualCpu}`
+                    var attPercent2 = `${novoRegistro[4].percentualCpu}`
                     percent2.innerHTML = `${attPercent2}%`
                    
                
-                    var attTemp2 = `${novoRegistro[1].tempAtual}`
+                    var attTemp2 = `${novoRegistro[4].tempAtual}`
                     temp2.innerHTML = `${attTemp2} C°`
                    
                     
 
-                    var attPercent3 = `${novoRegistro[2].percentualCpu}`
+                    var attPercent3 = `${novoRegistro[3].percentualCpu}`
                     percent3.innerHTML = `${attPercent3}%`
                    
                
-                    var attTemp3 = `${novoRegistro[2].tempAtual}`
+                    var attTemp3 = `${novoRegistro[3].tempAtual}`
                     temp3.innerHTML = `${attTemp3} C°`
                    
 
 
 
-                    var attPercent4 = `${novoRegistro[3].percentualCpu}`
+                    var attPercent4 = `${novoRegistro[2].percentualCpu}`
                     percent4.innerHTML = `${attPercent4}%`
                    
                
-                    var attTemp4 = `${novoRegistro[3].tempAtual}`
+                    var attTemp4 = `${novoRegistro[2].tempAtual}`
                     temp4.innerHTML = `${attTemp4} C°`
                    
 
                     
-                     var attPercent5 = `${novoRegistro[4].percentualCpu}`
+                     var attPercent5 = `${novoRegistro[1].percentualCpu}`
                      percent5.innerHTML = `${attPercent5}%`
                     
                      
-                     var attTemp5 = `${novoRegistro[4].tempAtual}`
+                     var attTemp5 = `${novoRegistro[1].tempAtual}`
                      temp5.innerHTML = `${attTemp5} C°`
 
                      
 
                      
-                     var attPercent6 = `${novoRegistro[5].percentualCpu}`
+                     var attPercent6 = `${novoRegistro[0].percentualCpu}`
                      percent6.innerHTML = `${attPercent6}%`
                     
                 
-                     var attTemp6 = `${novoRegistro[5].tempAtual}`
+                     var attTemp6 = `${novoRegistro[0].tempAtual}`
                      temp6.innerHTML = `${attTemp6} C°`
-
 
 
                      // Criando o alerta do percentual da CPU 
@@ -1183,7 +1182,7 @@
  
                          alertas(nomeEmpresa, maquina, componente, metrica, frase)
  
-                         setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
+                         setTimeout(() => sumirMensagem(idServidor, dadosCpu), 4000);
                      }
  
                      if (novoRegistro[0].percentualCpu >= 80 && novoRegistro[0].percentualCpu < 90) {
@@ -1198,7 +1197,7 @@
  
                          alertas(nomeEmpresa, maquina, componente, metrica, frase)
  
-                         setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
+                         setTimeout(() => sumirMensagem(idServidor, dadosCpu), 4000);
                      }
  
  
@@ -1214,7 +1213,7 @@
  
                          alertas(nomeEmpresa, maquina, componente, metrica, frase)
  
-                         setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
+                         setTimeout(() => sumirMensagem(idServidor, dadosCpu), 4000);
                      }
                      
                      
@@ -1228,7 +1227,7 @@
                      
                      
                      // Criando o alerta da temperatura atual da CPU    
-                     if (novoRegistro[0].tempAtual >= 70 && novoRegistro[0].tempAtual < 80) {
+                     if (novoRegistro[0].tempAtual >= 55 && novoRegistro[0].tempAtual < 60) {
                          componente = "CPU"
                          maquina = "1"
                          frase = "Alerta"
@@ -1241,10 +1240,10 @@
  
                          alertas(nomeEmpresa, maquina, componente, metrica, frase)
  
-                         setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
+                         setTimeout(() => sumirMensagem(idServidor, dadosCpu), 4000);
                      }
  
-                     if (novoRegistro[0].tempAtual >= 80 && novoRegistro[0].tempAtual < 90) {
+                     if (novoRegistro[0].tempAtual >= 70 && novoRegistro[0].tempAtual < 80) {
                          componente = "CPU"
                          maquina = "1"
                          frase = "Emergência"
@@ -1256,7 +1255,7 @@
  
                          alertas(nomeEmpresa, maquina, componente, metrica, frase)
  
-                         setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
+                         setTimeout(() => sumirMensagem(idServidor, dadosCpu), 4000);
                      }
  
  
@@ -1272,7 +1271,7 @@
  
                          alertas(nomeEmpresa, maquina, componente, metrica, frase)
  
-                         setTimeout(() => sumirMensagem(idServidor, dadosCpu), 2000);
+                         setTimeout(() => sumirMensagem(idServidor, dadosCpu), 4000);
                      }
  
                      
@@ -1289,11 +1288,11 @@
                         // i_alertaMemoria.style.display = "none"   
                     }
 
-                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, dadosCpu), 2000);
+                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, dadosCpu), 4000);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
-                proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, dadosCpu), 2000);
+                proximaAtualizacao = setTimeout(() => atualizarGrafico(idServidor, dadosCpu), 4000);
             }
         })
             .catch(function (error) {
