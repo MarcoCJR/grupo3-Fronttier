@@ -202,4 +202,3 @@ Login()
 
 while True:
     InserirBanco()
-    time.sleep(5)

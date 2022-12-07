@@ -68,7 +68,7 @@
 .div_alerta{
     /* display: none; */
     /* position: absolute; */
-    height: 80px;
+    height: 90px;
     width: 200px;
     /* background-color: rgb(167, 4, 4); */
     border-radius: 20px;
@@ -91,7 +91,7 @@
 .div_alertaDisco{
     /* display: none; */
     /* position: absolute; */
-    height: 75px;
+    height: 80px;
     width: 200px;
     /* background-color: rgb(167, 4, 4); */
     border-radius: 20px;
@@ -114,7 +114,7 @@
 .div_alertaMemoria{
     /* display: none; */
     /* position: absolute; */
-    height: 75px;
+    height: 85px;
     width: 200px;
     /* background-color: rgb(167, 4, 4); */
     border-radius: 20px;

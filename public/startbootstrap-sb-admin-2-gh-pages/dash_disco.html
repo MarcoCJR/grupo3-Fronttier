@@ -341,8 +341,8 @@
                             onclick="atualizarGrafico(8)">Máquina 1</button>
 
                         <span id="fkServidor"></span></span>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-share-alt fa-sm text-white-40"></i> Compartilhar </a>
+                        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-share-alt fa-sm text-white-40"></i> Compartilhar </a> -->
                     </div>
 
                     <!-- Content Row -->
@@ -717,7 +717,7 @@
 
     let proximaAtualizacao;
 
-    window.onload = obterDadosGrafico(8);
+    window.onload = obterDadosGrafico(1);
 
 
     function obterDadosGrafico(idServidor) {
@@ -757,8 +757,8 @@
                 {
                     yAxisID: 'y-disco_total',
                     label: 'DiscoTotal',
-                    borderColor: '#4e73df',
-                    backgroundColor: '#858796',
+                    borderColor: '#6c6bad',
+                    backgroundColor: '#6c6bad',
                     fill: true,
                     data: []
                 },
@@ -776,8 +776,8 @@
                 {
                     yAxisID: 'y-disco_usado',
                     label: 'DiscoUsado',
-                    borderColor: '#4e73df',
-                    backgroundColor: '#858796',
+                    borderColor: '#6c6bad',
+                    backgroundColor: '#6c6bad',
                     fill: true,
                     data: []
                 }
@@ -797,8 +797,8 @@
                 {
                     yAxisID: 'y-disco_livre',
                     label: 'DiscoLivre',
-                    borderColor: '#4e73df',
-                    backgroundColor: '#858796',
+                    borderColor: '#6c6bad',
+                    backgroundColor: '#6c6bad',
                     fill: true,
                     data: []
                 }
@@ -813,8 +813,8 @@
                 {
                     yAxisID: 'y-porcentagem',
                     label: 'Porcentagem',
-                    borderColor: '#4e73df',
-                    backgroundColor: '#858796',
+                    borderColor: '#6c6bad',
+                    backgroundColor: '#6c6bad',
                     fill: true,
                     data: []
                 }
@@ -831,8 +831,8 @@
                 {
                     yAxisID: 'y-disco_ler',
                     label: 'DiscoLer',
-                    borderColor: '#4e73df',
-                    backgroundColor: '#858796',
+                    borderColor: '#6c6bad',
+                    backgroundColor: '#6c6bad',
                     fill: true,
                     data: []
                 }
@@ -849,8 +849,8 @@
                 {
                     yAxisID: 'y-disco_escrito',
                     label: 'DiscoEscrito',
-                    borderColor: '#4e73df',
-                    backgroundColor: '#858796',
+                    borderColor: '#6c6bad',
+                    backgroundColor: '#6c6bad',
                     fill: true,
                     data: []
                 }
@@ -1195,7 +1195,7 @@ setTimeout(() => atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre
     }
 
 
-    //window.onload = atualizarGrafico(8);
+    window.onload = atualizarGrafico(1);
 
     function atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre, porcentagem, discoLer, discoEscrito) {
         let componente = ""
@@ -1328,7 +1328,7 @@ setTimeout(() => atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre
                     // Criando o alerta da frequencial atual da CPU    
 
                     if (window.discoLivre.labels.length > 5) {
-                        window.discoLIvre.labels.shift();
+                        window.discoLivre.labels.shift();
                         window.discoLivre.datasets[0].data.shift();
                     }
                     
@@ -1393,7 +1393,7 @@ setTimeout(() => atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre
                 
                     window.porcentagem.datasets[0].data.push(novoRegistro[0].porcentagem);
 
-                    if (novoRegistro[0].porcentagem >= 6 && novoRegistro[0].porcentagem < 12) {
+                    if (novoRegistro[0].porcentagem >= 60 && novoRegistro[0].porcentagem < 70) {
                         componente = "Porcentagem Disco"
                         maquina = "1"
                         frase = "Alerta"
@@ -1407,7 +1407,7 @@ setTimeout(() => atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre
 
                         setTimeout(() => sumirMensagem(idServidor, porcentagem), 2000);
                     }
-                    if (novoRegistro[0].porcentagem >= 12 && novoRegistro[0].porcentagem < 14) {
+                    if (novoRegistro[0].porcentagem >= 71 && novoRegistro[0].porcentagem < 85) {
                         componente = "Porcentagem Disco"
                         maquina = "1"
                         frase = "Emergência"
@@ -1421,7 +1421,7 @@ setTimeout(() => atualizarGrafico(idServidor, discoTotal, discoUsado, discoLivre
                         setTimeout(() => sumirMensagem(idServidor, porcentagem), 2000);
                     }
 
-                    if (novoRegistro[0].porcentagem > 14) {
+                    if (novoRegistro[0].porcentagem > 86) {
                         componente = "Porcentagem Disco"
                         maquina = "1"
                         frase = "Crítico"
