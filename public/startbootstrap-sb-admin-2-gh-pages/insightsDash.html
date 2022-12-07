@@ -469,7 +469,7 @@
                             <div class="card-body2">
                                
                                     <div class="col mr-2">
-                                        <div id="freq_cpu" class="mb font-weight-bold text-gray-800">RELATÓRIO SEMANAL<br><br>
+                                        <div id="freq_cpu" class="mb font-weight-bold text-gray-800">PRINCIPAIS PROBLEMAS RELACIONADOS AOS COMPONENTES<br><br>
 
                                             <table class="table tablesorter " id=""> 
                                                 <thead class="text-primary2">
@@ -814,28 +814,67 @@
     }
 
     function plotarGrafico(label, idCanva, vetor_qtd) {
+        
         window.grafico_linha = new Chart(document.getElementById(idCanva), {
-                  type: 'bar',
-                  data: {
+
+            type: 'bar',
+            data: {
                       labels: label,
                       datasets: [
                           {
+                            data: vetor_qtd,
                               label: "Quantidade de Chamados",
-                              backgroundColor: ["#3e95cd", "#8e5ea2"],
-                              data: vetor_qtd
+                              backgroundColor: ["#87CEEB", "#87CEEB", "#87CEEB"],
+                              borderColor: '#1E90FF',
+                              borderWidth: 2
                           }
                       ]
                   },
-                  options: {
-                        indexAxis: 'y',
-                        legend: { 
-                            display: false 
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                legend: { 
+                    display: false 
                         },
-                        title: {
-                            display: true,
-                            text: 'QUANTIDADE DE CHAMADOS',
-                      }
-                  }
+                title: {
+                    display: true,
+                    text: 'QUANTIDADE DE CHAMADOS',
+                }
+            },
+
+                //   type: 'bar',
+                //   data: {
+                //       labels: label,
+                //       datasets: [
+                //           {
+                //               label: "Quantidade de Chamados",
+                //               backgroundColor: ["#87CEEB", "#87CEEB", "#87CEEB"],
+                //               borderColor: '#1E90FF',
+                //               borderWidth: 2,
+                //               data: vetor_qtd
+                //           }
+                //       ]
+                //   },
+                //   options: {
+                //         // indexAxis: 'y',
+                //         scales: {
+                //             y: {
+                //                 beginAtZero: true
+                //             },
+                //         },
+                //         legend: { 
+                //             display: false 
+                //         },
+                //         title: {
+                //             display: true,
+                //             text: 'QUANTIDADE DE CHAMADOS',
+                //       }
+                //   }
+
+                  
         });
     }
         
