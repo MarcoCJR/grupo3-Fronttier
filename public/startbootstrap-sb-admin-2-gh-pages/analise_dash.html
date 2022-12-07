@@ -1066,57 +1066,6 @@
         //             // dadosEmpresas.datasets[0].data.shift();
         //             dadosEmpresas.datasets[0].data.push(novoRegistro[0].idChamado);
 
-        //             // Criando o alerta do percentual da CPU 
-        //             // if (novoRegistro[0].percentualCpu >= 60 && novoRegistro[0].percentualCpu < 80) {
-        //             //     componente = "CPU"
-        //             //     maquina = "1" 
-        //             //     frase = "Alerta"
-        //             //     metrica = `${novoRegistro[0].percentualCpu} %`
-
-        //             //     alerta_div.style.display = "block"
-        //             //     alerta_div.style.backgroundColor = "yellow"
-        //             //     alerta_div.style.borderColor = "yellow"
-        //             //     i_alerta.innerHTML = "CPU em estado de alerta! Cuidado!"
-
-        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-        //             //     setTimeout(() => sumirMensagem(idChamado, dadosEmpresas), 2000);
-        //             // }
-
-        //             // if (novoRegistro[0].percentualCpu >= 80 && novoRegistro[0].percentualCpu < 90) {
-        //             //     componente = "CPU"
-        //             //     maquina = "1"
-        //             //     frase = "Emergência"
-        //             //     metrica = `${novoRegistro[0].percentualCpu} %`
-
-        //             //     alerta_div.style.display = "block"
-        //             //     alerta_div.style.backgroundColor = "orange"
-        //             //     alerta_div.style.borderColor = "orange"
-        //             //     i_alerta.innerHTML = "CPU em estado de emergência! Cuidado!"
-
-        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-        //             //     setTimeout(() => sumirMensagem(idChamado, dadosEmpresas), 2000);
-        //             // }
-
-
-        //             // if (novoRegistro[0].percentualCpu > 90) {
-        //             //     componente = "CPU"
-        //             //     maquina = "1"
-        //             //     frase = "Crítico"
-        //             //     metrica = `${novoRegistro[0].percentualCpu} %`
-
-        //             //     alerta_div.style.display = "block"
-        //             //     alerta_div.style.backgroundColor = "red"
-        //             //     alerta_div.style.borderColor = "red"
-        //             //     i_alerta.innerHTML = "CPU em estado crítico! Cuidado!"
-
-        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-        //             //     setTimeout(() => sumirMensagem(idChamado, dadosEmpresas), 2000);
-        //             // }
-
-
 
         //             dadosACPU.labels.shift();
         //             dadosACPU.labels.push(novoRegistro[0].componente);
@@ -1131,113 +1080,12 @@
 
         //             dadosADISCO.datasets[0].data.shift();
         //             dadosADISCO.datasets[0].data.push(novoRegistro[0].Qtde_Disco);
-        //             // Alertas do disco
-
-        //             // if (novoRegistro[0].discoUsado >= 200 && novoRegistro[0].discoUsado < 220) {
-        //             //     componente = "Disco"
-        //             //     maquina = "1"
-        //             //     frase = "Alerta"
-        //             //     metrica = novoRegistro[0].discoUsado
-
-        //             //     alerta_disco.style.display = "block"
-        //             //     alerta_disco.style.backgroundColor = "yellow"
-        //             //     alerta_disco.style.borderColor = "yellow"
-        //             //     i_alertaDisco.innerHTML = "Disco está em estado de alerta! Cuidado!"
-
-        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-        //             //     setTimeout(() => sumirMensagem(idChamado, dadosADISCO), 2000);
-        //             // }
-
-        //             // if (novoRegistro[0].discoUsado >= 220 && novoRegistro[0].discoUsado < 240) {
-        //             //     componente = "Disco"
-        //             //     maquina = "1"
-        //             //     frase = "Emergência"
-        //             //     metrica = novoRegistro[0].discoUsado
-
-        //             //     alerta_disco.style.display = "block"
-        //             //     alerta_disco.style.backgroundColor = "orange"
-        //             //     alerta_disco.style.borderColor = "orange"
-        //             //     i_alertaDisco.innerHTML = "Disco está em estado de emergência! Cuidado!"
-
-        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-        //             //     setTimeout(() => sumirMensagem(idChamado, dadosADISCO), 2000);
-        //             // }
-
-        //             // if (novoRegistro[0].discoUsado > 240) {
-        //             //     componente = "Disco"
-        //             //     maquina = "1"
-        //             //     frase = "Crítico"
-        //             //     metrica = novoRegistro[0].discoUsado
-
-        //             //     alerta_disco.style.display = "block"
-        //             //     alerta_disco.style.backgroundColor = "red"
-        //             //     alerta_disco.style.borderColor = "red"
-        //             //     i_alertaDisco.innerHTML = "Disco está em estado crítico! Cuidado!"
-
-        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-        //             //     setTimeout(() => sumirMensagem(idChamado, dadosADISCO), 2000);
-        //             // }
-
-        //             // finalizando alertas do disco
-
-
+        
         //             dadosAMEMORIA.labels.shift();
         //             dadosAMEMORIA.labels.push(novoRegistro[0].componente);
 
         //             dadosAMEMORIA.datasets[0].data.shift();
         //             dadosAMEMORIA.datasets[0].data.push(novoRegistro[0].Qtde_Memoria);
-
-        //             // if (novoRegistro[0].memoriaUsada >= 6 && novoRegistro[0].memoriaUsada < 12) {
-        //             //     componente = "RAM"
-        //             //     maquina = "1"
-        //             //     frase = "Alerta"
-        //             //     metrica = novoRegistro[0].memoriaUsada
-
-        //             //     alerta_memoria.style.display = "block"
-        //             //     alerta_memoria.style.backgroundColor = "yellow"
-        //             //     alerta_memoria.style.borderColor = "yellow"
-        //             //     i_alertaMemoria.innerHTML = "Memória RAM em estado de alerta! Cuidado!"
-
-
-        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-        //             //     setTimeout(() => sumirMensagem(idChamado, dadosAMEMORIA), 2000);
-        //             // }
-        //             // if (novoRegistro[0].memoriaUsada >= 12 && novoRegistro[0].memoriaUsada < 14) {
-        //             //     componente = "RAM"
-        //             //     maquina = "1"
-        //             //     frase = "Emergência"
-        //             //     metrica = novoRegistro[0].memoriaUsada
-
-        //             //     alerta_memoria.style.display = "block"
-        //             //     alerta_memoria.style.backgroundColor = "orange"
-        //             //     alerta_memoria.style.borderColor = "orange"
-        //             //     i_alertaMemoria.innerHTML = "Memória RAM em estado de emergência! Cuidado!"
-
-        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-        //             //     setTimeout(() => sumirMensagem(idChamado, dadosAMEMORIA), 2000);
-        //             // }
-
-        //             // if (novoRegistro[0].memoriaUsada > 14) {
-        //             //     componente = "RAM"
-        //             //     maquina = "1"
-        //             //     frase = "Crítico"
-        //             //     metrica = novoRegistro[0].memoriaUsada
-
-        //             //     alerta_memoria.style.display = "block"
-        //             //     alerta_memoria.style.backgroundColor = "red"
-        //             //     alerta_memoria.style.borderColor = "red"
-        //             //     i_alertaMemoria.innerHTML = "Memória RAM em estado crítico! Cuidado!"
-
-        //             //     alertas(nomeEmpresa, maquina, componente, metrica, frase)
-
-        //             //     setTimeout(() => sumirMensagem(idChamado, dadosAMEMORIA), 2000);
-        //             // }
-
 
 
         //             window.grafico_linha.update();
@@ -1457,7 +1305,6 @@
         
         if(idCanva == 'myChartGeral'){
         
-        console.log("ESTOU NO DESTRUIR GERAL")
         myChart.destroy()
         
         
