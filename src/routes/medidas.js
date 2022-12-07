@@ -18,9 +18,14 @@ router.get("/tempo-real/:idServidor", function (req, res) {
 
 
 // rotas Freq
-router.get("/ultimasFreq/:idAquario", function (req, res) {
+router.get("/ultimasFreq/:idServidor", function (req, res) {
     medidaController.buscarMedidas(req, res);
 });
+
+router.get("/tempo-real-index/:idServidor", function (req, res) {
+    medidaController.ultimasIndex(req, res);
+});
+
 
 // rota maquina 1 
 router.get("/ultimasTeste/:idChamado", function (req, res) {

@@ -32,13 +32,13 @@ var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["Junho", "Julho", "Agosto", "Setembro", "Outubro"],
+    labels: ["Setembro", "Agosto", "Outubro", "Novembro", "Dezembro"],
     datasets: [{
       label: "Acessos",
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
-      data: [80, 10, 50, 60, 100],
+      data: [30, 42, 60, 94, 96],
     }],
   },
   options: {

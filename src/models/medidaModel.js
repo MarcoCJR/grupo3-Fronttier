@@ -81,7 +81,7 @@ function buscarMedidasEmTempoReal(idServidor) {
 
 // Criação teste freq
 
-function buscarMedidas(idServidor, limite_linhas) {
+function buscarMedidas(idServidor) {
 
     instrucaoSql = ''
 
@@ -118,6 +118,45 @@ function buscarMedidas(idServidor, limite_linhas) {
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 } 
+
+function ultimasIndex(idServidor) {
+
+    instrucaoSql = ''
+
+    if (process.env.AMBIENTE_PROCESSO == "producao") {
+        instrucaoSql = `
+        select top 1
+        percentualCpu,
+        freqAtual,
+        discoUsado,
+        memoriaUsada,
+                    dataHora,
+                        CONVERT(varchar, dataHora, 108) as horario,
+                        fkServidor 
+                        from dados
+                        where fkServidor = ${idServidor}
+                    order by idDados desc
+        `;
+
+    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
+        instrucaoSql = `select 
+        freqAtual,
+        percentualCpu,
+        discoUsado,
+        memoriaUsada
+                    from dados  
+                    order by idDados desc limit 1`;
+
+    }
+    else {
+        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
+        return
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+} 
+
 
 function buscarMedidasChamados(idChamado) {
 
@@ -511,5 +550,6 @@ module.exports = {
     buscarMedidasEmTempoRealRede,
     buscarUltimasTemp,    
     buscarTempoRealTemp,
-    buscarMedidasTemp
+    buscarMedidasTemp,
+    ultimasIndex
 }

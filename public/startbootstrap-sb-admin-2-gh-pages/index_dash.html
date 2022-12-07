@@ -294,8 +294,8 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-40"></i> Salvar </a>
+                        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-40"></i> Salvar </a> -->
                     </div>
 
                     <!-- Content Row CARDS -->
@@ -391,8 +391,21 @@
 
                         <!-- Content Column -->
                         <div class="col-lg-6 mb-4">
-                            <!-- Project Card Example -->
+
                             <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Saúde da Máquina</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-bar">
+                                        <canvas id="chartSaude"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Project Card Example -->
+                            <!-- <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Monitoramento</h6>
                                 </div>
@@ -428,7 +441,7 @@
                                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="col-lg-6 mb-4">
@@ -508,27 +521,31 @@
     <script src="vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <!-- <script src="js/demo/chart-area-demo.js"></script> -->
+    <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
     <script src="js/demo/chart-bar-demo.js"></script>
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
     <!-- <div id="teste"></div> -->
 
 </body>
 
 </html>
-<script>
 
+
+<script>
+    
     usuario.innerHTML = sessionStorage.NOME_USUARIO;
     nomeEmp.innerHTML = sessionStorage.nomeEmp
 
-    let proximaAtualizacao;
+    
+    window.onload = obterDadosGraficos(12);
 
-    window.onload = obterFrequencia(12);
-
-    function obterFrequencia(idServidor) {
+    function obterDadosGraficos(idServidor) {
 
         fetch(`/medidas/ultimasFreq/${idServidor}`, { cache: 'no-store' }).then(function (response) {
-
 
             if (response.ok) {
                 response.json().then(function (resposta) {
@@ -544,6 +561,9 @@
                     uso_cpu.innerHTML = `${resposta[0].percentualCpu}%`
                     disco_usado.innerHTML = `${resposta[0].discoUsado} GB`
                     memoria_usada.innerHTML = `${resposta[0].memoriaUsada} GB`
+                    
+
+                    plotarGrafico(resposta, idServidor);
 
                 });
             } else {
@@ -554,11 +574,121 @@
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
         })
 
-
     }
 
 
+    
+let ChartSaude
 
 
+function pieChart(dado) {
+  this.type = 'doughnut'
+  this.data = dado
+  this.options = {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      borderColor: '#dddfeb',
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      caretPadding: 10,
+    },
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 80,
+  }
+}
+
+
+
+
+function baseDataPieCores(labelsDados) {
+  this.labels = labelsDados
+  this.datasets = [{
+    data: [],
+    backgroundColor: [],
+    hoverBackgroundColor: [],
+    hoverBorderColor: "rgba(234, 236, 244, 1)",
+  }]
+}
+
+
+
+function corDado(dado, cores, parametros) {
+  let i
+  for (i = 1; i < cores.length; i++) {    
+    if(dado < parametros[i]) {
+      break
+    }
+  }
+  return cores[i - 1]
+}
+
+
+        function plotarGrafico(resposta, idServidor) {
+            console.log('iniciando plotagem do gráfico...');
+
+            console.log("passei aq" )
+                
+
+            
+  let dataSaude = new baseDataPieCores(["Saúde da Máquina", "Distância do ideal"]) // *DÉBORA* nomes que vão aparecer em cada setor do gráfico de rosca
+
+  let cpu = resposta[0].percentualCpu
+  let disco = resposta[0].discoUsado
+  let ram = resposta[0].memoriaUsada
+    
+  console.log(`cpu: ${cpu}`)
+
+  // transformando em porcentagem (para individual Débora)
+  let totalDisco = 256.0
+  let totalRAM = 8.0
+  
+  disco = (disco * 100) / totalDisco 
+  ram = (ram * 100) / totalRAM
+  
+  // saúde
+  let saudeCpu
+  let saudeDisco
+  let saudeRam
+
+  saudeCpu = parseInt(cpu/6) // 16.67
+  saudeDisco = parseInt(disco/3) // 33.33
+  saudeRam = parseInt(ram/2)    //50
+ 
+  let saudeTotal = (100 - (saudeDisco + saudeRam + saudeCpu))
+  let cores = ["#FF0000", "#FFA500", "#00FF00"]
+  let parametros = [0, 35, 55]
+
+  console.log("saude:", saudeTotal)
+  
+  dataSaude.datasets[0].data.push(saudeTotal) // *DÉBORA* push da saude da máquina e do que falta pra chegar em 100%
+  dataSaude.datasets[0].data.push(100 - saudeTotal)
+
+  dataSaude.datasets[0].backgroundColor.push(corDado(saudeTotal, cores, parametros)) // *DÉBORA* definição das cores, baseado na função corDado(), e o #DDDDDD é só um cinza que você pode alterar para a cor que achar mais bonita
+  dataSaude.datasets[0].backgroundColor.push("#F8F8FF")
+  dataSaude.datasets[0].hoverBackgroundColor.push(corDado(saudeTotal, cores, parametros))
+  dataSaude.datasets[0].hoverBackgroundColor.push("#F8F8FF")
+
+
+  if(document.getElementById("chartSaude")) {
+    var ctx = document.getElementById("chartSaude"); // *DÉBORA* Criação do chart (não alterei essa parte praticamente, apenas exclui o pieChart2 que me pareceu desnecessário)
+    if (ChartSaude != null) {
+      ChartSaude.destroy();
+    }
+    ChartSaude = new Chart(ctx, new pieChart(dataSaude,'%'));
+  }
+        
+    
+    
+
+}
+
+        
+        
 
 </script>
