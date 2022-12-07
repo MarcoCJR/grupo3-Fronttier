@@ -27,28 +27,28 @@ from mysql.connector import errorcode
 # username='Fronttier3'
 # password='#Gfgrupo3'
 
-c=1
-while True:
-    enviar_email()
+# c=1
+# while True:
+#     enviar_email()
 
-    while c < 4:
+#     while c < 4:
 
-        token_resposta = input("Token: ")
-        resposta = int(token_resposta)
+#         token_resposta = input("Token: ")
+#         resposta = int(token_resposta)
 
-        if c == 3:
-            print("Tente novamente mais tarde")
-            exit()
+#         if c == 3:
+#             print("Tente novamente mais tarde")
+#             exit()
 
-        if token != resposta:
-            print("Token errado!")
-            c += 1
-            print(c)
+#         if token != resposta:
+#             print("Token errado!")
+#             c += 1
+#             print(c)
 
-        else:
-            print("Token Correto")
-            break
-    break
+#         else:
+#             print("Token Correto")
+#             break
+#     break
 
 
 st = speedtest.Speedtest(secure=1)
@@ -90,8 +90,13 @@ def Login():
         
         print("Fazendo login...")
 
-        cursorAzure.fetchall()
-        SelectMaquina(codEmpresa)
+        dadosLogin = cursorAzure.fetchall()
+        if dadosLogin == []:
+            print("Credenciais incorretas! Tente novamente...")
+            print("")
+            Login()
+        else:
+            SelectMaquina(codEmpresa)
 
     except:
         print("Credenciais incorretas! Tente novamente...")
