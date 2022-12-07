@@ -8056,6 +8056,7 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 .p-5 {
     padding: 3rem !important;
     width: 100%;
+    margin-left: 10%;
 }
 
 .p-5 input {
@@ -11685,13 +11686,15 @@ body.sidebar-toggled footer.sticky-footer {
     height: 25rem;
     width: 2px;
     border-radius: 10px;
-    margin-left: 130px;
+    margin-left: 60px;
+    margin-right: 80px;
   }
 
   .coluna {
     display: flex;
     flex-direction: column;
     width: 37%;
+    margin-left: -60px;
   }
 
   .componentes {
@@ -11711,12 +11714,12 @@ body.sidebar-toggled footer.sticky-footer {
     border-radius: 0.35rem;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     height: 50px;
-    margin-bottom: 16px;
+    margin-bottom: 116px;
   }
 
   .compDireita {
     float: right;
-    margin-top: -130px;
+    margin-top: -230px;
   }
 
   .btnCadastrar {
